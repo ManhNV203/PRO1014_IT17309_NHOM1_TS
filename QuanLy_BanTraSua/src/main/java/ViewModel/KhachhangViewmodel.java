@@ -1,8 +1,15 @@
-package DomainModel;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ViewModel;
 
-public class KhachHang {
-
-    private String ID;
+/**
+ *
+ * @author mr.quyen
+ */
+public class KhachhangViewmodel {
+   private String ID;
     private String Ma;
     private String HoTen;
     private String GioiTinh;
@@ -10,10 +17,10 @@ public class KhachHang {
     private String SDT;
     private String MoTa;
 
-    public KhachHang() {
+    public KhachhangViewmodel() {
     }
 
-    public KhachHang(String ID, String Ma, String HoTen, String GioiTinh, String DiaChi, String SDT, String MoTa) {
+    public KhachhangViewmodel(String ID, String Ma, String HoTen, String GioiTinh, String DiaChi, String SDT, String MoTa) {
         this.ID = ID;
         this.Ma = Ma;
         this.HoTen = HoTen;
@@ -78,6 +85,8 @@ public class KhachHang {
     public void setMoTa(String MoTa) {
         this.MoTa = MoTa;
     }
-
-
+    
+    
+    
+    
 }
