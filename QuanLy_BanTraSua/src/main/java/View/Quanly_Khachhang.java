@@ -69,7 +69,6 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
         btnBanHang_Menu = new javax.swing.JButton();
         btnHoaDonMenu = new javax.swing.JButton();
         btnDoanUongMenu = new javax.swing.JButton();
-        btnNguyenLieuMenu = new javax.swing.JButton();
         btnNhanVienMenu = new javax.swing.JButton();
         btnKhachHangmenu = new javax.swing.JButton();
         btnKhuyenMaiMenu = new javax.swing.JButton();
@@ -141,16 +140,6 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
             }
         });
 
-        btnNguyenLieuMenu.setBackground(new java.awt.Color(204, 255, 255));
-        btnNguyenLieuMenu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnNguyenLieuMenu.setText("Nguyên Liệu");
-        btnNguyenLieuMenu.setPreferredSize(new java.awt.Dimension(117, 48));
-        btnNguyenLieuMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNguyenLieuMenuActionPerformed(evt);
-            }
-        });
-
         btnNhanVienMenu.setBackground(new java.awt.Color(204, 255, 255));
         btnNhanVienMenu.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnNhanVienMenu.setText("Nhân Viên");
@@ -215,7 +204,6 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
                     .addComponent(btnBanHang_Menu, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
                     .addComponent(btnHoaDonMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnDoanUongMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnNguyenLieuMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnNhanVienMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnKhachHangmenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnKhuyenMaiMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -235,8 +223,6 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDoanUongMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnNguyenLieuMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnNhanVienMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnKhachHangmenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,7 +232,7 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
                 .addComponent(btnThongkeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDangXuatMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -548,27 +534,26 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
 
     private void btnHoaDonMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonMenuActionPerformed
         // TODO add your handling code here:
-
+        new QuanLy_HoaDon().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnHoaDonMenuActionPerformed
 
     private void btnDoanUongMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoanUongMenuActionPerformed
         // TODO add your handling code here:
-
+        new QuanLy_DoAnUongFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnDoanUongMenuActionPerformed
-
-    private void btnNguyenLieuMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNguyenLieuMenuActionPerformed
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_btnNguyenLieuMenuActionPerformed
 
     private void btnNhanVienMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienMenuActionPerformed
         // TODO add your handling code here:
-
+        new QuanLyNhanVienFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnNhanVienMenuActionPerformed
 
     private void btnKhachHangmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangmenuActionPerformed
         // TODO add your handling code here:
-
+        new Quanly_Khachhang().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnKhachHangmenuActionPerformed
 
     private void btnKhuyenMaiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiMenuActionPerformed
@@ -836,7 +821,6 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
     private javax.swing.JButton btnHoaDonMenu;
     private javax.swing.JButton btnKhachHangmenu;
     private javax.swing.JButton btnKhuyenMaiMenu;
-    private javax.swing.JButton btnNguyenLieuMenu;
     private javax.swing.JButton btnNhanVienMenu;
     private javax.swing.JButton btnThongkeMenu;
     private javax.swing.JLabel jLabel10;

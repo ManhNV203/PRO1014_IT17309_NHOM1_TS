@@ -549,7 +549,8 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
 
     private void btnKhachHangmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangmenuActionPerformed
         // TODO add your handling code here:
-
+        new Quanly_Khachhang().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnKhachHangmenuActionPerformed
 
     private void btnKhuyenMaiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiMenuActionPerformed
