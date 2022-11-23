@@ -1,11 +1,16 @@
-
-package DomainModel;
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ViewModel;
 
 import java.util.Date;
 
-
-public class NhanVien {
-    private int ID;
+/**
+ *
+ * @author ADMIN
+ */
+public class NhanVienViewModel {
     private String ma;
     private String hoTen;
     private String matKhau;
@@ -14,13 +19,11 @@ public class NhanVien {
     private String diaChi;
     private String email;
     private String SDT;
-    
 
-    public NhanVien() {
+    public NhanVienViewModel() {
     }
 
-    public NhanVien(int ID, String ma, String hoTen, String matKhau, Date ngaySinh, String gioiTinh, String diaChi, String email,String SDT) {
-        this.ID = ID;
+    public NhanVienViewModel(String ma, String hoTen, String matKhau, Date ngaySinh, String gioiTinh, String diaChi, String email,String SDT) {
         this.ma = ma;
         this.hoTen = hoTen;
         this.matKhau = matKhau;
@@ -29,23 +32,13 @@ public class NhanVien {
         this.diaChi = diaChi;
         this.email = email;
         this.SDT = SDT;
-
-    }
-
-    public int getID() {
-        return ID;
-    }
-
-    public void setSDT(String SDT) {
-        this.SDT = SDT;
-    }
-
-    public String getSDT() {
-        return SDT;
     }
 
     public String getMa() {
         return ma;
+    }
+    public String getSDT() {
+        return SDT;
     }
 
     public String getHoTen() {
@@ -70,12 +63,6 @@ public class NhanVien {
 
     public String getEmail() {
         return email;
-    }
-
-    
-
-    public void setID(int ID) {
-        this.ID = ID;
     }
 
     public void setMa(String ma) {
@@ -105,14 +92,16 @@ public class NhanVien {
     public void setEmail(String email) {
         this.email = email;
     }
+    public void setSDT(String SDT) {
+        this.SDT = SDT;
+    }
 
     @Override
     public String toString() {
-        return "NhanVien{" + "ID=" + ID + ", ma=" + ma + ", hoTen=" + hoTen + ", matKhau=" + matKhau + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", diaChi=" + diaChi + ", email=" + email + ", SDT=" + SDT + '}';
+        return "NhanVienViewModel{" + "ma=" + ma + ", hoTen=" + hoTen + ", matKhau=" + matKhau + ", ngaySinh=" + ngaySinh + ", gioiTinh=" + gioiTinh + ", diaChi=" + diaChi + ", email=" + email + '}';
     }
-
     
-    
-    
-    
+    public Object[] dataRow() {
+        return new Object[]{ma,hoTen,matKhau,ngaySinh,gioiTinh,diaChi,email,SDT};
+    }
 }
