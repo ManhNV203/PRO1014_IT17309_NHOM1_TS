@@ -404,7 +404,8 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
 
     private void btnDoanUongMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoanUongMenuActionPerformed
         // TODO add your handling code here:
-        
+        new QuanLy_DoAnUongFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnDoanUongMenuActionPerformed
 
     private void btnNhanVienMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienMenuActionPerformed
