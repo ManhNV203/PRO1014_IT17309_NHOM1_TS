@@ -1,11 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ViewModel;
 
-package DomainModel;
-
+import DomainModel.KhachHang;
+import DomainModel.KhuyenMai;
+import DomainModel.NhanVien;
 import java.math.BigDecimal;
 
-
-public class HoaDon {
-    private String id;
+/**
+ *
+ * @author FPTSHOP
+ */
+public class HoaDonVModel {
+    
     private String Ma;
     private NhanVien Id_NV;
     private String ngayTao;
@@ -14,11 +23,10 @@ public class HoaDon {
     private KhuyenMai id_KM;
     private int TrangThai;
 
-    public HoaDon() {
+    public HoaDonVModel() {
     }
 
-    public HoaDon(String id, String Ma, NhanVien Id_NV, String ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
-        this.id = id;
+    public HoaDonVModel(String Ma, NhanVien Id_NV, String ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
         this.Ma = Ma;
         this.Id_NV = Id_NV;
         this.ngayTao = ngayTao;
@@ -26,15 +34,6 @@ public class HoaDon {
         this.id_KH = id_KH;
         this.id_KM = id_KM;
         this.TrangThai = TrangThai;
-    }
-
-   
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
     public String getMa() {
@@ -95,6 +94,9 @@ public class HoaDon {
 
     @Override
     public String toString() {
-        return "HoaDon{" + "id=" + id + ", Ma=" + Ma + ", Id_NV=" + Id_NV + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", id_KH=" + id_KH + ", id_KM=" + id_KM + ", TrangThai=" + TrangThai + '}';
+        return "HoaDonVModel{" + "Ma=" + Ma + ", Id_NV=" + Id_NV + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", id_KH=" + id_KH + ", id_KM=" + id_KM + ", TrangThai=" + TrangThai + '}';
     }
+
+    
+    
 }

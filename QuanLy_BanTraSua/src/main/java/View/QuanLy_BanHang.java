@@ -229,9 +229,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         pnlDSHoaDonBHLayout.setHorizontalGroup(
             pnlDSHoaDonBHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDSHoaDonBHLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addContainerGap()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
         pnlDSHoaDonBHLayout.setVerticalGroup(
             pnlDSHoaDonBHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -620,7 +620,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
     private void btnHoaDonMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonMenuActionPerformed
         // TODO add your handling code here:
-        
+        new QuanLy_HoaDon().setVisible(true);
+        this.dispose();
 
     }//GEN-LAST:event_btnHoaDonMenuActionPerformed
 
