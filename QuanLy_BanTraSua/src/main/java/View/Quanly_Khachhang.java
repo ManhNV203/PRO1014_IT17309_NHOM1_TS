@@ -440,7 +440,7 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
             }
         });
 
-        jLabel9.setText("Nhập mã cần tìm:");
+        jLabel9.setText("Nhập SĐT Cần Tìm:");
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -589,7 +589,7 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
     private void btADDKhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btADDKhachhangActionPerformed
 
         // TODO add your handling code here:\
-        String reg = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$";
+        String sdt = "^[0-9]{10}$";
         if (txtMaKhachhang.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "code not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
             return;
@@ -610,15 +610,16 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
         if (txtSDT.getText().equals("")) {
             JOptionPane.showMessageDialog(rootPane, "SDT not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
             return;
-        } else if(txtSDT.getText().matches(reg)) {
-            JOptionPane.showMessageDialog(rootPane, "SDT chưa nhập đúng định dạng", "Thông báo", JOptionPane.ERROR_MESSAGE);
+        }
+
+        if(txtSDT.getText().matches(sdt)) {
+           
+        }else{
+             JOptionPane.showMessageDialog(rootPane, "SDT phải nhập đủ 10 số và không được nhập chữ", "Thông báo", JOptionPane.ERROR_MESSAGE);
           return;
         }
-            if (txtMota.getText().equals("")) {
-                JOptionPane.showMessageDialog(rootPane, "MOTa not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-        
+     
+
         try {
             KhachHang kh = new KhachHang();
 
@@ -646,6 +647,34 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
     }//GEN-LAST:event_btADDKhachhangActionPerformed
 
     private void btUPDATEKhachhangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btUPDATEKhachhangActionPerformed
+
+        String sdt = "0[0-9]{10}";
+
+        if (txtHoTenkhachHang.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "name not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (rboNam.isSelected() == false && rboNu.isSelected() == false) {
+            JOptionPane.showMessageDialog(rootPane, "status not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (txtDiaChi.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "type not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (txtSDT.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "SDT not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        } else if (txtSDT.getText().matches(sdt)) {
+            JOptionPane.showMessageDialog(rootPane, "SDT chưa nhập đúng định dạng", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (txtMota.getText().equals("")) {
+            JOptionPane.showMessageDialog(rootPane, "MOTa not null", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         try {
             KhachHang kh = new KhachHang();
 
