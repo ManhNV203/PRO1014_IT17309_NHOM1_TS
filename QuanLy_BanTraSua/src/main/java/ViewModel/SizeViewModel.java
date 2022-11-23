@@ -1,12 +1,19 @@
-package DomainModel;
 
-public class Size {
+package ViewModel;
 
+
+public class SizeViewModel {
     private Integer id;
     private String ma;
     private String theTich;
 
-    public Size() {
+    public SizeViewModel() {
+    }
+
+    public SizeViewModel(Integer id, String ma, String theTich) {
+        this.id = id;
+        this.ma = ma;
+        this.theTich = theTich;
     }
 
     public Integer getId() {
@@ -35,7 +42,9 @@ public class Size {
 
     @Override
     public String toString() {
-        return "Size{" + "id=" + id + ", ma=" + ma + ", theTich=" + theTich + '}';
+        return "SizeViewModel{" + "id=" + id + ", ma=" + ma + ", theTich=" + theTich + '}';
     }
 
+    
+    
 }

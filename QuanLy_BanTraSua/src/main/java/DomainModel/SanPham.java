@@ -3,36 +3,34 @@ package DomainModel;
 
 
 public class SanPham {
-    private String id;
+    private Integer id;
     private String ma;
     private String ten;
     private String donGia;
     private Integer trangThai;
-    private String vi;
-    private String id_DanhMuc;
-    private String id_size;
-    private String id_NguyenLieu;
+    private Integer id_Vi;
+    private Integer id_DanhMuc;
+    private Integer id_size;
 
     public SanPham() {
     }
 
-    public SanPham(String id, String ma, String ten, String donGia, Integer trangThai, String vi, String id_DanhMuc, String id_size, String id_NguyenLieu) {
+    public SanPham(Integer id, String ma, String ten, String donGia, Integer trangThai, Integer id_Vi, Integer id_DanhMuc, Integer id_size) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
         this.donGia = donGia;
         this.trangThai = trangThai;
-        this.vi = vi;
+        this.id_Vi = id_Vi;
         this.id_DanhMuc = id_DanhMuc;
         this.id_size = id_size;
-        this.id_NguyenLieu = id_NguyenLieu;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -68,40 +66,36 @@ public class SanPham {
         this.trangThai = trangThai;
     }
 
-    public String getVi() {
-        return vi;
+    public Integer getId_Vi() {
+        return id_Vi;
     }
 
-    public void setVi(String vi) {
-        this.vi = vi;
+    public void setId_Vi(Integer id_Vi) {
+        this.id_Vi = id_Vi;
     }
 
-    public String getId_DanhMuc() {
+    public Integer getId_DanhMuc() {
         return id_DanhMuc;
     }
 
-    public void setId_DanhMuc(String id_DanhMuc) {
+    public void setId_DanhMuc(Integer id_DanhMuc) {
         this.id_DanhMuc = id_DanhMuc;
     }
 
-    public String getId_size() {
+    public Integer getId_size() {
         return id_size;
     }
 
-    public void setId_size(String id_size) {
+    public void setId_size(Integer id_size) {
         this.id_size = id_size;
-    }
-
-    public String getId_NguyenLieu() {
-        return id_NguyenLieu;
-    }
-
-    public void setId_NguyenLieu(String id_NguyenLieu) {
-        this.id_NguyenLieu = id_NguyenLieu;
     }
 
     @Override
     public String toString() {
-        return "SanPham{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", donGia=" + donGia + ", trangThai=" + trangThai + ", vi=" + vi + ", id_DanhMuc=" + id_DanhMuc + ", id_size=" + id_size + ", id_NguyenLieu=" + id_NguyenLieu + '}';
+        return "SanPham{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + ", donGia=" + donGia + ", trangThai=" + trangThai + ", id_Vi=" + id_Vi + ", id_DanhMuc=" + id_DanhMuc + ", id_size=" + id_size + '}';
     }
+
+    
+
+    
 }
