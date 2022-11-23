@@ -31,6 +31,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
      */
     public QuanLy_DoAnUongFrame() {
         initComponents();
+        setLocationRelativeTo(null);
         sanPhamServiceInterface = new SanPhamServiceImplement();
         viServiceInterface = new ViServiceImplement();
         danhMucServiceInterface = new DanhMucServiceImplement();
@@ -376,9 +377,19 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
         btnThemNhanhDM.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThemNhanhDM.setText("+");
+        btnThemNhanhDM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemNhanhDMActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jButton3.setText("+");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -913,7 +924,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
     private void btnNhanVienMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienMenuActionPerformed
         // TODO add your handling code here:
-
+        new QuanLyNhanVienFrame().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnNhanVienMenuActionPerformed
 
     private void btnKhachHangmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangmenuActionPerformed
@@ -1104,6 +1116,16 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private void btnThemNhanhViActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanhViActionPerformed
         new QuanLyViFrame().setVisible(true);
     }//GEN-LAST:event_btnThemNhanhViActionPerformed
+
+    private void btnThemNhanhDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanhDMActionPerformed
+        // TODO add your handling code here:
+        new QuanLyDanhMucFrame().setVisible(true);
+    }//GEN-LAST:event_btnThemNhanhDMActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        new QuanLySizeFrame().setVisible(true);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
