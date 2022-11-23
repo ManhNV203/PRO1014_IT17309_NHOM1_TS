@@ -1,16 +1,16 @@
 
-package DomainModel;
+package ViewModel;
 
 
-public class Vi {
+public class DanhMucViewModel {
     private Integer id;
     private String ma;
     private String ten;
 
-    public Vi() {
+    public DanhMucViewModel() {
     }
 
-    public Vi(Integer id, String ma, String ten) {
+    public DanhMucViewModel(Integer id, String ma, String ten) {
         this.id = id;
         this.ma = ma;
         this.ten = ten;
@@ -42,7 +42,7 @@ public class Vi {
 
     @Override
     public String toString() {
-        return "Vi{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + '}';
+        return "DanhMucViewModel{" + "id=" + id + ", ma=" + ma + ", ten=" + ten + '}';
     }
     
 }

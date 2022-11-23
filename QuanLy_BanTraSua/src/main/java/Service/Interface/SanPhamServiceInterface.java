@@ -1,12 +1,13 @@
 
-package RepositoryJDBC.Interface;
+package Service.Interface;
 
 import DomainModel.SanPham;
+import ViewModel.SanPhamViewModel;
 import java.util.List;
 
 
-public interface SanPhamRepositoryInterface {
-    public List<SanPham> getAllSanPham();
+public interface SanPhamServiceInterface {
+    public List<SanPhamViewModel> getAllSP();
     public void addSanPham(SanPham sanPham);
     public void updateSanPham(SanPham sanPham);
     public void deleteSanPham(SanPham sanPham);
