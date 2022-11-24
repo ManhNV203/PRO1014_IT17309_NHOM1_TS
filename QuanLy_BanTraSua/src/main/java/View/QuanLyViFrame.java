@@ -4,11 +4,20 @@
  */
 package View;
 
+import DomainModel.Vi;
+import Service.Implement.ViServiceImplement;
+import Service.Interface.ViServiceInterface;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ADMIN
  */
 public class QuanLyViFrame extends javax.swing.JFrame {
+
+    private ViServiceInterface viServiceInterface;
 
     /**
      * Creates new form QuanLyViFrame
@@ -16,6 +25,57 @@ public class QuanLyViFrame extends javax.swing.JFrame {
     public QuanLyViFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        viServiceInterface = new ViServiceImplement();
+        loadtableVI();
+    }
+
+    public void loadtableVI() {
+        DefaultTableModel tblModel = (DefaultTableModel) tblViSanPham.getModel();
+        tblModel.setRowCount(0);
+        List<Vi> listVi = viServiceInterface.getAllVi();
+        for (Vi vi : listVi) {
+            tblModel.addRow(new Object[]{
+                vi.getId(),
+                vi.getMa(),
+                vi.getTen()
+            });
+        }
+    }
+
+    public void DisPlayFromVi() {
+        int row = tblViSanPham.getSelectedRow();
+        if (row >= 0) {
+            txtMaVi.setText((String) tblViSanPham.getValueAt(row, 1));
+            txtTenVi.setText((String) tblViSanPham.getValueAt(row, 2));
+            txtMaVi.setEditable(false);
+        }
+    }
+
+    public void clearFromVi() {
+        txtMaVi.setText("");
+        txtTenVi.setText("");
+        txtMaVi.setEditable(false);
+    }
+
+    public boolean validateVifrom() {
+        String ma = txtMaVi.getText();
+        String TenVi = txtTenVi.getText();
+        if (ma.trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Mã Không được để trống");
+            return false;
+        }
+        List<Vi> listVi = viServiceInterface.getAllVi();
+        for (Vi vi : listVi) {
+            if (vi.getMa().equals(ma)) {
+                JOptionPane.showMessageDialog(this, "Mã Đã Tồn Tại");
+                return false;
+            }
+        }
+        if (TenVi.trim().equals("")) {
+            JOptionPane.showMessageDialog(this, " Tên Vị Không được để trống");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -29,10 +89,8 @@ public class QuanLyViFrame extends javax.swing.JFrame {
 
         pnlVi = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblid = new javax.swing.JLabel();
         txtMaVi = new javax.swing.JTextField();
         txtTenVi = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
@@ -48,20 +106,33 @@ public class QuanLyViFrame extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Quản Lý Vị Sản Phẩm");
 
-        jLabel2.setText("Id");
-
         jLabel3.setText("Mã");
 
         jLabel4.setText("Tên");
 
         btnThem.setBackground(new java.awt.Color(204, 255, 204));
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setBackground(new java.awt.Color(204, 255, 204));
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setBackground(new java.awt.Color(255, 102, 102));
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         tblViSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -80,6 +151,11 @@ public class QuanLyViFrame extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblViSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblViSanPhamMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tblViSanPham);
@@ -101,10 +177,6 @@ public class QuanLyViFrame extends javax.swing.JFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(txtMaVi))
                             .addGroup(pnlViLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlViLayout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtTenVi, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -125,11 +197,7 @@ public class QuanLyViFrame extends javax.swing.JFrame {
                 .addGroup(pnlViLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlViLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(30, 30, 30)
-                        .addGroup(pnlViLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(58, 58, 58)
                         .addGroup(pnlViLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtMaVi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -153,6 +221,67 @@ public class QuanLyViFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblViSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblViSanPhamMouseClicked
+        // TODO add your handling code here:
+        DisPlayFromVi();
+    }//GEN-LAST:event_tblViSanPhamMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        if (validateVifrom() == true) {
+            Vi vi = new Vi();
+            vi.setMa(txtMaVi.getText());
+            vi.setTen(txtTenVi.getText());
+            try {
+                viServiceInterface.addVi(vi);
+                loadtableVI();
+                clearFromVi();
+                JOptionPane.showMessageDialog(this, "Thêm Thành Công");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        int row = tblViSanPham.getSelectedRow();
+        if (row >= 0) {
+            Vi vi = new Vi();
+            vi.setMa(txtMaVi.getText());
+            vi.setTen(txtTenVi.getText());
+            try {
+                viServiceInterface.updateVi(vi);
+                loadtableVI();
+                clearFromVi();
+                JOptionPane.showMessageDialog(this, "Sửa Thành Công");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showConfirmDialog(this, "Chọn mục cần sửa");
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        int row = tblViSanPham.getSelectedRow();
+        if (row >= 0) {
+            Vi vi = new Vi();
+            vi.setMa(txtMaVi.getText());
+            try {
+                viServiceInterface.deleteVi(vi);
+                loadtableVI();
+                clearFromVi();
+                JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showConfirmDialog(this, "Chọn mục cần Xóa");
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -194,11 +323,9 @@ public class QuanLyViFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblid;
     private javax.swing.JPanel pnlVi;
     private javax.swing.JTable tblViSanPham;
     private javax.swing.JTextField txtMaVi;

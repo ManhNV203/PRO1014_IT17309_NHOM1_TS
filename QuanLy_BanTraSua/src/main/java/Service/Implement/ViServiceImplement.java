@@ -18,4 +18,19 @@ public class ViServiceImplement implements ViServiceInterface{
     public List<Vi> getAllVi() {
         return viRepositoryInterface.getAllVi();
     }
+
+    @Override
+    public void addVi(Vi vi) {
+        viRepositoryInterface.addVi(vi);
+    }
+
+    @Override
+    public void updateVi(Vi vi) {
+        viRepositoryInterface.updateVi(vi);
+    }
+
+    @Override
+    public void deleteVi(Vi vi) {
+        viRepositoryInterface.deleteVi(vi);
+    }
 }

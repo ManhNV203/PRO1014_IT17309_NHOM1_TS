@@ -18,4 +18,19 @@ public class SizeServiceImplement implements SizeServiceInterface{
     public List<Size> getAllSize() {
         return sizeRepositoryInterface.getAllSize();
     }
+
+    @Override
+    public void addSize(Size size) {
+        sizeRepositoryInterface.addSize(size);
+    }
+
+    @Override
+    public void updateSize(Size size) {
+        sizeRepositoryInterface.updateSize(size);
+    }
+
+    @Override
+    public void deleteSize(Size size) {
+        sizeRepositoryInterface.deleteSize(size);
+    }
 }

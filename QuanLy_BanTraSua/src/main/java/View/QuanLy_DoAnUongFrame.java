@@ -1121,6 +1121,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private void btnThemNhanhDMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemNhanhDMActionPerformed
         // TODO add your handling code here:
         new QuanLyDanhMucFrame().setVisible(true);
+        loadCBBFrame();
     }//GEN-LAST:event_btnThemNhanhDMActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

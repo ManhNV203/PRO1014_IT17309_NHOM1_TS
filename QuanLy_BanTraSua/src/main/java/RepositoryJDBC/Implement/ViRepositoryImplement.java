@@ -30,7 +30,7 @@ public class ViRepositoryImplement implements ViRepositoryInterface {
         try {
             PreparedStatement ps = connection.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {                
+            while (rs.next()) {
                 Vi vi = new Vi();
                 vi.setId(rs.getInt("Id"));
                 vi.setMa(rs.getString("Ma"));
@@ -41,5 +41,52 @@ public class ViRepositoryImplement implements ViRepositoryInterface {
             Logger.getLogger(ViRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listVi;
+    }
+
+    @Override
+    public void addVi(Vi vi) {
+        String sql = "INSERT INTO [dbo].[Vi]\n"
+                + "           ([Ma]\n"
+                + "           ,[Ten])\n"
+                + "     VALUES\n"
+                + "           (?\n"
+                + "           ,?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, vi.getMa());
+            ps.setString(2, vi.getTen());
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @Override
+    public void updateVi(Vi vi) {
+        String sql = "UPDATE [dbo].[Vi]\n"
+                + "   SET [Ten] = ?\n"
+                + " WHERE [Ma] = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(2, vi.getMa());
+            ps.setString(1, vi.getTen());
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public void deleteVi(Vi vi) {
+        String sql = "DELETE FROM [dbo].[Vi]\n"
+                + "      WHERE Ma=?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, vi.getMa());
+            ps.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ViRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
