@@ -4,11 +4,20 @@
  */
 package View;
 
+import DomainModel.Size;
+import Service.Implement.SizeServiceImplement;
+import Service.Interface.SizeServiceInterface;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ADMIN
  */
 public class QuanLySizeFrame extends javax.swing.JFrame {
+
+    private SizeServiceInterface sizeServiceInterface;
 
     /**
      * Creates new form QuanLySizeFrame
@@ -16,6 +25,56 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
     public QuanLySizeFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        sizeServiceInterface = new SizeServiceImplement();
+        loadTableSize();
+    }
+
+    public void loadTableSize() {
+        DefaultTableModel tblModel = (DefaultTableModel) tblSizeSanPham.getModel();
+        tblModel.setRowCount(0);
+        List<Size> listSize = sizeServiceInterface.getAllSize();
+        for (Size size : listSize) {
+            tblModel.addRow(new Object[]{
+                size.getId(),
+                size.getMa(),
+                size.getTheTich()
+            });
+        }
+    }
+
+    public void disPlayFrom() {
+        int row = tblSizeSanPham.getSelectedRow();
+        if (row >= 0) {
+            txtMaSize.setText((String) tblSizeSanPham.getValueAt(row, 1));
+            txtTheTich.setText((String) tblSizeSanPham.getValueAt(row, 2));
+            txtMaSize.setEditable(false);
+        }
+    }
+
+    void clearFrom() {
+        txtMaSize.setText("");
+        txtTheTich.setText("");
+        txtMaSize.setEditable(true);
+    }
+
+    public boolean validateFromSize() {
+        if (txtMaSize.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Mã không được trống");
+            return false;
+        }
+        String ma = txtMaSize.getText();
+        List<Size> listSize = sizeServiceInterface.getAllSize();
+        for (Size size : listSize) {
+            if (size.getMa().equals(ma)) {
+                JOptionPane.showMessageDialog(this, "Mã đã tồn tại");
+                return false;
+            }
+        }
+        if (txtTheTich.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Thể Tích không được để trống");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -30,14 +89,12 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblid = new javax.swing.JLabel();
         txtMaSize = new javax.swing.JTextField();
         txtTheTich = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblSizeSanPham = new javax.swing.JTable();
 
@@ -51,17 +108,30 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
 
         btnThem.setBackground(new java.awt.Color(204, 255, 204));
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setBackground(new java.awt.Color(204, 255, 204));
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setBackground(new java.awt.Color(255, 102, 102));
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Quản Lý Vị Sản Phẩm");
-
-        jLabel2.setText("Id");
+        jLabel1.setText("Quản Lý Size Sản Phẩm");
 
         tblSizeSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,6 +152,11 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSizeSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSizeSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblSizeSanPham);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -97,15 +172,9 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(114, 114, 114)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtMaSize))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMaSize, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(105, 105, 105)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -128,11 +197,7 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(58, 58, 58)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
                             .addComponent(txtMaSize, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -156,6 +221,65 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblSizeSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSizeSanPhamMouseClicked
+        // TODO add your handling code here:
+        disPlayFrom();
+    }//GEN-LAST:event_tblSizeSanPhamMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        if (validateFromSize() == true) {
+            Size size = new Size();
+            size.setMa(txtMaSize.getText());
+            size.setTheTich(txtTheTich.getText());
+            try {
+                System.out.println(size);
+                sizeServiceInterface.addSize(size);
+                loadTableSize();
+                clearFrom();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        int row = tblSizeSanPham.getSelectedRow();
+        if (row >= 0) {
+            Size size = new Size();
+            size.setMa(txtMaSize.getText());
+            size.setTheTich(txtTheTich.getText());
+            try {
+                sizeServiceInterface.updateSize(size);
+                loadTableSize();
+                clearFrom();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Chọn mục cân sửa");
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        int row = tblSizeSanPham.getSelectedRow();
+        if (row >= 0) {
+            Size size = new Size();
+            size.setMa(txtMaSize.getText());
+            try {
+                sizeServiceInterface.deleteSize(size);
+                loadTableSize();
+                clearFrom();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Chọn mục cân xóa");
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -188,7 +312,7 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new QuanLySizeFrame().setVisible(true);
-  }
+            }
         });
     }
 
@@ -197,12 +321,10 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblid;
     private javax.swing.JTable tblSizeSanPham;
     private javax.swing.JTextField txtMaSize;
     private javax.swing.JTextField txtTheTich;

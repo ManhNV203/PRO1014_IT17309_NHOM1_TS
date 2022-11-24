@@ -17,5 +17,20 @@ public class DanhMucServiceImplement implements DanhMucServiceInterface{
     public List<DanhMuc> getallDM() {
         return danhMucRepositoryInterface.getListAllDM();
     }
+
+    @Override
+    public void addDanhMuc(DanhMuc danhMuc) {
+        danhMucRepositoryInterface.addDM(danhMuc);
+    }
+
+    @Override
+    public void updateDanhMuc(DanhMuc danhMuc) {
+        danhMucRepositoryInterface.updateDM(danhMuc);
+    }
+
+    @Override
+    public void deleteDanhMuc(DanhMuc danhMuc) {
+        danhMucRepositoryInterface.deleteDM(danhMuc);
+    }
     
 }

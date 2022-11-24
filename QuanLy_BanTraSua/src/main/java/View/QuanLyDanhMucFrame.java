@@ -4,11 +4,20 @@
  */
 package View;
 
+import DomainModel.DanhMuc;
+import Service.Implement.DanhMucServiceImplement;
+import Service.Interface.DanhMucServiceInterface;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author ADMIN
  */
 public class QuanLyDanhMucFrame extends javax.swing.JFrame {
+
+    private DanhMucServiceInterface danhMucServiceInterface;
 
     /**
      * Creates new form QuanLyDanhMucFrame
@@ -16,6 +25,56 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
     public QuanLyDanhMucFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        danhMucServiceInterface = new DanhMucServiceImplement();
+        loadTableDanhMuc();
+    }
+
+    public void loadTableDanhMuc() {
+        DefaultTableModel tblModel = (DefaultTableModel) tblDanhMuc.getModel();
+        tblModel.setRowCount(0);
+        List<DanhMuc> listDM = danhMucServiceInterface.getallDM();
+        for (DanhMuc danhMuc : listDM) {
+            tblModel.addRow(new Object[]{
+                danhMuc.getId(),
+                danhMuc.getMa(),
+                danhMuc.getTenDM()
+            });
+        }
+    }
+
+    public void disPlayFrom() {
+        int row = tblDanhMuc.getSelectedRow();
+        if (row >= 0) {
+            txtMaDanhMuc.setText((String) tblDanhMuc.getValueAt(row, 1));
+            txtTenDanhMuc.setText((String) tblDanhMuc.getValueAt(row, 2));
+            txtMaDanhMuc.setEditable(false);
+        }
+    }
+
+    public void clearFromDanhMuc() {
+        txtMaDanhMuc.setText("");
+        txtTenDanhMuc.setText("");
+        txtMaDanhMuc.setEditable(true);
+    }
+
+    public boolean validateFromDanhMuc() {
+        if (txtMaDanhMuc.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống");
+            return false;
+        }
+        String maDM = txtMaDanhMuc.getText();
+        List<DanhMuc> listDM = danhMucServiceInterface.getallDM();
+        for (DanhMuc danhMuc : listDM) {
+            if (danhMuc.getMa().equals(maDM)) {
+                JOptionPane.showMessageDialog(this, "Mã Danh Mục đã tồn tại");
+                return false;
+            }
+        }
+        if (txtTenDanhMuc.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(this, "Tên Danh Mục không được để trống");
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -30,16 +89,15 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        lblid = new javax.swing.JLabel();
-        lblMaDM = new javax.swing.JTextField();
-        lblTenDM = new javax.swing.JTextField();
+        txtMaDanhMuc = new javax.swing.JTextField();
+        txtTenDanhMuc = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDanhMuc = new javax.swing.JTable();
+        btnClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -51,17 +109,30 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
 
         btnThem.setBackground(new java.awt.Color(204, 255, 204));
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
         btnSua.setBackground(new java.awt.Color(204, 255, 204));
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
         btnXoa.setBackground(new java.awt.Color(255, 102, 102));
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel1.setText("Quản Lý Vị Sản Phẩm");
-
-        jLabel2.setText("Id");
+        jLabel1.setText("Quản Lý Size Sản Phẩm");
 
         tblDanhMuc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,7 +153,20 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblDanhMuc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDanhMucMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDanhMuc);
+
+        btnClear.setBackground(new java.awt.Color(255, 153, 153));
+        btnClear.setText("Clear");
+        btnClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -95,24 +179,21 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
                         .addComponent(jLabel1))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(114, 114, 114)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblMaDM))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lblTenDM, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(txtTenDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtMaDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(81, 81, 81)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnThem)
                             .addComponent(btnSua)
-                            .addComponent(btnXoa)))
+                            .addComponent(btnXoa)
+                            .addComponent(btnClear)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(60, 60, 60)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 508, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -124,27 +205,28 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
                 .addGap(33, 33, 33)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(lblMaDM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(86, 86, 86))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(txtMaDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
-                            .addComponent(lblTenDM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18))
+                            .addComponent(txtTenDanhMuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnThem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSua)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnXoa)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnClear)
+                .addGap(8, 8, 8)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(45, Short.MAX_VALUE))
         );
@@ -153,6 +235,63 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void tblDanhMucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhMucMouseClicked
+        // TODO add your handling code here:
+        disPlayFrom();
+    }//GEN-LAST:event_tblDanhMucMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        if (validateFromDanhMuc() == true) {
+            DanhMuc danhMuc = new DanhMuc();
+            danhMuc.setMa(txtMaDanhMuc.getText());
+            danhMuc.setTenDM(txtTenDanhMuc.getText());
+            try {
+                danhMucServiceInterface.addDanhMuc(danhMuc);
+                loadTableDanhMuc();
+                clearFromDanhMuc();
+                JOptionPane.showMessageDialog(this, "Thêm Thành Công");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearActionPerformed
+        // TODO add your handling code here:
+        clearFromDanhMuc();
+    }//GEN-LAST:event_btnClearActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        DanhMuc danhMuc = new DanhMuc();
+        danhMuc.setMa(txtMaDanhMuc.getText());
+        danhMuc.setTenDM(txtTenDanhMuc.getText());
+        try {
+            danhMucServiceInterface.updateDanhMuc(danhMuc);
+            loadTableDanhMuc();
+            clearFromDanhMuc();
+            JOptionPane.showMessageDialog(this, "Sửa Thành Công");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        DanhMuc danhMuc = new DanhMuc();
+        danhMuc.setMa(txtMaDanhMuc.getText());
+        try {
+            danhMucServiceInterface.deleteDanhMuc(danhMuc);
+            loadTableDanhMuc();
+            clearFromDanhMuc();
+            JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Xóa Không Công");
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnXoaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -190,18 +329,17 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnClear;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
     private javax.swing.JButton btnXoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField lblMaDM;
-    private javax.swing.JTextField lblTenDM;
-    private javax.swing.JLabel lblid;
     private javax.swing.JTable tblDanhMuc;
+    private javax.swing.JTextField txtMaDanhMuc;
+    private javax.swing.JTextField txtTenDanhMuc;
     // End of variables declaration//GEN-END:variables
 }
