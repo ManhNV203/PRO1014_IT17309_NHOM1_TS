@@ -1,10 +1,16 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ViewModel;
 
-package DomainModel;
-
-import java.math.BigDecimal;
 import java.util.Date;
 
-public class KhuyenMai {
+/**
+ *
+ * @author mr.quyen
+ */
+public class KhuyenmaiViewModel {
     private String Id ;
     private String Ma;
     private  double SoTienGiam;
@@ -12,10 +18,10 @@ public class KhuyenMai {
     private Date ngayketThuc ;
     private String dieukien;
 
-    public KhuyenMai() {
+    public KhuyenmaiViewModel() {
     }
 
-    public KhuyenMai(String Id, String Ma, double SoTienGiam, Date ngayBatDau, Date ngayketThuc, String dieukien) {
+    public KhuyenmaiViewModel(String Id, String Ma, double SoTienGiam, Date ngayBatDau, Date ngayketThuc, String dieukien) {
         this.Id = Id;
         this.Ma = Ma;
         this.SoTienGiam = SoTienGiam;
@@ -71,13 +77,6 @@ public class KhuyenMai {
     public void setDieukien(String dieukien) {
         this.dieukien = dieukien;
     }
-
-    @Override
-    public String toString() {
-        return "KhuyenMai{" + "Id=" + Id + ", Ma=" + Ma + ", SoTienGiam=" + SoTienGiam + ", ngayBatDau=" + ngayBatDau + ", ngayketThuc=" + ngayketThuc + ", dieukien=" + dieukien + '}';
-    }
-
-   
-
+    
     
 }
