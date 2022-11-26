@@ -27,7 +27,8 @@ public class QuanLyNhanVienFrame extends javax.swing.JFrame {
     public QuanLyNhanVienFrame() {
        service = new NhanVienServiceImplement();
         initComponents();
-        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        setLocationRelativeTo(null);
         listNV = service.all();
         fillToTB(listNV);
     }

@@ -25,6 +25,8 @@ public class Quanly_Khachhang extends javax.swing.JFrame {
 
     public Quanly_Khachhang() {
         initComponents();
+        this.setResizable(false);
+        setLocationRelativeTo(null);
         khserviceit = new KhachhangServiceImplement();
         filltotableKhachHang();
     }
