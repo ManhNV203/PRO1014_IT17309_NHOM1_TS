@@ -45,6 +45,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             tbm1.addRow(new Object[]{x.getId_HD().getMa(),x.getId_SP().getTen(),x.getSL_Mua(),x.getDonGia()});
         }
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -243,7 +244,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             }
         });
 
-        cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa Thanh Toán", "Đã Hủy", "Đã Thanh Toán" }));
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);

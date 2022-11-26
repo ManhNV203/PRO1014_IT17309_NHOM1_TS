@@ -25,6 +25,16 @@ public class SanPham {
         this.id_DanhMuc = id_DanhMuc;
         this.id_size = id_size;
     }
+    public SanPham(String ma, String ten, Integer id_Vi, String donGia, Integer id_DanhMuc) {
+        
+        this.ma = ma;
+        this.ten = ten;
+        this.donGia = donGia;
+        this.id_Vi = id_Vi;
+        this.id_DanhMuc = id_DanhMuc;
+        
+    }
+    
 
     public Integer getId() {
         return id;

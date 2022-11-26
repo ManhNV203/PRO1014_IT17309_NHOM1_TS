@@ -1,15 +1,34 @@
 
 package View;
 
+import Service.Implement.HoaDonServiceImplement;
+import Service.Interface.HoaDonServiceInterface;
+import ViewModel.HoaDonVModel;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
 
 public class QuanLy_BanHang extends javax.swing.JFrame {
-
+    DefaultTableModel tbm ;
+    
+    HoaDonServiceInterface hdsvbhitf = new HoaDonServiceImplement();
+    List<HoaDonVModel> lst_hdvmdbh = hdsvbhitf.getListhdbh();
     /**
      * Creates new form QuanLy_BanHang
      */
     public QuanLy_BanHang() {
         initComponents();
-        setLocationRelativeTo(null);
+        
+        tbm = (DefaultTableModel) tblDSHoaDonBH.getModel();
+        filltableHDBH();
+        
+    }
+    public void filltableHDBH(){
+        tbm.setRowCount(0);
+        for (HoaDonVModel x : lst_hdvmdbh) {
+            tbm.addRow(new Object[]{x.getMa(),x.getId_NV().getMa(),x.getNgayTao(),x.getTrangThai()});
+        }
+        
     }
 
     /**
@@ -223,7 +242,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        pnlDSHoaDonBH.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh sách hóa đơn"));
+        pnlDSHoaDonBH.setBorder(javax.swing.BorderFactory.createTitledBorder("Hóa đơn chờ"));
 
         tblDSHoaDonBH.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
