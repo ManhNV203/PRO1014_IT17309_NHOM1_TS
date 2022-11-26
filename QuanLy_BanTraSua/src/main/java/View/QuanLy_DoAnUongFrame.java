@@ -31,6 +31,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
      */
     public QuanLy_DoAnUongFrame() {
         initComponents();
+        this.setResizable(false);
         setLocationRelativeTo(null);
         sanPhamServiceInterface = new SanPhamServiceImplement();
         viServiceInterface = new ViServiceImplement();
@@ -141,7 +142,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         }
         return true;
     }
-    public void loadTableSanPhamComBO(){
+
+    public void loadTableSanPhamComBO() {
         DefaultTableModel tblModel = (DefaultTableModel) tblSanPhamDouongComBO.getModel();
         tblModel.setRowCount(0);
         List<SanPhamViewModel> list = sanPhamServiceInterface.getAllSP();
@@ -157,6 +159,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             });
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -551,7 +554,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                         .addComponent(txtTimKiemKho, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(btnTimKiemKho, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
                         .addComponent(lblLocDMkho)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbbDanhMucKho, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -923,7 +926,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("ComBo Đồ Uuống", jPanel5);
@@ -939,11 +942,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         );
         pnltongLayout.setVerticalGroup(
             pnltongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnltongLayout.createSequentialGroup()
-                .addGroup(pnltongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE))
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         getContentPane().add(pnltong, java.awt.BorderLayout.CENTER);
@@ -1120,7 +1120,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn Mục Cần Sửa");
             return;
         }
@@ -1128,18 +1128,18 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
     private void btnXoaDoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaDoUongActionPerformed
         int row = tblSanPhamDouong.getSelectedRow();
-        if(row>=0){
-        SanPham sanPham = new SanPham();
-        sanPham.setMa(txtmaDoUong.getText());
-        try {
-            sanPhamServiceInterface.deleteSanPham(sanPham);
-            loadTableDSSP();
-            clearfromSanPham();
-            JOptionPane.showMessageDialog(this, "Xóa Thành Công");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        }else{
+        if (row >= 0) {
+            SanPham sanPham = new SanPham();
+            sanPham.setMa(txtmaDoUong.getText());
+            try {
+                sanPhamServiceInterface.deleteSanPham(sanPham);
+                loadTableDSSP();
+                clearfromSanPham();
+                JOptionPane.showMessageDialog(this, "Xóa Thành Công");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
             JOptionPane.showMessageDialog(this, "Chọn Mục Cần Xóa");
         }
     }//GEN-LAST:event_btnXoaDoUongActionPerformed
