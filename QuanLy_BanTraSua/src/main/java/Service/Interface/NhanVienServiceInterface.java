@@ -20,4 +20,5 @@ public interface NhanVienServiceInterface {
     NhanVienViewModel getone(String ma);
     public List<NhanVienViewModel> getByName(String name);
     public List<NhanVienViewModel> getBySex(String sex);
+    boolean checkMa(String ma);
 }

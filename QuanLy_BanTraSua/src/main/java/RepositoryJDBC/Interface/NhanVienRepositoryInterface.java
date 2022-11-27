@@ -19,4 +19,5 @@ public interface NhanVienRepositoryInterface {
     NhanVien getone(String ma);
     public List<NhanVien> getByName(String name);
     public List<NhanVien> getBySex(String sex);
+    
 }
