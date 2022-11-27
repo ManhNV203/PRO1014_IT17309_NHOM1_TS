@@ -1,19 +1,27 @@
 package View;
 
+import DomainModel.ComBo;
+import DomainModel.ComBoChiTiet;
 import DomainModel.DanhMuc;
 import DomainModel.SanPham;
 import DomainModel.Size;
 import DomainModel.Vi;
+import Service.Implement.ComBoChiTietServiceImplement;
+import Service.Implement.ComBoServiceImplement;
 import Service.Implement.DanhMucServiceImplement;
 import Service.Implement.SanPhamServiceImplement;
 import Service.Implement.SizeServiceImplement;
 import Service.Implement.ViServiceImplement;
+import Service.Interface.ComBoChiTietServiceInterface;
+import Service.Interface.ComBoServiceInterface;
 import Service.Interface.DanhMucServiceInterface;
 import Service.Interface.SanPhamServiceInterface;
 import Service.Interface.SizeServiceInterface;
 import Service.Interface.ViServiceInterface;
+import ViewModel.ComBoChiTietViewModel;
 import ViewModel.SanPhamViewModel;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Pattern;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -25,6 +33,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private ViServiceInterface viServiceInterface;
     private DanhMucServiceInterface danhMucServiceInterface;
     private SizeServiceInterface sizeServiceInterface;
+    private ComBoServiceInterface comBoServiceInterface;
+    private ComBoChiTietServiceInterface comBoChiTietServiceInterface;
 
     /**
      * Creates new form QuanLy_BanHang
@@ -37,9 +47,12 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         viServiceInterface = new ViServiceImplement();
         danhMucServiceInterface = new DanhMucServiceImplement();
         sizeServiceInterface = new SizeServiceImplement();
+        comBoServiceInterface = new ComBoServiceImplement();
+        comBoChiTietServiceInterface = new ComBoChiTietServiceImplement();
         loadTableDSSP();
         loadCBBFrame();
         loadTableSanPhamComBO();
+        loadTableComBo();
     }
 
     public void loadTableDSSP() {
@@ -65,6 +78,12 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         List<DanhMuc> listDm = danhMucServiceInterface.getallDM();
         for (DanhMuc danhMuc : listDm) {
             tblComboBoxModelDMSP.addElement(danhMuc.getTenDM());
+        }
+        //combobox timkiem SP ComBO
+        DefaultComboBoxModel tblComboBoxModelLocSPCombo = (DefaultComboBoxModel) cbbDanhMucKhoComBO.getModel();
+        List<DanhMuc> listDmComBo = danhMucServiceInterface.getallDM();
+        for (DanhMuc danhMuc : listDm) {
+            tblComboBoxModelLocSPCombo.addElement(danhMuc.getTenDM());
         }
         // combobox loc san pham
         DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbDanhMucKho.getModel();
@@ -160,6 +179,31 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         }
     }
 
+    void loadTableComBo() {
+        DefaultTableModel tblModel = (DefaultTableModel) TblComBo.getModel();
+        tblModel.setRowCount(0);
+        List<ComBo> listCB = comBoServiceInterface.getallCombo();
+        for (ComBo comBo : listCB) {
+            tblModel.addRow(new Object[]{
+                comBo.getMa(),
+                comBo.getTen(),
+                comBo.getDonGia(),
+                comBo.getTrangThai()==1 ? "Đang áp dụng" : "Không còn áp dụng"
+            });
+        }
+    }
+    public void loadTableComBoChiTiet(){
+        DefaultTableModel TblmoModel = (DefaultTableModel) tblComBoChiTiet.getModel();
+        TblmoModel.setRowCount(0);
+        List<ComBoChiTietViewModel> listCBCT = comBoChiTietServiceInterface.getAllComBo();
+        for (ComBoChiTietViewModel comBoChiTietViewModel : listCBCT) {
+            TblmoModel.addRow(new Object[]{
+                comBoChiTietViewModel.getMa_SP(),
+                comBoChiTietViewModel.getTen_SP(),
+                comBoChiTietViewModel.getDonGia()
+            });
+        }
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -215,7 +259,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         btnclearFromThongtinSP = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        cbbDanhMucKho1 = new javax.swing.JComboBox<>();
+        cbbDanhMucKhoComBO = new javax.swing.JComboBox<>();
         lblLocDMkho1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblSanPhamDouongComBO = new javax.swing.JTable();
@@ -226,15 +270,15 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         btnTaoComBo = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblComBoChiTiet = new javax.swing.JTable();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtmaComBo = new javax.swing.JTextField();
+        txtTenComBo = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         TblComBo = new javax.swing.JTable();
@@ -493,7 +537,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                     .addComponent(lblVi)
                     .addComponent(btnThemNhanhVi)
                     .addComponent(cbbVi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh Sách Đồ Ăn, Uống"));
@@ -554,7 +598,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                         .addComponent(txtTimKiemKho, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(45, 45, 45)
                         .addComponent(btnTimKiemKho, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 290, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 288, Short.MAX_VALUE)
                         .addComponent(lblLocDMkho)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(cbbDanhMucKho, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -667,9 +711,9 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
         jPanel6.setBorder(javax.swing.BorderFactory.createTitledBorder("Danh Sách Đồ Ăn, Uống"));
 
-        cbbDanhMucKho1.addActionListener(new java.awt.event.ActionListener() {
+        cbbDanhMucKhoComBO.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbDanhMucKho1ActionPerformed(evt);
+                cbbDanhMucKhoComBOActionPerformed(evt);
             }
         });
 
@@ -709,9 +753,19 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
         btnThemSpVaoComBo.setBackground(new java.awt.Color(204, 255, 204));
         btnThemSpVaoComBo.setText("Thêm Vào ComBO");
+        btnThemSpVaoComBo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSpVaoComBoActionPerformed(evt);
+            }
+        });
 
         btnTaoComBo.setBackground(new java.awt.Color(204, 255, 204));
         btnTaoComBo.setText("Tạo ComBO");
+        btnTaoComBo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoComBoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -729,12 +783,12 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblLocDMkho1)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(cbbDanhMucKho1, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(71, 71, 71)
-                        .addComponent(btnThemSpVaoComBo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(27, 27, 27)
-                        .addComponent(btnTaoComBo)))
-                .addGap(313, 313, 313))
+                        .addComponent(cbbDanhMucKhoComBO, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(110, 110, 110)
+                        .addComponent(btnTaoComBo)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnThemSpVaoComBo, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(266, 266, 266))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 978, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -750,7 +804,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTimKiemKho1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbbDanhMucKho1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbbDanhMucKhoComBO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTimKiemKho1)
                     .addComponent(btnThemSpVaoComBo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnTaoComBo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -761,7 +815,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi Tiết Combo"));
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblComBoChiTiet.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -780,7 +834,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(jTable2);
+        jScrollPane4.setViewportView(tblComBoChiTiet);
 
         jButton5.setText("Cập Nhật");
 
@@ -791,6 +845,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         jLabel1.setText("Mã ComBO");
 
         jLabel3.setText("Tên ComBO");
+
+        txtmaComBo.setEditable(false);
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -810,11 +866,11 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                             .addGroup(jPanel7Layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(24, 24, 24)
-                                .addComponent(jTextField1)
+                                .addComponent(txtmaComBo)
                                 .addGap(36, 36, 36)
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtTenComBo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel7Layout.createSequentialGroup()
                         .addGap(125, 125, 125)
                         .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -834,9 +890,9 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtmaComBo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTenComBo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -862,6 +918,11 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        TblComBo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TblComBoMouseClicked(evt);
             }
         });
         jScrollPane3.setViewportView(TblComBo);
@@ -926,7 +987,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("ComBo Đồ Uuống", jPanel5);
@@ -942,7 +1003,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         );
         pnltongLayout.setVerticalGroup(
             pnltongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 722, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -1009,23 +1070,6 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
     private void btnTimKiemKhoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemKhoActionPerformed
 
-//        String tenSp= txtTimKiemKho.getText();
-//        DefaultTableModel tblModel = (DefaultTableModel) tblSanPhamDouong.getModel();
-//        tblModel.setRowCount(0);
-//        List<SanPhamVModel> list = sanPhamServiceInterface.getAllSP();
-//        for (SanPhamVModel sanPhamVModel : list) {
-//            if(sanPhamVModel.getTen().equalsIgnoreCase(tenSp)){
-//                tblModel.addRow(new Object[]{
-//                    sanPhamVModel.getMa(),
-//                    sanPhamVModel.getTen(),
-//                    sanPhamVModel.getDonGia(),
-//                    sanPhamVModel.getVi(),
-//                    sanPhamVModel.getDanhmuc(),
-//                    sanPhamVModel.getSize(),
-//                    sanPhamVModel.getTrangThai()
-//                });
-//            }
-//        }
     }//GEN-LAST:event_btnTimKiemKhoActionPerformed
 
     private void btnThemdoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemdoUongActionPerformed
@@ -1144,18 +1188,31 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnXoaDoUongActionPerformed
 
+
     private void btnclearFromThongtinSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnclearFromThongtinSPActionPerformed
         // TODO add your handling code here:
 //        clearfromSanPham();
 //        LoadTableDoUong();
     }//GEN-LAST:event_btnclearFromThongtinSPActionPerformed
 
-    private void cbbDanhMucKho1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbDanhMucKho1ActionPerformed
+    private void cbbDanhMucKhoComBOActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbDanhMucKhoComBOActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbbDanhMucKho1ActionPerformed
+    }//GEN-LAST:event_cbbDanhMucKhoComBOActionPerformed
 
     private void tblSanPhamDouongComBOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamDouongComBOMouseClicked
         // TODO add your handling code here:
+        int row = tblSanPhamDouongComBO.getSelectedRow();
+        if(row>=0){
+            SanPham sp = new SanPham();
+            String maSP = (String) tblSanPhamDouongComBO.getValueAt(row, 0);
+            List<SanPhamViewModel> list = sanPhamServiceInterface.getAllSP();
+            for (SanPhamViewModel sanPhamViewModel : list) {
+                if(sanPhamViewModel.getMa().equals(maSP)){
+                    sp.setId(sanPhamViewModel.getId());
+                }
+            }
+            
+        }
     }//GEN-LAST:event_tblSanPhamDouongComBOMouseClicked
 
     private void btnTimKiemKho1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemKho1ActionPerformed
@@ -1176,6 +1233,73 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         new QuanLySizeFrame().setVisible(true);
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void btnTaoComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoComBoActionPerformed
+        // TODO add your handling code here:
+        ComBo comBo = new ComBo();
+        int marandom = ThreadLocalRandom.current().nextInt(1000);
+        String ma;
+        ma = "HD" + marandom;
+        comBo.setMa(ma);
+        comBo.setTrangThai(1);
+        try {
+            comBoServiceInterface.addComBo(comBo);
+            loadTableComBo();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnTaoComBoActionPerformed
+
+    private void TblComBoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TblComBoMouseClicked
+        // TODO add your handling code here:
+        int row = TblComBo.getSelectedRow();
+        DefaultTableModel tblModel = (DefaultTableModel) tblComBoChiTiet.getModel();
+        tblModel.setRowCount(0);
+        if(row>=0){
+            txtmaComBo.setText((String) TblComBo.getValueAt(row, 0));
+            txtTenComBo.setText((String) TblComBo.getValueAt(row, 1));
+            String maCB = (String) TblComBo.getValueAt(row, 0);
+            List<ComBoChiTietViewModel> list = comBoChiTietServiceInterface.getAllComBo();
+            for (ComBoChiTietViewModel comBoChiTietViewModel : list) {
+                if(comBoChiTietViewModel.getMa_CB().equals(maCB)){
+                    tblModel.addRow(new Object[]{
+                        comBoChiTietViewModel.getMa_SP(),
+                        comBoChiTietViewModel.getTen_SP(),
+                        comBoChiTietViewModel.getDonGia()
+                    });
+                }
+            }
+        }
+    }//GEN-LAST:event_TblComBoMouseClicked
+
+    private void btnThemSpVaoComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSpVaoComBoActionPerformed
+        // TODO add your handling code here:
+        int row = tblSanPhamDouongComBO.getSelectedRow();
+        if(row>=0){
+            ComBoChiTiet comBoChiTiet = new ComBoChiTiet();
+            String maComBO = txtmaComBo.getText();
+            List<ComBo> listCB = comBoServiceInterface.getallCombo();
+            for (ComBo comBo : listCB) {
+                if(comBo.getMa().equals(maComBO)){
+                    comBoChiTiet.setId_CB(comBo.getId());
+                }
+            }
+            String maSP = (String) tblSanPhamDouongComBO.getValueAt(row, 0);
+            List<SanPhamViewModel> list = sanPhamServiceInterface.getAllSP();
+            for (SanPhamViewModel sanPhamViewModel : list) {
+                if(sanPhamViewModel.getMa().equals(maSP)){
+                    comBoChiTiet.setId_SP(sanPhamViewModel.getId());
+                }
+            }
+            System.out.println(comBoChiTiet);
+            try {
+                comBoChiTietServiceInterface.addComBo(comBoChiTiet);
+                
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_btnThemSpVaoComBoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1235,7 +1359,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnXoaDoUong;
     private javax.swing.JButton btnclearFromThongtinSP;
     private javax.swing.JComboBox<String> cbbDanhMucKho;
-    private javax.swing.JComboBox<String> cbbDanhMucKho1;
+    private javax.swing.JComboBox<String> cbbDanhMucKhoComBO;
     private javax.swing.JComboBox<String> cbbDanhmucSp;
     private javax.swing.JComboBox<String> cbbSize;
     private javax.swing.JComboBox<String> cbbVi;
@@ -1261,10 +1385,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JLabel lblGia;
     private javax.swing.JLabel lblLocDMkho;
@@ -1279,13 +1400,16 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lbldanhmucSP;
     private javax.swing.JPanel pnlMenu;
     private javax.swing.JPanel pnltong;
+    private javax.swing.JTable tblComBoChiTiet;
     private javax.swing.JTable tblSanPhamDouong;
     private javax.swing.JTable tblSanPhamDouongComBO;
     private javax.swing.JTextField txtGia;
+    private javax.swing.JTextField txtTenComBo;
     private javax.swing.JTextField txtTenDoUong;
     private javax.swing.JTextField txtTimKiemKho;
     private javax.swing.JTextField txtTimKiemKho1;
     private javax.swing.JTextField txtTrangThai;
+    private javax.swing.JTextField txtmaComBo;
     private javax.swing.JTextField txtmaDoUong;
     // End of variables declaration//GEN-END:variables
 }
