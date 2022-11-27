@@ -1,6 +1,9 @@
 package RepositoryJDBC.Implement;
 
+import DomainModel.DanhMuc;
 import DomainModel.SanPham;
+import DomainModel.Size;
+import DomainModel.Vi;
 import RepositoryJDBC.Interface.SanPhamRepositoryInterface;
 import Utility.DBContext;
 import java.sql.Connection;
@@ -36,15 +39,21 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
+                Vi v = new Vi();
+                v.setId(rs.getInt(6));
+                DanhMuc dm = new DanhMuc();
+                dm.setId(rs.getInt(7));
+                Size s = new Size();
+                s.setId(8);
                 SanPham sp = new SanPham();
                 sp.setId(rs.getInt(1));
                 sp.setMa(rs.getString(2));
                 sp.setTen(rs.getString(3));
                 sp.setDonGia(rs.getString(4));
                 sp.setTrangThai(rs.getInt(5));
-                sp.setId_Vi(rs.getInt(6));
-                sp.setId_DanhMuc(rs.getInt(7));
-                sp.setId_size(rs.getInt(8));
+                sp.setId_Vi(v);
+                sp.setId_DanhMuc(dm);
+                sp.setId_size(s);
                 listSP.add(sp);
             }
         } catch (SQLException ex) {
@@ -73,13 +82,17 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
                 + "           ,?)";
         try {
             PreparedStatement ps = con.prepareStatement(sql);
+            Integer idvi=null;
+            if (sanPham.getId_Vi()!=null) {
+                idvi = sanPham.getId_Vi().getId();
+            }
             ps.setString(1, sanPham.getMa());
             ps.setString(2, sanPham.getTen());
             ps.setString(3, sanPham.getDonGia());
             ps.setInt(4, sanPham.getTrangThai());
-            ps.setInt(5, sanPham.getId_Vi());
-            ps.setInt(6, sanPham.getId_DanhMuc());
-            ps.setInt(7, sanPham.getId_size());
+            ps.setObject(5, idvi);
+            ps.setObject(6, sanPham.getId_DanhMuc());
+            ps.setObject(7, sanPham.getId_size());
 
             ps.execute();
             ps.close();

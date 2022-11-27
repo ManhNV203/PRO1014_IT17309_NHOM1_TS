@@ -1,8 +1,12 @@
 
 package View;
 
+import DomainModel.HoaDonChiTiet;
+import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
+import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
+import ViewModel.HoaDonCTVmodel;
 import ViewModel.HoaDonVModel;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
@@ -10,9 +14,11 @@ import javax.swing.table.DefaultTableModel;
 
 public class QuanLy_BanHang extends javax.swing.JFrame {
     DefaultTableModel tbm ;
-    
     HoaDonServiceInterface hdsvbhitf = new HoaDonServiceImplement();
     List<HoaDonVModel> lst_hdvmdbh = hdsvbhitf.getListhdbh();
+    DefaultTableModel tbmHDCT ;
+    HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
+  
     /**
      * Creates new form QuanLy_BanHang
      */
@@ -20,8 +26,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         initComponents();
         
         tbm = (DefaultTableModel) tblDSHoaDonBH.getModel();
+        tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
         filltableHDBH();
-        
+        filltotablehdct();
     }
     public void filltableHDBH(){
         tbm.setRowCount(0);
@@ -30,6 +37,13 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         }
         
     }
+    public void filltotablehdct(){
+        tbmHDCT.setRowCount(0);
+        for (HoaDonCTVmodel x : hdctitf.gethdct()) {
+            tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM()});
+        }
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -263,6 +277,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblDSHoaDonBH.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDSHoaDonBHMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblDSHoaDonBH);
 
         javax.swing.GroupLayout pnlDSHoaDonBHLayout = new javax.swing.GroupLayout(pnlDSHoaDonBH);
@@ -286,6 +305,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         btnXoaSPOrderBH.setBackground(new java.awt.Color(255, 153, 153));
         btnXoaSPOrderBH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnXoaSPOrderBH.setText("Xóa sản phẩm");
+        btnXoaSPOrderBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaSPOrderBHActionPerformed(evt);
+            }
+        });
 
         btnLamMoiSanPhamorderBH.setBackground(new java.awt.Color(153, 153, 255));
         btnLamMoiSanPhamorderBH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -813,6 +837,32 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private void txtMaKhuyenMaiBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMaKhuyenMaiBHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaKhuyenMaiBHActionPerformed
+
+    private void tblDSHoaDonBHMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSHoaDonBHMouseClicked
+        int index = tblDSHoaDonBH.getSelectedRow();
+        lblMaHoaDonBH.setText(tblDSHoaDonBH.getValueAt(index, 0).toString());
+        lblMaNhanVienBH.setText(tblDSHoaDonBH.getValueAt(index, 1).toString());
+        lblNgayTaoHDBH.setText(tblDSHoaDonBH.getValueAt(index, 2).toString());
+        
+    }//GEN-LAST:event_tblDSHoaDonBHMouseClicked
+
+    private void btnXoaSPOrderBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBHActionPerformed
+        
+        try {
+            
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            for (int i = 0; i < hdctitf.gethdct().size(); i++) {
+                if(hdctitf.gethdct().get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))){
+                    hdct.setId(hdctitf.gethdct().get(i).getId());
+                }
+            }
+            if(hdctitf.deleteHDCT(hdct)){
+              filltotablehdct();  
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnXoaSPOrderBHActionPerformed
 
     /**
      * @param args the command line arguments
