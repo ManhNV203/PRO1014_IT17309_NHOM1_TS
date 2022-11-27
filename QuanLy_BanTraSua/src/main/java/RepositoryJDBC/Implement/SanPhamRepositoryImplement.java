@@ -130,6 +130,4 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
             Logger.getLogger(SanPhamRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 }

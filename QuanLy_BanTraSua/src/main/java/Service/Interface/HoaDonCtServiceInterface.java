@@ -4,7 +4,6 @@
  */
 package Service.Interface;
 
-import DomainModel.HoaDonChiTiet;
 import ViewModel.HoaDonCTVmodel;
 import java.util.List;
 
@@ -14,8 +13,4 @@ import java.util.List;
  */
 public interface HoaDonCtServiceInterface {
     List<HoaDonCTVmodel> getall();
-     public  void CREATEHDCT(HoaDonChiTiet hdct);
-     
-    public List<HoaDonCTVmodel>  LocDanhMuc(String id);
-        
 }

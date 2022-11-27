@@ -1,76 +1,17 @@
+
 package View;
 
-import DomainModel.DanhMuc;
-import DomainModel.HoaDon;
-import DomainModel.HoaDonChiTiet;
-import DomainModel.SanPham;
-import DomainModel.Vi;
-import RepositoryJDBC.Implement.HoaDonCtRepositoryImplement;
-import RepositoryJDBC.Interface.HoaDonCTRepositoryInterface;
-import Service.Implement.DanhMucServiceImplement;
-import Service.Implement.SanPhamServiceImplement;
-import Service.Implement.ViServiceImplement;
-import Service.Interface.DanhMucServiceInterface;
-import Service.Interface.SanPhamServiceInterface;
-import Service.Interface.ViServiceInterface;
-import View.QuanLy_DoAnUongFrame;
-import ViewModel.SanPhamViewModel;
-import java.util.ArrayList;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 public class QuanLy_BanHang extends javax.swing.JFrame {
 
-    private SanPhamServiceInterface sanPhamServiceInterface;
-    private DanhMucServiceInterface danhmuc_itf;
-    private HoaDonCTRepositoryInterface hdct_itf;
-    private  ViServiceInterface vi_itf;
-
+    /**
+     * Creates new form QuanLy_BanHang
+     */
     public QuanLy_BanHang() {
-        sanPhamServiceInterface = new SanPhamServiceImplement();
-        hdct_itf =  new HoaDonCtRepositoryImplement();
-        danhmuc_itf = new DanhMucServiceImplement();
-        vi_itf = new ViServiceImplement();
         initComponents();
         this.setResizable(false);
         setLocationRelativeTo(null);
-        fillSanphamBanhang();
-        loadCBBFrame();
     }
-
-    public void fillSanphamBanhang() {
-
-        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
-        tblModel.setRowCount(0);
-        List<SanPhamViewModel> list = sanPhamServiceInterface.getAllSP();
-        for (SanPhamViewModel sanPhamViewModel : list) {
-            tblModel.addRow(new Object[]{
-                sanPhamViewModel.getMa(),
-                sanPhamViewModel.getTen(),
-                sanPhamViewModel.getDonGia(),
-                sanPhamViewModel.getTenVi(),
-                sanPhamViewModel.getTenDM(),
-                sanPhamViewModel.getTenSize(),
-                sanPhamViewModel.getTrangThai()
-            });
-        }
-
-    }
-     public void loadCBBFrame() {
-          DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbLocSanPham.getModel();
-        List<DanhMuc> listDmKho = danhmuc_itf.getallDM();
-        for (DanhMuc danhMuc : listDmKho) {
-            tblComboBoxModelDMKho.addElement(danhMuc.getTenDM());
-        }
-        
-        DefaultComboBoxModel tblComboBoxModelVI = (DefaultComboBoxModel) cbbVi.getModel();
-        List<Vi> listVi = vi_itf.getAllVi();
-        for (Vi vi : listVi) {
-            tblComboBoxModelVI.addElement(vi.getTen());
-        }
-     }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -134,9 +75,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblDSSanPham = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        txtTimkiemsanpham = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        btTimkiemsanpham = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         cbbLocSanPham = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cbbVi = new javax.swing.JComboBox<>();
@@ -576,17 +517,17 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         tblDSSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Mã", "Tên Sản Phẩm", "Đơn giá", "Vị", "Danh mục", "Size", "Trạng thai"
+                "Mã", "Tên Sản Phẩm", "Vị", "Đơn Giá", "Danh mục"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, true, true
+                false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -599,23 +540,13 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         jLabel3.setText("Danh Mục");
 
-        btTimkiemsanpham.setText("Tìm Kiếm");
-        btTimkiemsanpham.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btTimkiemsanphamActionPerformed(evt);
-            }
-        });
+        jButton1.setText("Tìm Kiếm");
 
-        cbbLocSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Danh Mục" }));
-        cbbLocSanPham.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbbLocSanPhamActionPerformed(evt);
-            }
-        });
+        cbbLocSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel4.setText("Vị");
 
-        cbbVi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vị" }));
+        cbbVi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel5.setText("Ảnh");
 
@@ -632,11 +563,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         btnThemSPBH.setBackground(new java.awt.Color(153, 255, 153));
         btnThemSPBH.setText("Thêm Sản Phẩm Order");
-        btnThemSPBH.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemSPBHActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -652,18 +578,17 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                                 .addGap(153, 153, 153)
                                 .addComponent(jLabel3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtTimkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btTimkiemsanpham)
+                                .addComponent(jButton1)
                                 .addGap(18, 18, 18)
                                 .addComponent(cbbLocSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(25, 25, 25)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
                                 .addComponent(cbbVi, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)
+                                .addGap(76, 76, 76)
                                 .addComponent(btnThemSPBH))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -684,8 +609,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimkiemsanpham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btTimkiemsanpham)
+                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1)
                     .addComponent(cbbLocSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbVi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
@@ -760,7 +685,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pnlAnhComBo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -823,7 +748,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             .addGroup(pnltongLayout.createSequentialGroup()
                 .addGroup(pnltongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(pnlGiaoDien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE))
+                    .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 743, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -866,17 +791,17 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
     private void btnKhuyenMaiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiMenuActionPerformed
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_btnKhuyenMaiMenuActionPerformed
 
     private void btnThongkeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongkeMenuActionPerformed
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_btnThongkeMenuActionPerformed
 
     private void btnDangXuatMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatMenuActionPerformed
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_btnDangXuatMenuActionPerformed
 
     private void txtTenKhachHangBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachHangBHActionPerformed
@@ -890,61 +815,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private void btnXoaSPOrderBH1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBH1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnXoaSPOrderBH1ActionPerformed
-
-    private void btTimkiemsanphamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTimkiemsanphamActionPerformed
-        // TODO add your handling code here:
-        List<SanPhamViewModel> lst_spvmd = new ArrayList<>();
-        for (int i = 0; i < sanPhamServiceInterface.getAllSP().size(); i++) {
-            if (sanPhamServiceInterface.getAllSP().get(i).getTen().equalsIgnoreCase(txtTimkiemsanpham.getText())) {
-                lst_spvmd.add(sanPhamServiceInterface.getAllSP().get(i));
-
-            }
-        }
-        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
-
-        tblModel.setRowCount(0);
-        for (SanPhamViewModel sanPhamViewModel : lst_spvmd) {
-            tblModel.addRow(new Object[]{
-                sanPhamViewModel.getMa(),
-                sanPhamViewModel.getTen(),
-                sanPhamViewModel.getDonGia(),
-                sanPhamViewModel.getTenVi(),
-                sanPhamViewModel.getTenDM(),
-                sanPhamViewModel.getTenSize(),
-                sanPhamViewModel.getTrangThai()
-            });
-        }
-    }//GEN-LAST:event_btTimkiemsanphamActionPerformed
-
-    private void btnThemSPBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPBHActionPerformed
-        // TODO add your handling code here:
-
-        String soluong = JOptionPane.showInputDialog(this, "Số lượng(Vui Lòng nhập là số)");
-        System.out.println(soluong);
-        HoaDonChiTiet hdctdoamain = new HoaDonChiTiet();
-//       List<HoaDon> list_hd = new ArrayList<>();
-//        for (HoaDon hoaDon : list_hd) {
-//            hdctdoamain.setId_HD(hoaDon.getId());
-//        }
-//        
-//        List<SanPham>  list_sp = new ArrayList<>();
-//        for (SanPham sanPham : list_sp) {
-//            hdctdoamain.setId_SP(sanPham.getId());
-//            
-//        }
-//        
-        
-        
-
-
-    }//GEN-LAST:event_btnThemSPBHActionPerformed
-
-    private void cbbLocSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocSanPhamActionPerformed
-        // TODO add your handling code here:
-        
-        
-        
-    }//GEN-LAST:event_cbbLocSanPhamActionPerformed
 
     /**
      * @param args the command line arguments
@@ -982,7 +852,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btTimkiemsanpham;
     private javax.swing.JButton btnBanHang_Menu;
     private javax.swing.JButton btnChonComBo;
     private javax.swing.JButton btnDangXuatMenu;
@@ -1000,6 +869,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private javax.swing.JButton btnXoaSPOrderBH1;
     private javax.swing.JComboBox<String> cbbLocSanPham;
     private javax.swing.JComboBox<String> cbbVi;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
@@ -1030,6 +900,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JLabel lblCanThanhToanBH;
@@ -1053,6 +924,5 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private javax.swing.JTextField txtMaKhuyenMaiBH;
     private javax.swing.JTextField txtTenKhachHangBH;
     private javax.swing.JTextField txtTienKhacDuaBH;
-    private javax.swing.JTextField txtTimkiemsanpham;
     // End of variables declaration//GEN-END:variables
 }

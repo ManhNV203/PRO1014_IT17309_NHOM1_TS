@@ -17,14 +17,12 @@ import java.util.List;
  *
  * @author FPTSHOP
  */
-public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
-
+public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface{
     private HoaDonCTRepositoryInterface hdct;
-
-    public HoaDonCtServiceImplement() {
+    public HoaDonCtServiceImplement(){
         this.hdct = new HoaDonCtRepositoryImplement();
     }
-    
+
     @Override
     public List<HoaDonCTVmodel> getall() {
         List<HoaDonChiTiet> lst_hdct = hdct.getAll();
@@ -38,17 +36,5 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
             lst_hdctvmd.add(hdctvmd);
         }
         return lst_hdctvmd;
-    }
-    
-    @Override
-    public void CREATEHDCT(HoaDonChiTiet hdct) {
-        this.hdct.CreateHDCT(hdct);
-        
-    }
-    
-    @Override
-    public List<HoaDonCTVmodel> LocDanhMuc(String id) {
-        return this.hdct.LocDanhmuc(id);
-        
     }
 }

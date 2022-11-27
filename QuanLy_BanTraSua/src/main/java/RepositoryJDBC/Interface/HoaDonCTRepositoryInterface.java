@@ -5,7 +5,6 @@
 package RepositoryJDBC.Interface;
 
 import DomainModel.HoaDonChiTiet;
-import ViewModel.HoaDonCTVmodel;
 import java.util.List;
 
 /**
@@ -14,6 +13,4 @@ import java.util.List;
  */
 public interface HoaDonCTRepositoryInterface {
     public List<HoaDonChiTiet> getAll();
-    public  void CreateHDCT(HoaDonChiTiet hdct);
-    public List<HoaDonCTVmodel> LocDanhmuc(String id);
 }
