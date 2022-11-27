@@ -1083,21 +1083,21 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             List<Vi> listVi = viServiceInterface.getAllVi();
             for (Vi vi : listVi) {
                 if (vi.getTen().equals(nameVi)) {
-                    sanPham.setId_Vi(vi.getId());
+//                    sanPham.setId_Vi(vi.getId());
                 }
             }
             String nameDM = (String) cbbDanhmucSp.getSelectedItem();
             List<DanhMuc> listdm = danhMucServiceInterface.getallDM();
             for (DanhMuc danhMuc : listdm) {
                 if (danhMuc.getTenDM().equals(nameDM)) {
-                    sanPham.setId_DanhMuc(danhMuc.getId());
+//                    sanPham.setId_DanhMuc(danhMuc.getId());
                 }
             }
             String maSize = (String) cbbSize.getSelectedItem();
             List<Size> listSize = sizeServiceInterface.getAllSize();
             for (Size size : listSize) {
                 if (size.getMa().equals(maSize)) {
-                    sanPham.setId_size(size.getId());
+//                    sanPham.setId_size(size.getId());
                 }
             }
             String trangThai = txtTrangThai.getText();
@@ -1131,21 +1131,21 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             List<Vi> listVi = viServiceInterface.getAllVi();
             for (Vi vi : listVi) {
                 if (vi.getTen().equals(nameVi)) {
-                    sanPham.setId_Vi(vi.getId());
+//                    sanPham.setId_Vi(vi.getId());
                 }
             }
             String nameDM = (String) cbbDanhmucSp.getSelectedItem();
             List<DanhMuc> listdm = danhMucServiceInterface.getallDM();
             for (DanhMuc danhMuc : listdm) {
                 if (danhMuc.getTenDM().equals(nameDM)) {
-                    sanPham.setId_DanhMuc(danhMuc.getId());
+//                    sanPham.setId_DanhMuc(danhMuc.getId());
                 }
             }
             String maSize = (String) cbbSize.getSelectedItem();
             List<Size> listSize = sizeServiceInterface.getAllSize();
             for (Size size : listSize) {
                 if (size.getMa().equals(maSize)) {
-                    sanPham.setId_size(size.getId());
+//                    sanPham.setId_size(size.getId());
                 }
             }
             String trangThai = txtTrangThai.getText();

@@ -12,29 +12,67 @@ import Service.Interface.HoaDonCtServiceInterface;
 import ViewModel.HoaDonCTVmodel;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author FPTSHOP
  */
-public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface{
-    private HoaDonCTRepositoryInterface hdct;
-    public HoaDonCtServiceImplement(){
-        this.hdct = new HoaDonCtRepositoryImplement();
+public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
+
+    private HoaDonCTRepositoryInterface hdctRepository;
+
+    public HoaDonCtServiceImplement() {
+        this.hdctRepository = new HoaDonCtRepositoryImplement();
     }
 
+//    @Override
+//    public List<HoaDonCTVmodel> getall() {
+//        List<HoaDonChiTiet> lst_hdct = hdct.getAll();
+//        List<HoaDonCTVmodel> lst_hdctvmd = new ArrayList<>();
+//        for (HoaDonChiTiet hdctdm : lst_hdct) {
+//            HoaDonCTVmodel hdctvmd = new HoaDonCTVmodel();
+//            hdctvmd.setId_HD(hdctdm.getId_HD());
+//            hdctvmd.setId_SP(hdctdm.getId_SP());
+//            hdctvmd.setSL_Mua(hdctdm.getSL_Mua());
+//            hdctvmd.setDonGia(hdctdm.getDonGia());
+//            lst_hdctvmd.add(hdctvmd);
+//        }
+//        return lst_hdctvmd;
+//    }
+
     @Override
-    public List<HoaDonCTVmodel> getall() {
-        List<HoaDonChiTiet> lst_hdct = hdct.getAll();
+    public List<HoaDonCTVmodel> gethdct() {
+        List<HoaDonChiTiet> lst_hdct = hdctRepository.gethdct();
         List<HoaDonCTVmodel> lst_hdctvmd = new ArrayList<>();
         for (HoaDonChiTiet hdctdm : lst_hdct) {
             HoaDonCTVmodel hdctvmd = new HoaDonCTVmodel();
-            hdctvmd.setId_HD(hdctdm.getId_HD());
-            hdctvmd.setId_SP(hdctdm.getId_SP());
-            hdctvmd.setSL_Mua(hdctdm.getSL_Mua());
+            hdctvmd.setId(hdctdm.getId());
+            hdctvmd.setMa_SP(hdctdm.getId_SP().getMa());
+            hdctvmd.setTenSP(hdctdm.getId_SP().getTen());
+            hdctvmd.setID_VI(hdctdm.getId_SP().getId_Vi().getTen());
+            hdctvmd.setID_SIZE(hdctdm.getId_SP().getId_size().getTheTich());
+            hdctvmd.setID_dM(hdctdm.getId_SP().getId_DanhMuc().getTenDM());
             hdctvmd.setDonGia(hdctdm.getDonGia());
+            hdctvmd.setSL_Mua(hdctdm.getSL_Mua());
             lst_hdctvmd.add(hdctvmd);
         }
         return lst_hdctvmd;
+    }
+    
+    public static void main(String[] args) {
+        HoaDonCTRepositoryInterface hoaDonCTRepositoryInterface = new HoaDonCtRepositoryImplement();
+        System.out.println(hoaDonCTRepositoryInterface.gethdct());
+    }
+
+    @Override
+    public boolean deleteHDCT(HoaDonChiTiet hdct) {
+        if (hdctRepository.delete(hdct)==false) {
+            JOptionPane.showMessageDialog(null,"Xoa thanh cong");
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null,"Xoa khong thanh cong");
+            return false;
+        }
     }
 }
