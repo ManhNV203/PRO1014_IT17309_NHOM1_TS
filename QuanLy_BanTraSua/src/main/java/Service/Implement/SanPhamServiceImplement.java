@@ -40,6 +40,7 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
         List<Vi> listVI = viRepositoryInterface.getAllVi();
         for (SanPham sanPham : listSanPham) {
             SanPhamViewModel spview = new SanPhamViewModel();
+            spview.setId(sanPham.getId());
             spview.setMa(sanPham.getMa());
             spview.setTen(sanPham.getTen());
             spview.setDonGia(sanPham.getDonGia());
