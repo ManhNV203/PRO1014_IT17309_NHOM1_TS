@@ -4,7 +4,7 @@
  */
 package Service.Interface;
 
-
+import DomainModel.HoaDon;
 import ViewModel.HoaDonVModel;
 import java.util.List;
 
@@ -14,5 +14,4 @@ import java.util.List;
  */
 public interface HoaDonServiceInterface {
     public List<HoaDonVModel> getList();
-    public List<HoaDonVModel > getListhdbh();
 }

@@ -4,72 +4,43 @@
  */
 package ViewModel;
 
-import DomainModel.DanhMuc;
 import DomainModel.HoaDon;
 import DomainModel.SanPham;
-import DomainModel.Size;
-import DomainModel.Vi;
 
 /**
  *
  * @author FPTSHOP
  */
 public class HoaDonCTVmodel {
-    private int id;
-    private String ma_hd;
-    private String Ma_SP;
-    private String TenSP;
+    private HoaDon Id_HD;
+    private SanPham Id_SP;
     private int SL_Mua;
     private double DonGia;
-    private String ID_VI;
-    private String ID_SIZE;
-    private String ID_dM;
 
     public HoaDonCTVmodel() {
     }
 
-    public HoaDonCTVmodel(int id, String ma_hd, String Ma_SP, String TenSP, int SL_Mua, double DonGia, String ID_VI, String ID_SIZE, String ID_dM) {
-        this.id = id;
-        this.ma_hd = ma_hd;
-        this.Ma_SP = Ma_SP;
-        this.TenSP = TenSP;
+    public HoaDonCTVmodel(HoaDon Id_HD, SanPham Id_SP, int SL_Mua, double DonGia) {
+        this.Id_HD = Id_HD;
+        this.Id_SP = Id_SP;
         this.SL_Mua = SL_Mua;
         this.DonGia = DonGia;
-        this.ID_VI = ID_VI;
-        this.ID_SIZE = ID_SIZE;
-        this.ID_dM = ID_dM;
     }
 
-    public int getId() {
-        return id;
+    public HoaDon getId_HD() {
+        return Id_HD;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId_HD(HoaDon Id_HD) {
+        this.Id_HD = Id_HD;
     }
 
-    public String getMa_hd() {
-        return ma_hd;
+    public SanPham getId_SP() {
+        return Id_SP;
     }
 
-    public void setMa_hd(String ma_hd) {
-        this.ma_hd = ma_hd;
-    }
-
-    public String getMa_SP() {
-        return Ma_SP;
-    }
-
-    public void setMa_SP(String Ma_SP) {
-        this.Ma_SP = Ma_SP;
-    }
-
-    public String getTenSP() {
-        return TenSP;
-    }
-
-    public void setTenSP(String TenSP) {
-        this.TenSP = TenSP;
+    public void setId_SP(SanPham Id_SP) {
+        this.Id_SP = Id_SP;
     }
 
     public int getSL_Mua() {
@@ -88,38 +59,10 @@ public class HoaDonCTVmodel {
         this.DonGia = DonGia;
     }
 
-    public String getID_VI() {
-        return ID_VI;
-    }
-
-    public void setID_VI(String ID_VI) {
-        this.ID_VI = ID_VI;
-    }
-
-    public String getID_SIZE() {
-        return ID_SIZE;
-    }
-
-    public void setID_SIZE(String ID_SIZE) {
-        this.ID_SIZE = ID_SIZE;
-    }
-
-    public String getID_dM() {
-        return ID_dM;
-    }
-
-    public void setID_dM(String ID_dM) {
-        this.ID_dM = ID_dM;
-    }
-
     @Override
     public String toString() {
-        return "HoaDonCTVmodel{" + "id=" + id + ", ma_hd=" + ma_hd + ", Ma_SP=" + Ma_SP + ", TenSP=" + TenSP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + ", ID_VI=" + ID_VI + ", ID_SIZE=" + ID_SIZE + ", ID_dM=" + ID_dM + '}';
+        return "HoaDonCTVmodel{" + "Id_HD=" + Id_HD + ", Id_SP=" + Id_SP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + '}';
     }
 
-   
-
-    
-    
     
 }

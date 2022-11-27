@@ -3,7 +3,6 @@ package DomainModel;
 
 
 public class HoaDonChiTiet {
-    private int id;
     private HoaDon Id_HD;
     private SanPham Id_SP;
     private int SL_Mua;
@@ -12,20 +11,11 @@ public class HoaDonChiTiet {
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(int id, HoaDon Id_HD, SanPham Id_SP, int SL_Mua, double DonGia) {
-        this.id = id;
+    public HoaDonChiTiet(HoaDon Id_HD, SanPham Id_SP, int SL_Mua, double DonGia) {
         this.Id_HD = Id_HD;
         this.Id_SP = Id_SP;
         this.SL_Mua = SL_Mua;
         this.DonGia = DonGia;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public HoaDon getId_HD() {
@@ -62,9 +52,9 @@ public class HoaDonChiTiet {
 
     @Override
     public String toString() {
-        return "HoaDonChiTiet{" + "id=" + id + ", Id_HD=" + Id_HD + ", Id_SP=" + Id_SP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + '}';
+        return "HoaDonChiTiet{" + "Id_HD=" + Id_HD + ", Id_SP=" + Id_SP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + '}';
     }
 
-   
+    
     
 }

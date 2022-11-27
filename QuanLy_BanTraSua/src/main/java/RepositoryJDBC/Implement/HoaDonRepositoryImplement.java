@@ -55,24 +55,5 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
         }
         return lst_hd;
     }
-
-    @Override
-    public List<HoaDon> getListhdbh() {
-        List<HoaDon> lst_hdbh = new ArrayList<>();
-        String sql = "select hd.Ma,nv.Ma as MaNv,hd.ngayTao,hd.TrangThai from HoaDon hd join NhanVien nv  on  hd.Id_NV = nv.Id";
-        try {
-            PreparedStatement pr = cn.prepareStatement(sql);
-            ResultSet rs = pr.executeQuery();
-            while (rs.next()) { 
-                NhanVien nv = new NhanVien();
-                nv.setMa(rs.getString("MaNv"));
-                HoaDon hd = new HoaDon(rs.getString("Ma"), nv, rs.getString("ngayTao"), rs.getInt("TrangThai"));
-                lst_hdbh.add(hd);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lst_hdbh;
-    }
     
 }

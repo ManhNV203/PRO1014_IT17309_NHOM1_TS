@@ -44,19 +44,19 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
             spview.setMa(sanPham.getMa());
             spview.setTen(sanPham.getTen());
             spview.setDonGia(sanPham.getDonGia());
-            Vi idVi = sanPham.getId_Vi();
+            Integer idVi = sanPham.getId_Vi();
             for (Vi vi : listVI) {
                 if(vi.getId().equals(idVi)){
                     spview.setTenVi(vi.getTen());
                 }
             }
-            DanhMuc iddm= sanPham.getId_DanhMuc();
+            Integer iddm= sanPham.getId_DanhMuc();
             for (DanhMuc danhMuc : listDanhMuc) {
                 if(danhMuc.getId().equals(iddm)){
                     spview.setTenDM(danhMuc.getTenDM());
                 }
             }
-            Size idsize = sanPham.getId_size();
+            Integer idsize = sanPham.getId_size();
             for (Size size : listSize) {
                 if(size.getId().equals(idsize)){
                     spview.setTenSize(size.getMa());

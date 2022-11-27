@@ -27,13 +27,6 @@ public class HoaDon {
         this.id_KM = id_KM;
         this.TrangThai = TrangThai;
     }
-    public HoaDon( String Ma, NhanVien Id_NV, String ngayTao, int TrangThai) {
-        
-        this.Ma = Ma;
-        this.Id_NV = Id_NV;
-        this.ngayTao = ngayTao;
-        this.TrangThai = TrangThai;
-    }
 
    
     public String getId() {

@@ -13,6 +13,4 @@ import java.util.List;
  */
 public interface HoaDonCTRepositoryInterface {
     public List<HoaDonChiTiet> getAll();
-    public List<HoaDonChiTiet> gethdct();
-    public boolean delete(HoaDonChiTiet hdct);
 }

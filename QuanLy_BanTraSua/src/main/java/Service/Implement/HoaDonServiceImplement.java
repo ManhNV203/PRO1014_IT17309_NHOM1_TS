@@ -39,21 +39,5 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface{
         }
         return lst_hdvmd;
     }
-
-    @Override
-    public List<HoaDonVModel> getListhdbh() {
-        List<HoaDon> lst_hd = hd.getListhdbh();
-        List<HoaDonVModel> lst_hdvmd = new ArrayList<>();
-        for (HoaDon hd : lst_hd) {
-            HoaDonVModel hdvmd = new HoaDonVModel();
-            hdvmd.setMa(hd.getMa());
-            hdvmd.setId_NV(hd.getId_NV());
-            hdvmd.setNgayTao(hd.getNgayTao());
-            hdvmd.setTrangThai(hd.getTrangThai());
-            lst_hdvmd.add(hdvmd);
-            
-        }
-        return lst_hdvmd;
-    }
     
 }
