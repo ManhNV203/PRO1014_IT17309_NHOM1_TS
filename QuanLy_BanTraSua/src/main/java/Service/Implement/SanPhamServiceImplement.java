@@ -40,22 +40,23 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
         List<Vi> listVI = viRepositoryInterface.getAllVi();
         for (SanPham sanPham : listSanPham) {
             SanPhamViewModel spview = new SanPhamViewModel();
+            spview.setId(sanPham.getId());
             spview.setMa(sanPham.getMa());
             spview.setTen(sanPham.getTen());
             spview.setDonGia(sanPham.getDonGia());
-            Integer idVi = sanPham.getId_Vi();
+            Vi idVi = sanPham.getId_Vi();
             for (Vi vi : listVI) {
                 if(vi.getId().equals(idVi)){
                     spview.setTenVi(vi.getTen());
                 }
             }
-            Integer iddm= sanPham.getId_DanhMuc();
+            DanhMuc iddm= sanPham.getId_DanhMuc();
             for (DanhMuc danhMuc : listDanhMuc) {
                 if(danhMuc.getId().equals(iddm)){
                     spview.setTenDM(danhMuc.getTenDM());
                 }
             }
-            Integer idsize = sanPham.getId_size();
+            Size idsize = sanPham.getId_size();
             for (Size size : listSize) {
                 if(size.getId().equals(idsize)){
                     spview.setTenSize(size.getMa());

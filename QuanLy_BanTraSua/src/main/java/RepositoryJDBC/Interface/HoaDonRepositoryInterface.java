@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface HoaDonRepositoryInterface {
     public List<HoaDon> getList();
+    public List<HoaDon> getListhdbh();
 }

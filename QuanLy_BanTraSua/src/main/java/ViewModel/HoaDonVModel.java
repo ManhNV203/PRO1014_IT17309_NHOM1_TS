@@ -35,6 +35,12 @@ public class HoaDonVModel {
         this.id_KM = id_KM;
         this.TrangThai = TrangThai;
     }
+    public HoaDonVModel(String Ma, NhanVien Id_NV, String ngayTao, int TrangThai) {
+        this.Ma = Ma;
+        this.Id_NV = Id_NV;
+        this.ngayTao = ngayTao;
+        this.TrangThai = TrangThai;
+    }
 
     public String getMa() {
         return Ma;
@@ -84,8 +90,17 @@ public class HoaDonVModel {
         this.id_KM = id_KM;
     }
 
-    public int getTrangThai() {
-        return TrangThai;
+        public String getTrangThai() {
+        
+            if (TrangThai ==0) {
+                return "Chưa Thanh Toán";
+            }else if(TrangThai==1){
+                return "Chờ Thanh Toán";
+            }else if(TrangThai==2){
+                return "Đã Hủy";
+            }else{
+                return "Đã Thanh Toán";
+            }
     }
 
     public void setTrangThai(int TrangThai) {
