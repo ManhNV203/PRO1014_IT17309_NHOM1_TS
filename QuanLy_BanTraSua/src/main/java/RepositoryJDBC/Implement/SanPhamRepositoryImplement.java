@@ -117,9 +117,9 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
             ps.setString(1, sanPham.getTen());
             ps.setString(2, sanPham.getDonGia());
             ps.setInt(3, sanPham.getTrangThai());
-            ps.setInt(4, sanPham.getId_Vi());
-            ps.setInt(5, sanPham.getId_DanhMuc());
-            ps.setInt(6, sanPham.getId_size());
+            ps.setObject(4, sanPham.getId_Vi());
+            ps.setObject(5, sanPham.getId_DanhMuc());
+            ps.setObject(6, sanPham.getId_size());
             ps.setString(7, sanPham.getMa());
             ps.execute();
             ps.close();

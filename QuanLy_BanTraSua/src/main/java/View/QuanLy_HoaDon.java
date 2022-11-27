@@ -21,7 +21,7 @@ import javax.swing.table.DefaultTableModel;
 public class QuanLy_HoaDon extends javax.swing.JFrame {
     DefaultTableModel tbm1;
     HoaDonCtServiceInterface hdctsv = new HoaDonCtServiceImplement();
-    List<HoaDonCTVmodel> lst_hdctvmd = hdctsv.getall();
+    List<HoaDonCTVmodel> lst_hdctvmd = hdctsv.gethdct();
     DefaultTableModel tbm;
     HoaDonServiceInterface hdsv = new HoaDonServiceImplement();
     List<HoaDonVModel> lst_hdvmd = hdsv.getList();
@@ -43,7 +43,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
     public void filltableHDCT(){
         tbm1.setRowCount(0);
         for (HoaDonCTVmodel x : lst_hdctvmd) {
-            tbm1.addRow(new Object[]{x.getId_HD().getMa(),x.getId_SP().getTen(),x.getSL_Mua(),x.getDonGia()});
+            tbm1.addRow(new Object[]{x.getMa_hd(),x.getTenSP(),x.getSL_Mua(),x.getDonGia()});
         }
     }
     

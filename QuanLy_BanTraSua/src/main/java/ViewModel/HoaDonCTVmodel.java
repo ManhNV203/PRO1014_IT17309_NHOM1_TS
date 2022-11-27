@@ -16,6 +16,7 @@ import DomainModel.Vi;
  */
 public class HoaDonCTVmodel {
     private int id;
+    private String ma_hd;
     private String Ma_SP;
     private String TenSP;
     private int SL_Mua;
@@ -27,8 +28,9 @@ public class HoaDonCTVmodel {
     public HoaDonCTVmodel() {
     }
 
-    public HoaDonCTVmodel(int id, String Ma_SP, String TenSP, int SL_Mua, double DonGia, String ID_VI, String ID_SIZE, String ID_dM) {
+    public HoaDonCTVmodel(int id, String ma_hd, String Ma_SP, String TenSP, int SL_Mua, double DonGia, String ID_VI, String ID_SIZE, String ID_dM) {
         this.id = id;
+        this.ma_hd = ma_hd;
         this.Ma_SP = Ma_SP;
         this.TenSP = TenSP;
         this.SL_Mua = SL_Mua;
@@ -44,6 +46,14 @@ public class HoaDonCTVmodel {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getMa_hd() {
+        return ma_hd;
+    }
+
+    public void setMa_hd(String ma_hd) {
+        this.ma_hd = ma_hd;
     }
 
     public String getMa_SP() {
@@ -104,8 +114,10 @@ public class HoaDonCTVmodel {
 
     @Override
     public String toString() {
-        return "HoaDonCTVmodel{" + "id=" + id + ", Ma_SP=" + Ma_SP + ", TenSP=" + TenSP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + ", ID_VI=" + ID_VI + ", ID_SIZE=" + ID_SIZE + ", ID_dM=" + ID_dM + '}';
+        return "HoaDonCTVmodel{" + "id=" + id + ", ma_hd=" + ma_hd + ", Ma_SP=" + Ma_SP + ", TenSP=" + TenSP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + ", ID_VI=" + ID_VI + ", ID_SIZE=" + ID_SIZE + ", ID_dM=" + ID_dM + '}';
     }
+
+   
 
     
     
