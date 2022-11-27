@@ -27,6 +27,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
     List<HoaDonVModel> lst_hdvmd = hdsv.getList();
     public QuanLy_HoaDon() {
         initComponents();
+        this.setResizable(false);
         setLocationRelativeTo(null);
         tbm = (DefaultTableModel) tblHoaDon.getModel();
         tbm1 = (DefaultTableModel) tblHDCT.getModel();

@@ -24,6 +24,7 @@ public class QuanLyViFrame extends javax.swing.JFrame {
      */
     public QuanLyViFrame() {
         initComponents();
+        this.setResizable(false);
         setLocationRelativeTo(null);
         viServiceInterface = new ViServiceImplement();
         loadtableVI();

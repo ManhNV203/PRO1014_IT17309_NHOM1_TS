@@ -24,6 +24,7 @@ public class QuanLySizeFrame extends javax.swing.JFrame {
      */
     public QuanLySizeFrame() {
         initComponents();
+        this.setResizable(false);
         setLocationRelativeTo(null);
         sizeServiceInterface = new SizeServiceImplement();
         loadTableSize();

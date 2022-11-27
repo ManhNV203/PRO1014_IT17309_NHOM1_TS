@@ -24,6 +24,7 @@ public class QuanLyDanhMucFrame extends javax.swing.JFrame {
      */
     public QuanLyDanhMucFrame() {
         initComponents();
+        this.setResizable(false);
         setLocationRelativeTo(null);
         danhMucServiceInterface = new DanhMucServiceImplement();
         loadTableDanhMuc();
