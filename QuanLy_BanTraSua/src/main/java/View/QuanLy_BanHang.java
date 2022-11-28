@@ -22,15 +22,15 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class QuanLy_BanHang extends javax.swing.JFrame {
-
+    
     private SanPhamServiceInterface sanPhamServiceInterface;
     private DanhMucServiceInterface danhmuc_itf;
     private HoaDonCTRepositoryInterface hdct_itf;
-    private  ViServiceInterface vi_itf;
+    private ViServiceInterface vi_itf;
 
     public QuanLy_BanHang() {
         sanPhamServiceInterface = new SanPhamServiceImplement();
-        hdct_itf =  new HoaDonCtRepositoryImplement();
+        hdct_itf = new HoaDonCtRepositoryImplement();
         danhmuc_itf = new DanhMucServiceImplement();
         vi_itf = new ViServiceImplement();
         initComponents();
@@ -58,19 +58,20 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         }
 
     }
-     public void loadCBBFrame() {
-          DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbLocSanPham.getModel();
+
+    public void loadCBBFrame() {
+        DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbLocSanPham.getModel();
         List<DanhMuc> listDmKho = danhmuc_itf.getallDM();
         for (DanhMuc danhMuc : listDmKho) {
             tblComboBoxModelDMKho.addElement(danhMuc.getTenDM());
         }
-        
+
         DefaultComboBoxModel tblComboBoxModelVI = (DefaultComboBoxModel) cbbVi.getModel();
         List<Vi> listVi = vi_itf.getAllVi();
         for (Vi vi : listVi) {
             tblComboBoxModelVI.addElement(vi.getTen());
         }
-     }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -616,6 +617,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         jLabel4.setText("Vị");
 
         cbbVi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vị" }));
+        cbbVi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbViActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Ảnh");
 
@@ -933,18 +939,77 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 //            
 //        }
 //        
-        
-        
 
 
     }//GEN-LAST:event_btnThemSPBHActionPerformed
 
     private void cbbLocSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocSanPhamActionPerformed
         // TODO add your handling code here:
-        
-        
-        
+
+        String nameDM = (String) cbbLocSanPham.getSelectedItem();
+        List<DanhMuc> listdm = danhmuc_itf.getallDM();
+        List<SanPhamViewModel> lstsp_vmd = new ArrayList<>();
+
+        if (nameDM.equalsIgnoreCase("Danh mục")) {
+            lstsp_vmd = sanPhamServiceInterface.getAllSP();
+        } else {
+            for (DanhMuc danhMuc : listdm) {
+                if (danhMuc.getTenDM().equalsIgnoreCase(nameDM)) {
+                    lstsp_vmd = sanPhamServiceInterface.LocdanhmucSp(danhMuc.getId());
+                }
+            }
+        }
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
+        tblModel.setRowCount(0);
+        for (SanPhamViewModel sanPhamViewModel : lstsp_vmd) {
+            tblModel.addRow(new Object[]{
+                sanPhamViewModel.getMa(),
+                sanPhamViewModel.getTen(),
+                sanPhamViewModel.getDonGia(),
+                sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getTenDM(),
+                sanPhamViewModel.getTenSize(),
+                sanPhamViewModel.getTrangThai()
+            });
+        }
+
+
     }//GEN-LAST:event_cbbLocSanPhamActionPerformed
+
+    private void cbbViActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbViActionPerformed
+        // TODO add your handling code here:
+        
+          String nameDM = (String) cbbVi.getSelectedItem();
+        List<Vi> listvi = vi_itf.getAllVi();
+        List<SanPhamViewModel> lstsp_vmd = new ArrayList<>();
+
+        if (nameDM.equalsIgnoreCase("Vị")) {
+            lstsp_vmd = sanPhamServiceInterface.getAllSP();
+        } else {
+            for (Vi vi : listvi) {
+                if (vi.getTen().equalsIgnoreCase(nameDM)) {
+                    lstsp_vmd = sanPhamServiceInterface.LocVISP(vi.getId());
+                }
+            }
+            
+        }
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
+        tblModel.setRowCount(0);
+        for (SanPhamViewModel sanPhamViewModel : lstsp_vmd) {
+            tblModel.addRow(new Object[]{
+                sanPhamViewModel.getMa(),
+                sanPhamViewModel.getTen(),
+                sanPhamViewModel.getDonGia(),
+                sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getTenDM(),
+                sanPhamViewModel.getTenSize(),
+                sanPhamViewModel.getTrangThai()
+            });
+        }
+        
+    }//GEN-LAST:event_cbbViActionPerformed
 
     /**
      * @param args the command line arguments

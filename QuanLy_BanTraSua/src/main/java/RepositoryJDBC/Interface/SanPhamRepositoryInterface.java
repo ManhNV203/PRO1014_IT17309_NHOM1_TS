@@ -10,4 +10,8 @@ public interface SanPhamRepositoryInterface {
     public void addSanPham(SanPham sanPham);
     public void updateSanPham(SanPham sanPham);
     public void deleteSanPham(SanPham sanPham);
+    
+    public List<SanPham> LocDanhMucSP(Integer id);
+    public List<SanPham> LocVISp(Integer id);
+    
 }

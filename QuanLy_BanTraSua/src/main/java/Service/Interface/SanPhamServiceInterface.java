@@ -11,4 +11,6 @@ public interface SanPhamServiceInterface {
     public void addSanPham(SanPham sanPham);
     public void updateSanPham(SanPham sanPham);
     public void deleteSanPham(SanPham sanPham);
+    public List<SanPhamViewModel> LocdanhmucSp(Integer id);
+    public List<SanPhamViewModel> LocVISP(Integer id);
 }

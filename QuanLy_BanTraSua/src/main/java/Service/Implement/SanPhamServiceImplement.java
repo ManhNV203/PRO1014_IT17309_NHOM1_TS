@@ -1,4 +1,3 @@
-
 package Service.Implement;
 
 import DomainModel.DanhMuc;
@@ -18,13 +17,14 @@ import ViewModel.SanPhamViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+public class SanPhamServiceImplement implements SanPhamServiceInterface {
 
-public class SanPhamServiceImplement implements SanPhamServiceInterface{
     private SanPhamRepositoryInterface sanPhamRepositoryInterface;
     private ViRepositoryInterface viRepositoryInterface;
     private DanhMucRepositoryInterface danhMucRepositoryInterface;
     private SizeRepositoryInterface sizeRepositoryInterface;
-    public SanPhamServiceImplement(){
+
+    public SanPhamServiceImplement() {
         sanPhamRepositoryInterface = new SanPhamRepositoryImplement();
         viRepositoryInterface = new ViRepositoryImplement();
         danhMucRepositoryInterface = new DanhMucRepositoryImplement();
@@ -45,29 +45,29 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
             spview.setDonGia(sanPham.getDonGia());
             Integer idVi = sanPham.getId_Vi();
             for (Vi vi : listVI) {
-                if(vi.getId().equals(idVi)){
+                if (vi.getId().equals(idVi)) {
                     spview.setTenVi(vi.getTen());
                 }
             }
-            Integer iddm= sanPham.getId_DanhMuc();
+            Integer iddm = sanPham.getId_DanhMuc();
             for (DanhMuc danhMuc : listDanhMuc) {
-                if(danhMuc.getId().equals(iddm)){
+                if (danhMuc.getId().equals(iddm)) {
                     spview.setTenDM(danhMuc.getTenDM());
                 }
             }
             Integer idsize = sanPham.getId_size();
             for (Size size : listSize) {
-                if(size.getId().equals(idsize)){
+                if (size.getId().equals(idsize)) {
                     spview.setTenSize(size.getMa());
                 }
             }
-            if(sanPham.getTrangThai()==0){
+            if (sanPham.getTrangThai() == 0) {
                 spview.setTrangThai("Hết Hàng");
-            }else{
+            } else {
                 spview.setTrangThai("Còn Hàng");
             }
             listSanPhamVModel.add(spview);
-            
+
         }
         return listSanPhamVModel;
     }
@@ -85,6 +85,89 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
     @Override
     public void deleteSanPham(SanPham sanPham) {
         sanPhamRepositoryInterface.deleteSanPham(sanPham);
+    }
+
+    @Override
+    public List<SanPhamViewModel> LocdanhmucSp(Integer id) {
+        List<SanPham> listSanPham = sanPhamRepositoryInterface.LocDanhMucSP(id);
+        List<SanPhamViewModel> listSanPhamVModel = new ArrayList<>();
+        List<DanhMuc> listDanhMuc = danhMucRepositoryInterface.getListAllDM();
+        List<Size> listSize = sizeRepositoryInterface.getAllSize();
+        List<Vi> listVI = viRepositoryInterface.getAllVi();
+        for (SanPham sanPham : listSanPham) {
+            SanPhamViewModel spview = new SanPhamViewModel();
+            spview.setMa(sanPham.getMa());
+            spview.setTen(sanPham.getTen());
+            spview.setDonGia(sanPham.getDonGia());
+            Integer idVi = sanPham.getId_Vi();
+            for (Vi vi : listVI) {
+                if (vi.getId().equals(idVi)) {
+                    spview.setTenVi(vi.getTen());
+                }
+            }
+            Integer iddm = sanPham.getId_DanhMuc();
+            for (DanhMuc danhMuc : listDanhMuc) {
+                if (danhMuc.getId().equals(iddm)) {
+                    spview.setTenDM(danhMuc.getTenDM());
+                }
+            }
+            Integer idsize = sanPham.getId_size();
+            for (Size size : listSize) {
+                if (size.getId().equals(idsize)) {
+                    spview.setTenSize(size.getMa());
+                }
+            }
+            if (sanPham.getTrangThai() == 0) {
+                spview.setTrangThai("Hết Hàng");
+            } else {
+                spview.setTrangThai("Còn Hàng");
+            }
+            listSanPhamVModel.add(spview);
+
+        }
+        return listSanPhamVModel;
+    }
+
+    @Override
+    public List<SanPhamViewModel> LocVISP(Integer id) {
+
+        List<SanPham> listSanPham = sanPhamRepositoryInterface.LocVISp(id);
+        List<SanPhamViewModel> listSanPhamVModel = new ArrayList<>();
+        List<DanhMuc> listDanhMuc = danhMucRepositoryInterface.getListAllDM();
+        List<Size> listSize = sizeRepositoryInterface.getAllSize();
+        List<Vi> listVI = viRepositoryInterface.getAllVi();
+        for (SanPham sanPham : listSanPham) {
+            SanPhamViewModel spview = new SanPhamViewModel();
+            spview.setMa(sanPham.getMa());
+            spview.setTen(sanPham.getTen());
+            spview.setDonGia(sanPham.getDonGia());
+            Integer idVi = sanPham.getId_Vi();
+            for (Vi vi : listVI) {
+                if (vi.getId().equals(idVi)) {
+                    spview.setTenVi(vi.getTen());
+                }
+            }
+            Integer iddm = sanPham.getId_DanhMuc();
+            for (DanhMuc danhMuc : listDanhMuc) {
+                if (danhMuc.getId().equals(iddm)) {
+                    spview.setTenDM(danhMuc.getTenDM());
+                }
+            }
+            Integer idsize = sanPham.getId_size();
+            for (Size size : listSize) {
+                if (size.getId().equals(idsize)) {
+                    spview.setTenSize(size.getMa());
+                }
+            }
+            if (sanPham.getTrangThai() == 0) {
+                spview.setTrangThai("Hết Hàng");
+            } else {
+                spview.setTrangThai("Còn Hàng");
+            }
+            listSanPhamVModel.add(spview);
+
+        }
+        return listSanPhamVModel;
     }
 
 }
