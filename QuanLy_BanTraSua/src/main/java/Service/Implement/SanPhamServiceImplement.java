@@ -44,22 +44,22 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
             spview.setMa(sanPham.getMa());
             spview.setTen(sanPham.getTen());
             spview.setDonGia(sanPham.getDonGia());
-            Vi idVi = sanPham.getId_Vi();
+            Integer idVi = sanPham.getId_Vi().getId();
             for (Vi vi : listVI) {
                 if(vi.getId().equals(idVi)){
                     spview.setTenVi(vi.getTen());
                 }
             }
-            DanhMuc iddm= sanPham.getId_DanhMuc();
+            Integer iddm= sanPham.getId_DanhMuc().getId();
             for (DanhMuc danhMuc : listDanhMuc) {
                 if(danhMuc.getId().equals(iddm)){
                     spview.setTenDM(danhMuc.getTenDM());
                 }
             }
-            Size idsize = sanPham.getId_size();
+            Integer idsize = sanPham.getId_size().getId();
             for (Size size : listSize) {
                 if(size.getId().equals(idsize)){
-                    spview.setTenSize(size.getMa());
+                    spview.setTenSize(size.getTheTich());
                 }
             }
             if(sanPham.getTrangThai()==0){
@@ -86,6 +86,10 @@ public class SanPhamServiceImplement implements SanPhamServiceInterface{
     @Override
     public void deleteSanPham(SanPham sanPham) {
         sanPhamRepositoryInterface.deleteSanPham(sanPham);
+    }
+    public static void main(String[] args) {
+        SanPhamRepositoryImplement sp = new SanPhamRepositoryImplement();
+        System.out.println(sp.getAllSanPham());
     }
 
 }
