@@ -12,6 +12,7 @@ import ViewModel.NhanVienViewModel;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -92,7 +93,8 @@ public class NhanVienServiceImplement implements NhanVienServiceInterface{
 
     @Override
     public NhanVienViewModel getone(String ma) {
-        NhanVien nvMD = new NhanVien();
+        try {
+            NhanVien nvMD = new NhanVien();
         NhanVienViewModel nvVMD = new NhanVienViewModel();
         nvMD = Repo.getone(ma);
         nvVMD.setDiaChi(nvMD.getDiaChi());
@@ -104,6 +106,11 @@ public class NhanVienServiceImplement implements NhanVienServiceInterface{
             nvVMD.setNgaySinh(nvMD.getNgaySinh());
             nvVMD.setSDT(nvMD.getSDT());
             return nvVMD;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        
     }
 
     @Override
@@ -152,6 +159,16 @@ public class NhanVienServiceImplement implements NhanVienServiceInterface{
             listNVVMD.add(VMD);
         }
         return listNVVMD;
+    }
+
+    @Override
+    public boolean checkMa(String ma) {
+         NhanVien nv = Repo.getone(ma);
+         if(Objects.isNull(nv)){
+             return true;
+         }else{
+             return false;
+         }
     }
 
    
