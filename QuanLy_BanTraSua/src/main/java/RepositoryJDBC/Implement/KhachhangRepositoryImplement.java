@@ -122,4 +122,27 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
 
     }
 
+    @Override
+    public List<KhachHang> getBySDT(String sdt) {
+        KhachHang kh = new KhachHang();
+        List<KhachHang> list = new ArrayList<>();
+        String sql = "select * from KhachHang where SDT = ?";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, sdt);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+            list.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+//    public static void main(String[] args) {
+//        KhachhangRepositoryImplement kh = new KhachhangRepositoryImplement();
+//        System.out.println(kh.getBySDT("0343204318").toString());
+//    }
+
 }

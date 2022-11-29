@@ -7,11 +7,14 @@ package Service.Implement;
 import DomainModel.HoaDon;
 import DomainModel.HoaDonChiTiet;
 import RepositoryJDBC.Implement.HoaDonCtRepositoryImplement;
+import RepositoryJDBC.Implement.HoaDonRepositoryImplement;
 import RepositoryJDBC.Interface.HoaDonCTRepositoryInterface;
+import RepositoryJDBC.Interface.HoaDonRepositoryInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import ViewModel.HoaDonCTVmodel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,9 +24,11 @@ import javax.swing.JOptionPane;
 public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
 
     private HoaDonCTRepositoryInterface hdctRepository;
+    private HoaDonRepositoryInterface hdRepository;
 
     public HoaDonCtServiceImplement() {
         this.hdctRepository = new HoaDonCtRepositoryImplement();
+        this.hdRepository = new HoaDonRepositoryImplement();
     }
 
 //    @Override
@@ -74,5 +79,20 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
             JOptionPane.showMessageDialog(null,"Xoa khong thanh cong");
             return false;
         }
+    }
+
+    @Override
+    public boolean HuyThanhToan(String ma) {
+       boolean check = false;
+        List<Integer> list = new ArrayList<>();
+        list = hdctRepository.getIDByMa(hdRepository.getIDByMa(ma));
+        if(Objects.isNull(list)){
+            return false;
+        }
+        for (Integer id : list) {
+            check = hdctRepository.HuyHoaDon(id);
+        }
+        
+        return check;
     }
 }

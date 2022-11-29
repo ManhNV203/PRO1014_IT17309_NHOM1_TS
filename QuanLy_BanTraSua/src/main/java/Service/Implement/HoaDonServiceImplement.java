@@ -55,5 +55,25 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface{
         }
         return lst_hdvmd;
     }
+
+    @Override
+    public boolean ThanhToan(String ma) {
+        boolean check ;
+        check = hd.ThanhToan(ma);
+        return check;
+    }
+
+    @Override
+    public boolean HuyThanhToan(String ma) {
+        boolean check;
+        check = hd.HuyThanhToan(ma);
+        return check;
+    }
+
+    @Override
+    public int getIDByMa(String ma) {
+       return hd.getIDByMa(ma);
+        
+        }
     
 }

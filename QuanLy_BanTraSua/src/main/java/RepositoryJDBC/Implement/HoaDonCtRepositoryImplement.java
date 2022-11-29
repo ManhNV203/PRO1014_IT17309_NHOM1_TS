@@ -15,6 +15,7 @@ import ViewModel.HoaDonCTVmodel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.crypto.spec.PSource;
@@ -93,6 +94,37 @@ public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
              return false;
         }
        
+    }
+
+    @Override
+    public List getIDByMa(int ID) {
+        List<Integer> list = new ArrayList<>();
+        String sql = "select HoaDonChiTiet.ID from HoaDonChiTiet where ID_HD = ?";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                list.add(rs.getInt("ID"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
+    public boolean HuyHoaDon(int ID) {
+        int check = 0;
+        String sql = "delete from HoaDonChiTiet where ID = ?";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setInt(1, ID);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check >0;
     }
     
 }
