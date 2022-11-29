@@ -1,68 +1,50 @@
-
 package View;
 
-import DomainModel.ComBo;
 import DomainModel.HoaDonChiTiet;
-import Service.Implement.ComBoChiTietServiceImplement;
-import Service.Implement.ComBoServiceImplement;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
-import Service.Interface.ComBoChiTietServiceInterface;
-import Service.Interface.ComBoServiceInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
-import ViewModel.ComBoChiTietViewModel;
 import ViewModel.HoaDonCTVmodel;
 import ViewModel.HoaDonVModel;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-
 public class QuanLy_BanHang extends javax.swing.JFrame {
-    DefaultTableModel tbm ;
+
+    DefaultTableModel tbm;
     HoaDonServiceInterface hdsvbhitf = new HoaDonServiceImplement();
     List<HoaDonVModel> lst_hdvmdbh = hdsvbhitf.getListhdbh();
-    DefaultTableModel tbmHDCT ;
+    DefaultTableModel tbmHDCT;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
-    ComBoChiTietServiceInterface comBoChiTietServiceInterface = new ComBoChiTietServiceImplement();
-    ComBoServiceInterface comBoServiceInterface = new ComBoServiceImplement();
-  
+
     /**
      * Creates new form QuanLy_BanHang
      */
     public QuanLy_BanHang() {
         initComponents();
-        
+
         tbm = (DefaultTableModel) tblDSHoaDonBH.getModel();
         tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
         filltableHDBH();
         filltotablehdct();
-        loadComBo();
     }
-    public void filltableHDBH(){
+
+    public void filltableHDBH() {
         tbm.setRowCount(0);
         for (HoaDonVModel x : lst_hdvmdbh) {
-            tbm.addRow(new Object[]{x.getMa(),x.getId_NV().getMa(),x.getNgayTao(),x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(), x.getId_NV().getMa(), x.getNgayTao(), x.getTrangThai()});
         }
-        
+
     }
-    public void filltotablehdct(){
+
+    public void filltotablehdct() {
         tbmHDCT.setRowCount(0);
         for (HoaDonCTVmodel x : hdctitf.gethdct()) {
-            tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM()});
-        }
-    }
-    public void loadComBo(){
-        DefaultTableModel tblModel = (DefaultTableModel) tblComBoSanPham.getModel();
-        tblModel.setRowCount(0);
-        List<ComBo> listALL = comBoServiceInterface.getallCombo();
-        for (ComBo comBo : listALL) {
-            tblModel.addRow(new Object[]{
-                comBo.getMa(),
-                comBo.getTen(),
-                comBo.getDonGia(),
-                comBo.getTrangThai()
-            });
+            tbmHDCT.addRow(new Object[]{x.getMa_SP(), x.getTenSP(), x.getDonGia(), x.getSL_Mua(), x.getID_VI(), x.getID_SIZE(), x.getID_dM()});
         }
     }
 
@@ -437,10 +419,20 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         btnThanhToanBH.setBackground(new java.awt.Color(153, 255, 153));
         btnThanhToanBH.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThanhToanBH.setText("Thanh Toán");
+        btnThanhToanBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanBHActionPerformed(evt);
+            }
+        });
 
         btnLamMoiSanPhamorderBH.setBackground(new java.awt.Color(153, 153, 255));
         btnLamMoiSanPhamorderBH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnLamMoiSanPhamorderBH.setText("Hủy Thanh Toán");
+        btnLamMoiSanPhamorderBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLamMoiSanPhamorderBHActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Số ĐT");
 
@@ -701,6 +693,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblComBoSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblComBoSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane7.setViewportView(tblComBoSanPham);
 
         jLabel6.setText("Tên ComBO");
@@ -834,7 +831,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btnHoaDonMenuActionPerformed
-    
+
     private void btnDoanUongMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoanUongMenuActionPerformed
         // TODO add your handling code here:
         new QuanLy_DoAnUongFrame().setVisible(true);
@@ -855,17 +852,17 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
     private void btnKhuyenMaiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiMenuActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnKhuyenMaiMenuActionPerformed
 
     private void btnThongkeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongkeMenuActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnThongkeMenuActionPerformed
 
     private void btnDangXuatMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatMenuActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnDangXuatMenuActionPerformed
 
     private void txtTenKhachHangBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachHangBHActionPerformed
@@ -881,50 +878,83 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblMaHoaDonBH.setText(tblDSHoaDonBH.getValueAt(index, 0).toString());
         lblMaNhanVienBH.setText(tblDSHoaDonBH.getValueAt(index, 1).toString());
         lblNgayTaoHDBH.setText(tblDSHoaDonBH.getValueAt(index, 2).toString());
-        
+
     }//GEN-LAST:event_tblDSHoaDonBHMouseClicked
 
     private void btnXoaSPOrderBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBHActionPerformed
-        
+
         try {
-            
+
             HoaDonChiTiet hdct = new HoaDonChiTiet();
             for (int i = 0; i < hdctitf.gethdct().size(); i++) {
-                if(hdctitf.gethdct().get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))){
+                if (hdctitf.gethdct().get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))) {
                     hdct.setId(hdctitf.gethdct().get(i).getId());
                 }
             }
-            if(hdctitf.deleteHDCT(hdct)){
-              filltotablehdct();  
+            if (hdctitf.deleteHDCT(hdct)) {
+                filltotablehdct();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            
+
         }
     }//GEN-LAST:event_btnXoaSPOrderBHActionPerformed
 
-    private void btnChonComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonComBoActionPerformed
+    private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanBHActionPerformed
         // TODO add your handling code here:
-        int row = tblComBoSanPham.getSelectedRow();
-        DefaultTableModel tblModel = (DefaultTableModel) tblSanPhamOrder.getModel();
-        tblModel.setRowCount(0);
-        if(row>=0){
-            String maCB = (String) tblComBoSanPham.getValueAt(row, 0);
-            List<ComBoChiTietViewModel> list = comBoChiTietServiceInterface.getAllComBo();
-            for (ComBoChiTietViewModel comBoChiTietViewModel : list) {
-                if(comBoChiTietViewModel.getMa_CB().equals(maCB)){
-                    tblModel.addRow(new Object[]{
-                        comBoChiTietViewModel.getMa_SP(),
-                        comBoChiTietViewModel.getTen_SP(),
-                        comBoChiTietViewModel.getDonGia(),
-                        1
-                    });
-                    
+        try {
+            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText()) == true) {
+                JOptionPane.showMessageDialog(pnlAnhComBo, "Thanh Cong");
+                lst_hdvmdbh = hdsvbhitf.getListhdbh();
+                filltableHDBH();
+                filltotablehdct();
+            } else {
+                JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can thanh toan");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnThanhToanBHActionPerformed
+
+    private void btnLamMoiSanPhamorderBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLamMoiSanPhamorderBHActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            if(hdctitf.HuyThanhToan(lblMaHoaDonBH.getText()) == false){
+                if (hdsvbhitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
+                    lst_hdvmdbh = hdsvbhitf.getListhdbh();
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }else{
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can huy");
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
                 }
             }
-            lblTongTienBH.setText((String) tblComBoSanPham.getValueAt(row, 2));
+            if (hdctitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
+                if (hdsvbhitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
+                    lst_hdvmdbh = hdsvbhitf.getListhdbh();
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }else{
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan That Bai");
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan That Bai");
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-    }//GEN-LAST:event_btnChonComBoActionPerformed
+    }//GEN-LAST:event_btnLamMoiSanPhamorderBHActionPerformed
 
     /**
      * @param args the command line arguments

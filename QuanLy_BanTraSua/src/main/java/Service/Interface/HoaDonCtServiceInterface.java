@@ -17,4 +17,5 @@ public interface HoaDonCtServiceInterface {
     
      List<HoaDonCTVmodel> gethdct();
      public boolean deleteHDCT(HoaDonChiTiet hdct);
+     public boolean HuyThanhToan(String ma);
 }

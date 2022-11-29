@@ -14,4 +14,7 @@ import java.util.List;
 public interface HoaDonRepositoryInterface {
     public List<HoaDon> getList();
     public List<HoaDon> getListhdbh();
+    public boolean ThanhToan(String ma);
+    public int getIDByMa(String ma);
+    public boolean HuyThanhToan(String ma);
 }
