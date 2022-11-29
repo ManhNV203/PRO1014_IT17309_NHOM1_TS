@@ -1,11 +1,17 @@
 
 package View;
 
+import DomainModel.ComBo;
 import DomainModel.HoaDonChiTiet;
+import Service.Implement.ComBoChiTietServiceImplement;
+import Service.Implement.ComBoServiceImplement;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
+import Service.Interface.ComBoChiTietServiceInterface;
+import Service.Interface.ComBoServiceInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
+import ViewModel.ComBoChiTietViewModel;
 import ViewModel.HoaDonCTVmodel;
 import ViewModel.HoaDonVModel;
 import java.util.List;
@@ -18,6 +24,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     List<HoaDonVModel> lst_hdvmdbh = hdsvbhitf.getListhdbh();
     DefaultTableModel tbmHDCT ;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
+    ComBoChiTietServiceInterface comBoChiTietServiceInterface = new ComBoChiTietServiceImplement();
+    ComBoServiceInterface comBoServiceInterface = new ComBoServiceImplement();
   
     /**
      * Creates new form QuanLy_BanHang
@@ -29,6 +37,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
         filltableHDBH();
         filltotablehdct();
+        loadComBo();
     }
     public void filltableHDBH(){
         tbm.setRowCount(0);
@@ -43,7 +52,19 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM()});
         }
     }
-    
+    public void loadComBo(){
+        DefaultTableModel tblModel = (DefaultTableModel) tblComBoSanPham.getModel();
+        tblModel.setRowCount(0);
+        List<ComBo> listALL = comBoServiceInterface.getallCombo();
+        for (ComBo comBo : listALL) {
+            tblModel.addRow(new Object[]{
+                comBo.getMa(),
+                comBo.getTen(),
+                comBo.getDonGia(),
+                comBo.getTrangThai()
+            });
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -680,11 +701,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblComBoSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblComBoSanPhamMouseClicked(evt);
-            }
-        });
         jScrollPane7.setViewportView(tblComBoSanPham);
 
         jLabel6.setText("Tên ComBO");
@@ -818,7 +834,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         this.dispose();
 
     }//GEN-LAST:event_btnHoaDonMenuActionPerformed
-
+    
     private void btnDoanUongMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoanUongMenuActionPerformed
         // TODO add your handling code here:
         new QuanLy_DoAnUongFrame().setVisible(true);
@@ -886,6 +902,29 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_btnXoaSPOrderBHActionPerformed
+
+    private void btnChonComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChonComBoActionPerformed
+        // TODO add your handling code here:
+        int row = tblComBoSanPham.getSelectedRow();
+        DefaultTableModel tblModel = (DefaultTableModel) tblSanPhamOrder.getModel();
+        tblModel.setRowCount(0);
+        if(row>=0){
+            String maCB = (String) tblComBoSanPham.getValueAt(row, 0);
+            List<ComBoChiTietViewModel> list = comBoChiTietServiceInterface.getAllComBo();
+            for (ComBoChiTietViewModel comBoChiTietViewModel : list) {
+                if(comBoChiTietViewModel.getMa_CB().equals(maCB)){
+                    tblModel.addRow(new Object[]{
+                        comBoChiTietViewModel.getMa_SP(),
+                        comBoChiTietViewModel.getTen_SP(),
+                        comBoChiTietViewModel.getDonGia(),
+                        1
+                    });
+                    
+                }
+            }
+            lblTongTienBH.setText((String) tblComBoSanPham.getValueAt(row, 2));
+        }
+    }//GEN-LAST:event_btnChonComBoActionPerformed
 
     /**
      * @param args the command line arguments
