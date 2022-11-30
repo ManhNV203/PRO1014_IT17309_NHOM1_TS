@@ -1,8 +1,13 @@
 package View;
 
+import DomainModel.ComBo;
 import DomainModel.HoaDonChiTiet;
+import Service.Implement.ComBoChiTietServiceImplement;
+import Service.Implement.ComBoServiceImplement;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
+import Service.Interface.ComBoChiTietServiceInterface;
+import Service.Interface.ComBoServiceInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
 import ViewModel.HoaDonCTVmodel;
@@ -20,6 +25,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     List<HoaDonVModel> lst_hdvmdbh = hdsvbhitf.getListhdbh();
     DefaultTableModel tbmHDCT;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
+    ComBoServiceInterface comBoServiceInterface = new ComBoServiceImplement();
+    ComBoChiTietServiceInterface comBoChiTietServiceInterface = new ComBoChiTietServiceImplement();
 
     /**
      * Creates new form QuanLy_BanHang
@@ -31,6 +38,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
         filltableHDBH();
         filltotablehdct();
+        filltableComBo();
     }
 
     public void filltableHDBH() {
@@ -45,6 +53,19 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         tbmHDCT.setRowCount(0);
         for (HoaDonCTVmodel x : hdctitf.gethdct()) {
             tbmHDCT.addRow(new Object[]{x.getMa_SP(), x.getTenSP(), x.getDonGia(), x.getSL_Mua(), x.getID_VI(), x.getID_SIZE(), x.getID_dM()});
+        }
+    }
+    public void filltableComBo(){
+        DefaultTableModel tblModel = (DefaultTableModel) tblComBoSanPham.getModel();
+        tblModel.setRowCount(0);
+        List<ComBo> listCB = comBoServiceInterface.getallCombo();
+        for (ComBo comBo : listCB) {
+            tblModel.addRow(new Object[]{
+                comBo.getMa(),
+                comBo.getTen(),
+                comBo.getDonGia(),
+                comBo.getTrangThai()
+            });
         }
     }
 
@@ -719,11 +740,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         btnChonComBo.setBackground(new java.awt.Color(153, 255, 0));
         btnChonComBo.setText("Chọn ComBO");
-        btnChonComBo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChonComBoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -955,6 +971,10 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnLamMoiSanPhamorderBHActionPerformed
+
+    private void tblComBoSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblComBoSanPhamMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblComBoSanPhamMouseClicked
 
     /**
      * @param args the command line arguments
