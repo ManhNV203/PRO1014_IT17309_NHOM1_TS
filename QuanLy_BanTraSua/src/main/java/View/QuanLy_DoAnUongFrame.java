@@ -1191,7 +1191,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
 
     private void btnclearFromThongtinSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnclearFromThongtinSPActionPerformed
         // TODO add your handling code here:
-//        clearfromSanPham();
+        clearfromSanPham();
 //        LoadTableDoUong();
     }//GEN-LAST:event_btnclearFromThongtinSPActionPerformed
 
@@ -1237,9 +1237,10 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private void btnTaoComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoComBoActionPerformed
         // TODO add your handling code here:
         ComBo comBo = new ComBo();
-        int marandom = ThreadLocalRandom.current().nextInt(1000);
+        List<ComBo> listCb = comBoServiceInterface.getallCombo();
+        int listsize = listCb.size();
         String ma;
-        ma = "HD" + marandom;
+        ma = "CB" + listsize++ ;
         comBo.setMa(ma);
         comBo.setTrangThai(1);
         try {
@@ -1265,7 +1266,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                     tblModel.addRow(new Object[]{
                         comBoChiTietViewModel.getMa_SP(),
                         comBoChiTietViewModel.getTen_SP(),
-                        comBoChiTietViewModel.getDonGia()
+                        comBoChiTietViewModel.getDonGia(),
+                        1
                     });
                 }
             }

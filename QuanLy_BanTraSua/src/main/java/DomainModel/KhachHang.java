@@ -23,6 +23,11 @@ public class KhachHang {
         this.MoTa = MoTa;
     }
 
+    @Override
+    public String toString() {
+        return "KhachHang{" + "ID=" + ID + ", Ma=" + Ma + ", HoTen=" + HoTen + ", GioiTinh=" + GioiTinh + ", DiaChi=" + DiaChi + ", SDT=" + SDT + ", MoTa=" + MoTa + '}';
+    }
+
     public String getID() {
         return ID;
     }

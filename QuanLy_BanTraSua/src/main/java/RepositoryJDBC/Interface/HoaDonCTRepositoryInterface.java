@@ -15,4 +15,6 @@ public interface HoaDonCTRepositoryInterface {
     
     public List<HoaDonChiTiet> gethdct();
     public boolean delete(HoaDonChiTiet hdct);
+    public List getIDByMa(int ID);
+    public boolean HuyHoaDon(int ID);
 }

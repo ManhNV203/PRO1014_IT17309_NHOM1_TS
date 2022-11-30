@@ -820,6 +820,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Thanh To&#xe1;n"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThanhToanBHActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTienTraLaiBH">
                 </Component>
@@ -833,6 +836,9 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="H&#x1ee7;y Thanh To&#xe1;n"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLamMoiSanPhamorderBHActionPerformed"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel9">
                   <Properties>

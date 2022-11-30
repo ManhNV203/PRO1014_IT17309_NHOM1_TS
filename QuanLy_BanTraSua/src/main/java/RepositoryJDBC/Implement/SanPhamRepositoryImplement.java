@@ -44,7 +44,7 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
                 DanhMuc dm = new DanhMuc();
                 dm.setId(rs.getInt(7));
                 Size s = new Size();
-                s.setId(8);
+                s.setId(rs.getInt(8));
                 SanPham sp = new SanPham();
                 sp.setId(rs.getInt(1));
                 sp.setMa(rs.getString(2));
