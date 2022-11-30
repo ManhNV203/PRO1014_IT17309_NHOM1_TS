@@ -2,13 +2,14 @@
 package DomainModel;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 
 public class HoaDon {
     private String id;
     private String Ma;
     private NhanVien Id_NV;
-    private String ngayTao;
+    private Date ngayTao;
     private BigDecimal TongTien;
     private KhachHang id_KH;
     private KhuyenMai id_KM;
@@ -17,7 +18,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public HoaDon(String id, String Ma, NhanVien Id_NV, String ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
+    public HoaDon(String id, String Ma, NhanVien Id_NV, Date ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
         this.id = id;
         this.Ma = Ma;
         this.Id_NV = Id_NV;
@@ -27,15 +28,7 @@ public class HoaDon {
         this.id_KM = id_KM;
         this.TrangThai = TrangThai;
     }
-    public HoaDon( String Ma, NhanVien Id_NV, String ngayTao, int TrangThai) {
-        
-        this.Ma = Ma;
-        this.Id_NV = Id_NV;
-        this.ngayTao = ngayTao;
-        this.TrangThai = TrangThai;
-    }
 
-   
     public String getId() {
         return id;
     }
@@ -60,11 +53,11 @@ public class HoaDon {
         this.Id_NV = Id_NV;
     }
 
-    public String getNgayTao() {
+    public Date getNgayTao() {
         return ngayTao;
     }
 
-    public void setNgayTao(String ngayTao) {
+    public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
 
@@ -104,4 +97,6 @@ public class HoaDon {
     public String toString() {
         return "HoaDon{" + "id=" + id + ", Ma=" + Ma + ", Id_NV=" + Id_NV + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", id_KH=" + id_KH + ", id_KM=" + id_KM + ", TrangThai=" + TrangThai + '}';
     }
+    
+    
 }

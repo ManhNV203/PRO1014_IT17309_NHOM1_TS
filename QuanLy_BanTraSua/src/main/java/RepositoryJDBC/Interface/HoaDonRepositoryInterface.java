@@ -14,4 +14,6 @@ import java.util.List;
 public interface HoaDonRepositoryInterface {
     public List<HoaDon> getList();
     public List<HoaDon> getListhdbh();
+    public boolean addHoaDon(HoaDon hd);
+    public boolean Delete(HoaDon hd);
 }

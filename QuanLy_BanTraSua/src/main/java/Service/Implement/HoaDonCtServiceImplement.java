@@ -26,20 +26,7 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
         this.hdctRepository = new HoaDonCtRepositoryImplement();
     }
 
-//    @Override
-//    public List<HoaDonCTVmodel> getall() {
-//        List<HoaDonChiTiet> lst_hdct = hdct.getAll();
-//        List<HoaDonCTVmodel> lst_hdctvmd = new ArrayList<>();
-//        for (HoaDonChiTiet hdctdm : lst_hdct) {
-//            HoaDonCTVmodel hdctvmd = new HoaDonCTVmodel();
-//            hdctvmd.setId_HD(hdctdm.getId_HD());
-//            hdctvmd.setId_SP(hdctdm.getId_SP());
-//            hdctvmd.setSL_Mua(hdctdm.getSL_Mua());
-//            hdctvmd.setDonGia(hdctdm.getDonGia());
-//            lst_hdctvmd.add(hdctvmd);
-//        }
-//        return lst_hdctvmd;
-//    }
+
 
     @Override
     public List<HoaDonCTVmodel> gethdct() {
@@ -48,6 +35,7 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
         for (HoaDonChiTiet hdctdm : lst_hdct) {
             HoaDonCTVmodel hdctvmd = new HoaDonCTVmodel();
             hdctvmd.setId(hdctdm.getId());
+            hdctvmd.setMa_hd(hdctdm.getId_HD().getMa());
             hdctvmd.setMa_SP(hdctdm.getId_SP().getMa());
             hdctvmd.setTenSP(hdctdm.getId_SP().getTen());
             hdctvmd.setID_VI(hdctdm.getId_SP().getId_Vi().getTen());

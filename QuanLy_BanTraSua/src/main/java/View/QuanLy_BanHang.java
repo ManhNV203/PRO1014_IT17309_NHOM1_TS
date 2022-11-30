@@ -1,13 +1,17 @@
 
 package View;
 
+import DomainModel.HoaDon;
 import DomainModel.HoaDonChiTiet;
+import DomainModel.NhanVien;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
 import ViewModel.HoaDonCTVmodel;
 import ViewModel.HoaDonVModel;
+import java.awt.event.MouseEvent;
+import java.util.Date;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -15,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
 public class QuanLy_BanHang extends javax.swing.JFrame {
     DefaultTableModel tbm ;
     HoaDonServiceInterface hdsvbhitf = new HoaDonServiceImplement();
-    List<HoaDonVModel> lst_hdvmdbh = hdsvbhitf.getListhdbh();
+    
     DefaultTableModel tbmHDCT ;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
   
@@ -32,8 +36,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }
     public void filltableHDBH(){
         tbm.setRowCount(0);
-        for (HoaDonVModel x : lst_hdvmdbh) {
-            tbm.addRow(new Object[]{x.getMa(),x.getId_NV().getMa(),x.getNgayTao(),x.getTrangThai()});
+        for (HoaDonVModel x : hdsvbhitf.getListhdbh()) {
+            tbm.addRow(new Object[]{x.getMa(),x.getMa_nv(),x.getNgayTao(),x.getTrangThai()});
         }
         
     }
@@ -54,6 +58,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupmenu = new javax.swing.JPopupMenu();
+        MNTThemSoLuong = new javax.swing.JMenuItem();
+        MNTGiamSoLuong = new javax.swing.JMenuItem();
         pnltong = new javax.swing.JPanel();
         pnlMenu = new javax.swing.JPanel();
         lblAnh = new javax.swing.JLabel();
@@ -126,6 +133,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         pnlAnhComBo = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         btnChonComBo = new javax.swing.JButton();
+
+        MNTThemSoLuong.setText("Thêm Số Lượng");
+        popupmenu.add(MNTThemSoLuong);
+
+        MNTGiamSoLuong.setText("Giam Số Lượng");
+        popupmenu.add(MNTGiamSoLuong);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -254,7 +267,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addComponent(btnThongkeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDangXuatMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         pnlDSHoaDonBH.setBorder(javax.swing.BorderFactory.createTitledBorder("Hóa đơn chờ"));
@@ -346,6 +359,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblSanPhamOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tblSanPhamOrderMouseReleased(evt);
+            }
+        });
         jScrollPane6.setViewportView(tblSanPhamOrder);
 
         javax.swing.GroupLayout pnlSanPhamOrderBHLayout = new javax.swing.GroupLayout(pnlSanPhamOrderBH);
@@ -381,6 +399,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         btnTaoHoaDonBH.setBackground(new java.awt.Color(204, 255, 153));
         btnTaoHoaDonBH.setText("Chờ Thanh Toán");
+        btnTaoHoaDonBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTaoHoaDonBHActionPerformed(evt);
+            }
+        });
 
         lblMaNhanVienBH.setText("NV1");
 
@@ -424,11 +447,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         jLabel9.setText("Số ĐT");
 
         btnaddsdt.setText("+");
-        btnaddsdt.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnaddsdtActionPerformed(evt);
-            }
-        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -680,11 +698,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblComBoSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblComBoSanPhamMouseClicked(evt);
-            }
-        });
         jScrollPane7.setViewportView(tblComBoSanPham);
 
         jLabel6.setText("Tên ComBO");
@@ -706,11 +719,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         btnChonComBo.setBackground(new java.awt.Color(153, 255, 0));
         btnChonComBo.setText("Chọn ComBO");
-        btnChonComBo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnChonComBoActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -794,10 +802,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         pnltongLayout.setVerticalGroup(
             pnltongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnltongLayout.createSequentialGroup()
-                .addGroup(pnltongLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(pnlGiaoDien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE))
+                .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 773, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(pnltongLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pnlGiaoDien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnltong, java.awt.BorderLayout.CENTER);
@@ -887,6 +897,41 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnXoaSPOrderBHActionPerformed
 
+    private void btnTaoHoaDonBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonBHActionPerformed
+        try {
+            NhanVien nv = new NhanVien();
+            nv.setID(1);
+            HoaDon hd = new HoaDon();
+            hd.setMa("HD0" + Math.round(Math.random()*1000));
+            hd.setId_NV(nv);
+            hd.setNgayTao(new Date());
+            hd.setTrangThai(0);
+            System.out.println(hd);
+            hdsvbhitf.addHoaDon(hd);
+            filltableHDBH();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnTaoHoaDonBHActionPerformed
+
+    private void btnXoaSPOrderBH1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBH1ActionPerformed
+        try {
+            HoaDon hd = new HoaDon();
+            hdsvbhitf.Delete(hd);
+            filltableHDBH();
+            
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btnXoaSPOrderBH1ActionPerformed
+
+    private void tblSanPhamOrderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamOrderMouseReleased
+         if (evt.getButton() == MouseEvent.BUTTON3) {
+            if (evt.isPopupTrigger() && tblSanPhamOrder.getSelectedRowCount() != 0) {
+                popupmenu.show(evt.getComponent(), evt.getX(), evt.getY());
+            }
+        }
+
+    }//GEN-LAST:event_tblSanPhamOrderMouseReleased
+
     /**
      * @param args the command line arguments
      */
@@ -923,6 +968,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem MNTGiamSoLuong;
+    private javax.swing.JMenuItem MNTThemSoLuong;
     private javax.swing.JButton btnBanHang_Menu;
     private javax.swing.JButton btnChonComBo;
     private javax.swing.JButton btnDangXuatMenu;
@@ -989,6 +1036,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSanPhamOrderBH;
     private javax.swing.JPanel pnlThongTinHoaDon;
     private javax.swing.JPanel pnltong;
+    private javax.swing.JPopupMenu popupmenu;
     private javax.swing.JTable tblComBoSanPham;
     private javax.swing.JTable tblDSHoaDonBH;
     private javax.swing.JTable tblDSSanPham;

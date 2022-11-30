@@ -13,7 +13,7 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface HoaDonCtServiceInterface {
-//    List<HoaDonCTVmodel> getall();
+
     
      List<HoaDonCTVmodel> gethdct();
      public boolean deleteHDCT(HoaDonChiTiet hdct);
