@@ -1237,9 +1237,10 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private void btnTaoComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoComBoActionPerformed
         // TODO add your handling code here:
         ComBo comBo = new ComBo();
-        int marandom = ThreadLocalRandom.current().nextInt(1000);
+        List<ComBo> listCb = comBoServiceInterface.getallCombo();
+        int listsize = listCb.size();
         String ma;
-        ma = "CB" + marandom;
+        ma = "CB" + listsize++ ;
         comBo.setMa(ma);
         comBo.setTrangThai(1);
         try {

@@ -1169,6 +1169,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblComBoSanPhamMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
@@ -1215,9 +1218,6 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Ch&#x1ecd;n ComBO"/>
                       </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChonComBoActionPerformed"/>
-                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>
