@@ -434,10 +434,9 @@
                     <Component class="javax.swing.JComboBox" name="cbbLoc">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="3">
-                            <StringItem index="0" value="Ch&#x1b0;a Thanh To&#xe1;n"/>
-                            <StringItem index="1" value="&#x110;&#xe3; H&#x1ee7;y"/>
-                            <StringItem index="2" value="&#x110;&#xe3; Thanh To&#xe1;n"/>
+                          <StringArray count="2">
+                            <StringItem index="0" value="&#x110;&#xe3; H&#x1ee7;y"/>
+                            <StringItem index="1" value="&#x110;&#xe3; Thanh To&#xe1;n"/>
                           </StringArray>
                         </Property>
                       </Properties>
@@ -469,7 +468,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="jComboBox2" min="-2" pref="118" max="-2" attributes="0"/>
+                              <Component id="cbbDonGia" min="-2" pref="118" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
                           </Group>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -485,7 +484,7 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
-                              <Component id="jComboBox2" min="-2" max="-2" attributes="0"/>
+                              <Component id="cbbDonGia" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="245" max="32767" attributes="0"/>
                           </Group>
                           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
@@ -526,14 +525,13 @@
                         </Component>
                       </SubComponents>
                     </Container>
-                    <Component class="javax.swing.JComboBox" name="jComboBox2">
+                    <Component class="javax.swing.JComboBox" name="cbbDonGia">
                       <Properties>
                         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                          <StringArray count="4">
-                            <StringItem index="0" value="Item 1"/>
-                            <StringItem index="1" value="Item 2"/>
-                            <StringItem index="2" value="Item 3"/>
-                            <StringItem index="3" value="Item 4"/>
+                          <StringArray count="3">
+                            <StringItem index="0" value="0&lt;=50000 VND"/>
+                            <StringItem index="1" value="50000&lt;=150000 VND"/>
+                            <StringItem index="2" value="150000&lt;=500000 VND"/>
                           </StringArray>
                         </Property>
                       </Properties>

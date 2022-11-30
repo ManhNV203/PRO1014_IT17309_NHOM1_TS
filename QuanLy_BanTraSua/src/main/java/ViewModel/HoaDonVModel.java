@@ -8,38 +8,43 @@ import DomainModel.KhachHang;
 import DomainModel.KhuyenMai;
 import DomainModel.NhanVien;
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  *
  * @author FPTSHOP
  */
 public class HoaDonVModel {
-    
+    private String id;
     private String Ma;
-    private NhanVien Id_NV;
-    private String ngayTao;
+    private String Ma_nv;
+    private String Ten_nv;
+    private Date ngayTao;
     private BigDecimal TongTien;
-    private KhachHang id_KH;
-    private KhuyenMai id_KM;
+    private String TenKh;
+    private String makm;
     private int TrangThai;
-
     public HoaDonVModel() {
     }
 
-    public HoaDonVModel(String Ma, NhanVien Id_NV, String ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
+    public HoaDonVModel(String id, String Ma, String Ma_nv, String Ten_nv, Date ngayTao, BigDecimal TongTien, String TenKh, String makm, int TrangThai) {
+        this.id = id;
         this.Ma = Ma;
-        this.Id_NV = Id_NV;
+        this.Ma_nv = Ma_nv;
+        this.Ten_nv = Ten_nv;
         this.ngayTao = ngayTao;
         this.TongTien = TongTien;
-        this.id_KH = id_KH;
-        this.id_KM = id_KM;
+        this.TenKh = TenKh;
+        this.makm = makm;
         this.TrangThai = TrangThai;
     }
-    public HoaDonVModel(String Ma, NhanVien Id_NV, String ngayTao, int TrangThai) {
-        this.Ma = Ma;
-        this.Id_NV = Id_NV;
-        this.ngayTao = ngayTao;
-        this.TrangThai = TrangThai;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getMa() {
@@ -50,19 +55,27 @@ public class HoaDonVModel {
         this.Ma = Ma;
     }
 
-    public NhanVien getId_NV() {
-        return Id_NV;
+    public String getMa_nv() {
+        return Ma_nv;
     }
 
-    public void setId_NV(NhanVien Id_NV) {
-        this.Id_NV = Id_NV;
+    public void setMa_nv(String Ma_nv) {
+        this.Ma_nv = Ma_nv;
     }
 
-    public String getNgayTao() {
+    public String getTen_nv() {
+        return Ten_nv;
+    }
+
+    public void setTen_nv(String Ten_nv) {
+        this.Ten_nv = Ten_nv;
+    }
+
+    public Date getNgayTao() {
         return ngayTao;
     }
 
-    public void setNgayTao(String ngayTao) {
+    public void setNgayTao(Date ngayTao) {
         this.ngayTao = ngayTao;
     }
 
@@ -74,33 +87,31 @@ public class HoaDonVModel {
         this.TongTien = TongTien;
     }
 
-    public KhachHang getId_KH() {
-        return id_KH;
+    public String getTenKh() {
+        return TenKh;
     }
 
-    public void setId_KH(KhachHang id_KH) {
-        this.id_KH = id_KH;
+    public void setTenKh(String TenKh) {
+        this.TenKh = TenKh;
     }
 
-    public KhuyenMai getId_KM() {
-        return id_KM;
+    public String getMakm() {
+        return makm;
     }
 
-    public void setId_KM(KhuyenMai id_KM) {
-        this.id_KM = id_KM;
+    public void setMakm(String makm) {
+        this.makm = makm;
     }
 
-        public String getTrangThai() {
-        
-            if (TrangThai ==0) {
-                return "Chưa Thanh Toán";
-            }else if(TrangThai==1){
-                return "Chờ Thanh Toán";
-            }else if(TrangThai==2){
-                return "Đã Hủy";
-            }else{
-                return "Đã Thanh Toán";
-            }
+    
+    public String getTrangThai() {
+        if (TrangThai==0) {
+            return "Chưa Thanh Toán";
+        }else if(TrangThai==1){
+            return "Đã Hủy";
+        }else{
+            return "Đã Thanh Toán";
+        }
     }
 
     public void setTrangThai(int TrangThai) {
@@ -109,9 +120,21 @@ public class HoaDonVModel {
 
     @Override
     public String toString() {
-        return "HoaDonVModel{" + "Ma=" + Ma + ", Id_NV=" + Id_NV + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", id_KH=" + id_KH + ", id_KM=" + id_KM + ", TrangThai=" + TrangThai + '}';
+        return "HoaDonVModel{" + "id=" + id + ", Ma=" + Ma + ", Ma_nv=" + Ma_nv + ", Ten_nv=" + Ten_nv + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", TenKh=" + TenKh + ", makm=" + makm + ", TrangThai=" + TrangThai + '}';
     }
 
+    
+
+    
+
+   
+
+    
+
+    
+    
+
+ 
     
     
 }

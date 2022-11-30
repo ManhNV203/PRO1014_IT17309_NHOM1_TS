@@ -17,23 +17,24 @@ import java.util.ArrayList;
  * @author FPTSHOP
  */
 public class HoaDonServiceImplement implements HoaDonServiceInterface{
-    private HoaDonRepositoryInterface hd ;
+    private HoaDonRepositoryInterface hdrp ;
     public HoaDonServiceImplement(){
-        this.hd = new HoaDonRepositoryImplement();
+        this.hdrp = new HoaDonRepositoryImplement();
     }
     
     @Override
     public List<HoaDonVModel> getList() {
-        List<HoaDon> lst_hd = hd.getList();
+        List<HoaDon> lst_hd = hdrp.getList();
         List<HoaDonVModel> lst_hdvmd = new ArrayList<>();
         for (HoaDon hddm : lst_hd) {
             HoaDonVModel hdvmd = new HoaDonVModel();
+            hdvmd.setId(hddm.getId());
             hdvmd.setMa(hddm.getMa());
-            hdvmd.setId_NV(hddm.getId_NV());
+            hdvmd.setTen_nv(hddm.getId_NV().getHoTen());
+            hdvmd.setTenKh(hddm.getId_KH().getHoTen());
+            hdvmd.setMakm(hddm.getId_KM().getMa());
             hdvmd.setNgayTao(hddm.getNgayTao());
             hdvmd.setTongTien(hddm.getTongTien());
-            hdvmd.setId_KH(hddm.getId_KH());
-            hdvmd.setId_KM(hddm.getId_KM());
             hdvmd.setTrangThai(hddm.getTrangThai());
             lst_hdvmd.add(hdvmd);
         }
@@ -42,12 +43,13 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface{
 
     @Override
     public List<HoaDonVModel> getListhdbh() {
-        List<HoaDon> lst_hd = hd.getListhdbh();
+        List<HoaDon> lst_hd = hdrp.getListhdbh();
         List<HoaDonVModel> lst_hdvmd = new ArrayList<>();
         for (HoaDon hd : lst_hd) {
             HoaDonVModel hdvmd = new HoaDonVModel();
+            hdvmd.setId(hd.getId());
             hdvmd.setMa(hd.getMa());
-            hdvmd.setId_NV(hd.getId_NV());
+            hdvmd.setMa_nv(hd.getId_NV().getMa());
             hdvmd.setNgayTao(hd.getNgayTao());
             hdvmd.setTrangThai(hd.getTrangThai());
             lst_hdvmd.add(hdvmd);
@@ -57,23 +59,18 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface{
     }
 
     @Override
-    public boolean ThanhToan(String ma) {
-        boolean check ;
-        check = hd.ThanhToan(ma);
-        return check;
+    public boolean addHoaDon(HoaDon hd) {
+        return hdrp.addHoaDon(hd);
     }
-
-    @Override
-    public boolean HuyThanhToan(String ma) {
-        boolean check;
-        check = hd.HuyThanhToan(ma);
-        return check;
-    }
-
-    @Override
-    public int getIDByMa(String ma) {
-       return hd.getIDByMa(ma);
+    public static void main(String[] args) {
+        HoaDonServiceInterface hdsv = new HoaDonServiceImplement();
+        System.out.println(hdsv.getListhdbh());
         
-        }
+    }
+
+    @Override
+    public boolean Delete(HoaDon hd) {
+        return hdrp.Delete(hd);
+    }
     
 }

@@ -21,10 +21,10 @@ import javax.swing.table.DefaultTableModel;
 public class QuanLy_HoaDon extends javax.swing.JFrame {
     DefaultTableModel tbm1;
     HoaDonCtServiceInterface hdctsv = new HoaDonCtServiceImplement();
-    List<HoaDonCTVmodel> lst_hdctvmd = hdctsv.gethdct();
+    
     DefaultTableModel tbm;
     HoaDonServiceInterface hdsv = new HoaDonServiceImplement();
-    List<HoaDonVModel> lst_hdvmd = hdsv.getList();
+    
     public QuanLy_HoaDon() {
         initComponents();
         this.setResizable(false);
@@ -36,14 +36,22 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
     }
     public void filltableHD(){
         tbm.setRowCount(0);
-        for (HoaDonVModel x : lst_hdvmd) {
-            tbm.addRow(new Object[]{x.getMa(),x.getId_NV().getHoTen(),x.getNgayTao(),x.getTongTien(),x.getId_KH().getMa(),x.getId_KM().getMa(),x.getTrangThai()});
+        for (HoaDonVModel x : hdsv.getList()) {
+            tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
         }
     }
     public void filltableHDCT(){
         tbm1.setRowCount(0);
-        for (HoaDonCTVmodel x : lst_hdctvmd) {
+        for (HoaDonCTVmodel x :  hdctsv.gethdct()) {
             tbm1.addRow(new Object[]{x.getMa_hd(),x.getTenSP(),x.getSL_Mua(),x.getDonGia()});
+        }
+    }
+    public void comboboxTT(){
+        for (int i = 0; i < hdsv.getList().size(); i++) {
+            if (hdsv.getList().get(i).getTrangThai().equalsIgnoreCase(cbbLoc.getSelectedItem().toString())) {
+                
+            } else {
+            }
         }
     }
     
@@ -80,7 +88,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         jPanel24 = new javax.swing.JPanel();
         jScrollPane14 = new javax.swing.JScrollPane();
         tblHDCT = new javax.swing.JTable();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        cbbDonGia = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -245,7 +253,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             }
         });
 
-        cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Chưa Thanh Toán", "Đã Hủy", "Đã Thanh Toán" }));
+        cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hủy", "Đã Thanh Toán" }));
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -298,7 +306,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         ));
         jScrollPane14.setViewportView(tblHDCT);
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbDonGia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0<=50000 VND", "50000<=150000 VND", "150000<=500000 VND" }));
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
@@ -306,7 +314,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel24Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(19, 19, 19))
             .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel24Layout.createSequentialGroup()
@@ -318,7 +326,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel24Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cbbDonGia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(245, Short.MAX_VALUE))
             .addGroup(jPanel24Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel24Layout.createSequentialGroup()
@@ -441,13 +449,13 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
     private void btnTimMKHbtnTimMaKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimMKHbtnTimMaKhachHangActionPerformed
         List<HoaDonVModel> lst_hdvmd = new ArrayList<>();
         for (int i = 0; i < hdsv.getList().size(); i++) {
-            if (hdsv.getList().get(i).getId_KH().getMa().equalsIgnoreCase(txtTimKiem.getText())) {
+            if (hdsv.getList().get(i).getMa().equalsIgnoreCase(txtTimKiem.getText())) {
                 lst_hdvmd.add(hdsv.getList().get(i));
             }
         }
         tbm.setRowCount(0);
         for (HoaDonVModel x : lst_hdvmd) {
-            tbm.addRow(new Object[]{x.getMa(),x.getId_NV().getHoTen(),x.getNgayTao(),x.getTongTien(),x.getId_KH().getMa(),x.getId_KM().getMa(),x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
         }
         filltableHD();
     }//GEN-LAST:event_btnTimMKHbtnTimMaKhachHangActionPerformed
@@ -461,7 +469,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         }
         tbm.setRowCount(0);
         for (HoaDonVModel x : lst_hdvmd) {
-            tbm.addRow(new Object[]{x.getMa(),x.getId_NV().getHoTen(),x.getNgayTao(),x.getTongTien(),x.getId_KH().getMa(),x.getId_KM().getMa(),x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
         }
         filltableHD();
     }//GEN-LAST:event_btnTimMHDbtnTimMaHoaDonActionPerformed
@@ -513,8 +521,8 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
     private javax.swing.JButton btnThongkeMenu;
     private javax.swing.JButton btnTimMHD;
     private javax.swing.JButton btnTimMKH;
+    private javax.swing.JComboBox<String> cbbDonGia;
     private javax.swing.JComboBox<String> cbbLoc;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JPanel jPanel23;
     private javax.swing.JPanel jPanel24;
     private javax.swing.JScrollPane jScrollPane13;

@@ -26,31 +26,12 @@ import javax.crypto.spec.PSource;
  */
 public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
     private static Connection cn = Utility.DBContext.getConnection();
-    @Override
-    public List<HoaDonChiTiet> getAll() {
-        List<HoaDonChiTiet> lst_hdct = new ArrayList<>();
-        String sql = "select hd.Ma as MaHD,sp.Ten as TenSP,hdct.SL_Mua,hdct.DonGia from HoaDonChiTiet hdct join SanPham sp on hdct.Id_SP = sp.Id join HoaDon hd on hdct.Id_HD = hd.Id";
-        try {
-            PreparedStatement pr = cn.prepareStatement(sql);
-            ResultSet rs = pr.executeQuery();
-            while(rs.next()){
-                HoaDon hd = new HoaDon();
-                hd.setMa(rs.getString("MaHD"));
-                SanPham sp = new SanPham();
-                sp.setTen(rs.getString("TenSP"));
-                HoaDonChiTiet hdct = new HoaDonChiTiet(rs.getInt("id"),hd, sp, rs.getInt("SL_Mua"), rs.getDouble("DonGia"));
-                lst_hdct.add(hdct);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return lst_hdct;
-    }
+    
 
     @Override
     public List<HoaDonChiTiet> gethdct() {
         List<HoaDonChiTiet> lst_hdct = new ArrayList<>();
-        String sql ="select hdct.Id, hd.Id as IDHD, sp.Ma as Masp,sp.Ten as TenSp,hdct.DonGia,hdct.SL_Mua,v.Ten as Vi,s.TheTich as TheTich,dm.Ten as DanhMuc from HoaDonChiTiet hdct join SanPham sp on hdct.Id_SP = sp.Id join HoaDon hd on hdct.Id_HD = hd.Id join Vi v on sp.Id_Vi = v.Id join Size s on sp.Id_Size=s.Id join DanhMuc dm on sp.Id_DM=dm.Id ";
+        String sql ="select hdct.Id, hd.Id as IDHD,hd.Ma as mahd, sp.Ma as Masp,sp.Ten as TenSp,hdct.DonGia,hdct.SL_Mua,v.Ten as Vi,s.TheTich as TheTich,dm.Ten as DanhMuc from HoaDonChiTiet hdct join SanPham sp on hdct.Id_SP = sp.Id join HoaDon hd on hdct.Id_HD = hd.Id join Vi v on sp.Id_Vi = v.Id join Size s on sp.Id_Size=s.Id join DanhMuc dm on sp.Id_DM=dm.Id ";
         try {
             PreparedStatement pr = cn.prepareStatement(sql);
             ResultSet rs = pr.executeQuery();
@@ -69,6 +50,7 @@ public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
                 sp.setId_DanhMuc(dm);
                 HoaDon hd = new HoaDon();
                 hd.setId(rs.getString("IDHD"));
+                hd.setMa(rs.getString("mahd"));
                 HoaDonChiTiet hdct = new HoaDonChiTiet(rs.getInt("id"),hd, sp, rs.getInt("SL_Mua"), rs.getDouble("DonGia"));
                 lst_hdct.add(hdct);
                 System.out.println(hdct);

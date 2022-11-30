@@ -13,9 +13,11 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 /**
  *
@@ -26,9 +28,9 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
     @Override
     public List<HoaDon> getList() {
         List<HoaDon> lst_hd = new ArrayList<>();
-        String sql = "select hd.Id,hd.Ma,nv.HoTen AS Ten_nv ,hd.ngayTao,hd.TongTien,kh.Ma AS MA_Kh,km.Ma AS MA_Km,hd.TrangThai from HoaDon hd  join NhanVien nv on  hd.Id_NV = nv.Id \n"
+        String sql = "select hd.Id,hd.Ma,nv.HoTen AS Ten_nv ,hd.ngayTao,hd.TongTien,kh.HoTen AS Ten_Kh,km.Ma AS MA_Km,hd.TrangThai from HoaDon hd  join NhanVien nv on  hd.Id_NV = nv.Id \n"
                 + "  join Khachhang kh on hd.id_KH = kh.Id \n"
-                + " join KhuyenMai km on hd.id_KM = km.Id";
+                + " join KhuyenMai km on hd.id_KM = km.Id where hd.TrangThai=1 or hd.TrangThai=2";
         try {
             PreparedStatement pr = cn.prepareStatement(sql);
             ResultSet rs = pr.executeQuery();
@@ -38,12 +40,12 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
                 NhanVien nv = new NhanVien();
                 nv.setHoTen(rs.getString("Ten_nv"));
                 KhachHang kh = new KhachHang();
-                kh.setMa(rs.getString("MA_Kh"));
+                kh.setHoTen(rs.getString("Ten_Kh"));
                 HoaDon hd = new HoaDon(
                         rs.getString("id"),
                         rs.getString("Ma"),
                         nv,
-                        rs.getString("ngayTao"), 
+                        rs.getDate("ngayTao"), 
                         rs.getBigDecimal("TongTien"), 
                         kh,
                         km, 
@@ -60,14 +62,21 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
     @Override
     public List<HoaDon> getListhdbh() {
         List<HoaDon> lst_hdbh = new ArrayList<>();
-        String sql = "select hd.Ma,nv.Ma as MaNv,hd.ngayTao,hd.TrangThai from HoaDon hd join NhanVien nv  on  hd.Id_NV = nv.Id";
+        String sql = "select hd.id as id,nv.id as idnv ,hd.Ma as Ma,nv.Ma as MaNv,hd.ngayTao,hd.TrangThai from HoaDon hd join NhanVien nv  on  hd.Id_NV = nv.Id where hd.TrangThai=0 ";
         try {
             PreparedStatement pr = cn.prepareStatement(sql);
             ResultSet rs = pr.executeQuery();
+           
             while (rs.next()) { 
                 NhanVien nv = new NhanVien();
                 nv.setMa(rs.getString("MaNv"));
-                HoaDon hd = new HoaDon(rs.getString("Ma"), nv, rs.getString("ngayTao"), rs.getInt("TrangThai"));
+                nv.setID(rs.getInt("idnv"));
+                HoaDon hd = new HoaDon();
+                hd.setMa(rs.getString("Ma"));
+                hd.setId_NV(nv);
+                hd.setId(rs.getString("id"));
+                hd.setNgayTao(rs.getDate("ngayTao"));
+                hd.setTrangThai(rs.getInt("TrangThai"));
                 lst_hdbh.add(hd);
             }
         } catch (Exception e) {
@@ -76,50 +85,35 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
         return lst_hdbh;
     }
 
+ 
     @Override
-    public boolean ThanhToan(String ma) {
-        int check =0;
-        String sql = "update HoaDon set TrangThai = ? where Ma = ?";
+    public boolean addHoaDon(HoaDon hd) {
+       String sql = "insert into HoaDon (ma,Id_NV,ngayTao,TrangThai)values (?,?,?,?)";
         try {
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setObject(1, 3);
-            ps.setObject(2, ma);
-            check = ps.executeUpdate();
-        } catch (SQLException e) {
+            PreparedStatement pr = cn.prepareStatement(sql);
+            pr.setString(1, hd.getMa());
+            pr.setInt(2, hd.getId_NV().getID());
+            pr.setDate(3, new java.sql.Date(hd.getNgayTao().getTime()));
+            pr.setInt(4, hd.getTrangThai());
+            pr.execute();
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return check >0;
+        return false;
     }
 
     @Override
-    public int getIDByMa(String ma) {
-        int ID = 0;
-        String sql = "select HoaDon.ID from HoaDon where Ma =?";
+    public boolean Delete(HoaDon hd) {
+        String sql ="delete  from HoaDon ";
         try {
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setString(1, ma);
-            ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-                ID = rs.getInt("ID");
-            }
-        } catch (SQLException e) {
+            PreparedStatement pr = cn.prepareStatement(sql);
+            pr.executeUpdate();
+            return true;
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return ID;
-    }
-
-    @Override
-    public boolean HuyThanhToan(String ma) {
-        int check = 0;
-        String sql ="delete from HoaDon where Ma = ?";
-        try {
-            PreparedStatement ps = cn.prepareStatement(sql);
-            ps.setString(1, ma);
-            check = ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return check >0;
+        return false;
     }
     
 }

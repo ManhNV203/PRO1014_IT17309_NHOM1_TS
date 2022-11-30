@@ -12,7 +12,7 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface HoaDonCTRepositoryInterface {
-    public List<HoaDonChiTiet> getAll();
+    
     public List<HoaDonChiTiet> gethdct();
     public boolean delete(HoaDonChiTiet hdct);
     public List getIDByMa(int ID);
