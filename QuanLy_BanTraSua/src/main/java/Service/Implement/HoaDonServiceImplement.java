@@ -4,7 +4,6 @@
  */
 package Service.Implement;
 
-
 import RepositoryJDBC.Interface.HoaDonRepositoryInterface;
 import Service.Interface.HoaDonServiceInterface;
 import ViewModel.HoaDonVModel;
@@ -12,16 +11,19 @@ import java.util.List;
 import DomainModel.HoaDon;
 import RepositoryJDBC.Implement.HoaDonRepositoryImplement;
 import java.util.ArrayList;
+
 /**
  *
  * @author FPTSHOP
  */
-public class HoaDonServiceImplement implements HoaDonServiceInterface{
-    private HoaDonRepositoryInterface hdrp ;
-    public HoaDonServiceImplement(){
+public class HoaDonServiceImplement implements HoaDonServiceInterface {
+
+    private HoaDonRepositoryInterface hdrp;
+
+    public HoaDonServiceImplement() {
         this.hdrp = new HoaDonRepositoryImplement();
     }
-    
+
     @Override
     public List<HoaDonVModel> getList() {
         List<HoaDon> lst_hd = hdrp.getList();
@@ -53,7 +55,7 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface{
             hdvmd.setNgayTao(hd.getNgayTao());
             hdvmd.setTrangThai(hd.getTrangThai());
             lst_hdvmd.add(hdvmd);
-            
+
         }
         return lst_hdvmd;
     }
@@ -62,15 +64,35 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface{
     public boolean addHoaDon(HoaDon hd) {
         return hdrp.addHoaDon(hd);
     }
+
     public static void main(String[] args) {
         HoaDonServiceInterface hdsv = new HoaDonServiceImplement();
         System.out.println(hdsv.getListhdbh());
-        
+
     }
 
     @Override
     public boolean Delete(HoaDon hd) {
         return hdrp.Delete(hd);
     }
-    
+
+    @Override
+    public boolean ThanhToan(String ma) {
+        boolean check;
+        check = hdrp.ThanhToan(ma);
+        return check;
+    }
+
+    @Override
+    public boolean HuyThanhToan(String ma) {
+        boolean check;
+        check = hdrp.HuyThanhToan(ma);
+        return check;
+    }
+
+    @Override
+    public int getIDByMa(String ma) {
+        return hdrp.getIDByMa(ma);
+    }
+
 }
