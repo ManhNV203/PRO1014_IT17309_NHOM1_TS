@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +31,7 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
         List<HoaDon> lst_hd = new ArrayList<>();
         String sql = "select hd.Id,hd.Ma,nv.HoTen AS Ten_nv ,hd.ngayTao,hd.TongTien,kh.HoTen AS Ten_Kh,km.Ma AS MA_Km,hd.TrangThai from HoaDon hd  join NhanVien nv on  hd.Id_NV = nv.Id \n"
                 + "  join Khachhang kh on hd.id_KH = kh.Id \n"
-                + " join KhuyenMai km on hd.id_KM = km.Id where hd.TrangThai=1 or hd.TrangThai=2";
+                + " join KhuyenMai km on hd.id_KM = km.Id where hd.TrangThai=1 or hd.TrangThai=3";
         try {
             PreparedStatement pr = cn.prepareStatement(sql);
             ResultSet rs = pr.executeQuery();
@@ -114,6 +115,52 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
             e.printStackTrace();
         }
         return false;
+    }
+
+    @Override
+    public boolean ThanhToan(String ma) {
+        int check =0;
+        String sql = "update HoaDon set TrangThai = ? where Ma = ?";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setObject(1, 3);
+            ps.setObject(2, ma);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check >0;
+    }
+
+    @Override
+    public int getIDByMa(String ma) {
+        int ID = 0;
+        String sql = "select HoaDon.ID from HoaDon where Ma =?";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setString(1, ma);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                ID = rs.getInt("ID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ID;
+    }
+
+    @Override
+    public boolean HuyThanhToan(String ma) {
+        int check = 0;
+        String sql ="delete from HoaDon where Ma = ?";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setString(1, ma);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check >0;
     }
     
 }
