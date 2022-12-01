@@ -2,20 +2,31 @@
 package View;
 
 import DomainModel.ComBo;
+import DomainModel.DanhMuc;
 import DomainModel.HoaDon;
 import DomainModel.HoaDonChiTiet;
 import DomainModel.NhanVien;
+import DomainModel.Vi;
 import Service.Implement.ComBoServiceImplement;
+import Service.Implement.DanhMucServiceImplement;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
+import Service.Implement.SanPhamServiceImplement;
+import Service.Implement.ViServiceImplement;
 import Service.Interface.ComBoServiceInterface;
+import Service.Interface.DanhMucServiceInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
+import Service.Interface.SanPhamServiceInterface;
+import Service.Interface.ViServiceInterface;
 import ViewModel.HoaDonCTVmodel;
 import ViewModel.HoaDonVModel;
+import ViewModel.SanPhamViewModel;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -27,6 +38,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     DefaultTableModel tbmHDCT ;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
     ComBoServiceInterface comBoServiceInterface = new ComBoServiceImplement();
+    SanPhamServiceInterface sp_itf=  new SanPhamServiceImplement();
+    DanhMucServiceInterface dm_itf= new DanhMucServiceImplement();
+    ViServiceInterface vi_itf   = new ViServiceImplement();
     /**
      * Creates new form QuanLy_BanHang
      */
@@ -39,6 +53,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         filltableHDBH();
         filltotablehdct();
         loadTableComBo();
+        fillSanphamBanhang();
+        loadCBBFrame();
     }
     void loadTableComBo(){
          tblModelComBo.setRowCount(0);
@@ -65,6 +81,37 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         for (HoaDonCTVmodel x : hdctitf.gethdct()) {
             tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM()});
         }
+    }
+        public void loadCBBFrame() {
+            DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbLocSanPham.getModel();
+        List<DanhMuc> listDmKho = dm_itf.getallDM();
+        for (DanhMuc danhMuc : listDmKho) {
+            tblComboBoxModelDMKho.addElement(danhMuc.getTenDM());
+        }
+
+        DefaultComboBoxModel tblComboBoxModelVI = (DefaultComboBoxModel) cbbVi.getModel();
+        List<Vi> listVi = vi_itf.getAllVi();
+        for (Vi vi : listVi) {
+            tblComboBoxModelVI.addElement(vi.getTen());
+        }
+    }
+             public void fillSanphamBanhang() {
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
+        tblModel.setRowCount(0);
+        List<SanPhamViewModel> list = sp_itf.getAllSP();
+        for (SanPhamViewModel sanPhamViewModel : list) {
+            tblModel.addRow(new Object[]{
+                sanPhamViewModel.getMa(),
+                sanPhamViewModel.getTen(),
+                sanPhamViewModel.getDonGia(),
+                sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getTenDM(),
+                sanPhamViewModel.getTenSize(),
+                sanPhamViewModel.getTrangThai()
+            });
+        }
+
     }
     
 
@@ -133,9 +180,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tblDSSanPham = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtTimkiemSP = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        btTimkiemSP = new javax.swing.JButton();
         cbbLocSanPham = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         cbbVi = new javax.swing.JComboBox<>();
@@ -286,7 +333,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addComponent(btnThongkeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDangXuatMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(223, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
 
         pnlDSHoaDonBH.setBorder(javax.swing.BorderFactory.createTitledBorder("Hóa đơn chờ"));
@@ -629,13 +676,28 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         jLabel3.setText("Danh Mục");
 
-        jButton1.setText("Tìm Kiếm");
+        btTimkiemSP.setText("Tìm Kiếm");
+        btTimkiemSP.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTimkiemSPActionPerformed(evt);
+            }
+        });
 
-        cbbLocSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbLocSanPham.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Danh mục" }));
+        cbbLocSanPham.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbLocSanPhamActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Vị");
 
-        cbbVi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbbVi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vị", " " }));
+        cbbVi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbbViActionPerformed(evt);
+            }
+        });
 
         jLabel5.setText("Ảnh");
 
@@ -667,9 +729,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                                 .addGap(153, 153, 153)
                                 .addComponent(jLabel3))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtTimkiemSP, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton1)
+                                .addComponent(btTimkiemSP)
                                 .addGap(18, 18, 18)
                                 .addComponent(cbbLocSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(25, 25, 25)
@@ -698,8 +760,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                     .addComponent(jLabel4))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
+                    .addComponent(txtTimkiemSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btTimkiemSP)
                     .addComponent(cbbLocSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbbVi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
@@ -1026,6 +1088,102 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnaddsdtActionPerformed
 
+    private void btTimkiemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTimkiemSPActionPerformed
+   List<SanPhamViewModel> lst_spvmd = new ArrayList<>();
+for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
+            if (sp_itf.getAllSP().get(i).getTen().equalsIgnoreCase(txtTimkiemSP.getText())) {
+                lst_spvmd.add(sp_itf.getAllSP().get(i));
+                JOptionPane.showMessageDialog(this, "Tìm thành công!");
+                DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
+
+                tblModel.setRowCount(0);
+                for (SanPhamViewModel sanPhamViewModel : lst_spvmd) {
+                    tblModel.addRow(new Object[]{
+                        sanPhamViewModel.getMa(),
+                        sanPhamViewModel.getTen(),
+                        sanPhamViewModel.getTenVi(),
+                        sanPhamViewModel.getDonGia(),
+                        sanPhamViewModel.getTenDM()
+
+                    });
+                }
+
+                break;
+            }else{
+                JOptionPane.showMessageDialog(this, "Nhập sai tên sản phẩm");
+                txtTimkiemSP.setText(null);
+                 break;
+            }
+        } 
+
+        
+    }//GEN-LAST:event_btTimkiemSPActionPerformed
+
+    private void cbbLocSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocSanPhamActionPerformed
+        // TODO add your handling code here:
+         // DAnh mục  
+ String nameDM = (String) cbbLocSanPham.getSelectedItem();
+        List<DanhMuc> listdm = dm_itf.getallDM();
+        List<SanPhamViewModel> lstsp_vmd = new ArrayList<>();
+
+        if (nameDM.equalsIgnoreCase("Danh mục")) {
+            lstsp_vmd = sp_itf.getAllSP();
+        } else {
+            for (DanhMuc danhMuc : listdm) {
+                if (danhMuc.getTenDM().equalsIgnoreCase(nameDM)) {
+                    lstsp_vmd = sp_itf.locDanhmuc(danhMuc.getId());
+                }
+            }
+        }
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
+        tblModel.setRowCount(0);
+        for (SanPhamViewModel sanPhamViewModel : lstsp_vmd) {
+            tblModel.addRow(new Object[]{
+                sanPhamViewModel.getMa(),
+                sanPhamViewModel.getTen(),
+                sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getDonGia(),
+                sanPhamViewModel.getTenDM()
+
+            });
+        }
+       
+    }//GEN-LAST:event_cbbLocSanPhamActionPerformed
+
+    private void cbbViActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbViActionPerformed
+        // TODO add your handling code here:
+           
+     String nameVi = (String) cbbVi.getSelectedItem();
+        List<Vi> lisVi = vi_itf.getAllVi();
+        List<SanPhamViewModel> lstsp_vmd = new ArrayList<>();
+
+        if (nameVi.equalsIgnoreCase("Vị")) {
+            lstsp_vmd = sp_itf.getAllSP();
+        } else {
+            for (Vi vi : lisVi) {
+                if (vi.getTen().equalsIgnoreCase(nameVi)) {
+                    lstsp_vmd = sp_itf.locDanhmuc(vi.getId());
+                }
+            }
+        }
+
+        DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
+        tblModel.setRowCount(0);
+        for (SanPhamViewModel sanPhamViewModel : lstsp_vmd) {
+            tblModel.addRow(new Object[]{
+                sanPhamViewModel.getMa(),
+                sanPhamViewModel.getTen(),
+                sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getDonGia(),
+                sanPhamViewModel.getTenDM()
+
+            });
+        }
+
+    
+    }//GEN-LAST:event_cbbViActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1064,6 +1222,7 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem MNTGiamSoLuong;
     private javax.swing.JMenuItem MNTThemSoLuong;
+    private javax.swing.JButton btTimkiemSP;
     private javax.swing.JButton btnBanHang_Menu;
     private javax.swing.JButton btnChonComBo;
     private javax.swing.JButton btnDangXuatMenu;
@@ -1082,7 +1241,6 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JButton btnaddsdt;
     private javax.swing.JComboBox<String> cbbLocSanPham;
     private javax.swing.JComboBox<String> cbbVi;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
@@ -1113,7 +1271,6 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblAnh;
@@ -1137,5 +1294,6 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JTable tblSanPhamOrder;
     private javax.swing.JTextField txtTenKhachHangBH;
     private javax.swing.JTextField txtTienKhacDuaBH;
+    private javax.swing.JTextField txtTimkiemSP;
     // End of variables declaration//GEN-END:variables
 }

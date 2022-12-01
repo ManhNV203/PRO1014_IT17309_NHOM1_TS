@@ -144,5 +144,95 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
         }
     }
 
+    @Override
+    public List<SanPham> locDanhmuc(Integer id) {
+ 
+        String sql = "SELECT [Id]\n"
+                + "      ,[Ma]\n"
+                + "      ,[Ten]\n"
+                + "      ,[DonGia]\n"
+                + "      ,[TrangThai]\n"
+                + "      ,[Id_Vi]\n"
+                + "      ,[Id_DM]\n"
+                + "      ,[Id_Size]\n"
+                + "  FROM [dbo].[SanPham] \n"
+                + "  where [Id_DM] = ?  ";
+
+        List<SanPham> list_sp = new ArrayList<>();
+        try {
+            PreparedStatement pt = con.prepareStatement(sql);
+            pt.setInt(1, id);
+            ResultSet rs = pt.executeQuery();
+            while (rs.next()) {
+               Vi v = new Vi();
+                v.setId(rs.getInt(6));
+                DanhMuc dm = new DanhMuc();
+                dm.setId(rs.getInt(7));
+                Size s = new Size();
+                s.setId(rs.getInt(8));
+                SanPham sp = new SanPham();
+                sp.setId(rs.getInt(1));
+                sp.setMa(rs.getString(2));
+                sp.setTen(rs.getString(3));
+                sp.setDonGia(rs.getString(4));
+                sp.setTrangThai(rs.getInt(5));
+                sp.setId_Vi(v);
+                sp.setId_DanhMuc(dm);
+                sp.setId_size(s);
+                list_sp.add(sp);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(SanPhamRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list_sp;
+
+    }
+
+    @Override
+    public List<SanPham> locVi(Integer id) {
+ String sql = "SELECT [Id]\n"
+                + "      ,[Ma]\n"
+                + "      ,[Ten]\n"
+                + "      ,[DonGia]\n"
+                + "      ,[TrangThai]\n"
+                + "      ,[Id_Vi]\n"
+                + "      ,[Id_DM]\n"
+                + "      ,[Id_Size]\n"
+                + "  FROM [dbo].[SanPham] \n"
+                + "  where [Id_Vi] = ?  ";
+
+        List<SanPham> list_sp = new ArrayList<>();
+        try {
+            PreparedStatement pt = con.prepareStatement(sql);
+            pt.setInt(1, id);
+            ResultSet rs = pt.executeQuery();
+             while (rs.next()) {
+                 Vi v = new Vi();
+                v.setId(rs.getInt(6));
+                DanhMuc dm = new DanhMuc();
+                dm.setId(rs.getInt(7));
+                Size s = new Size();
+                s.setId(rs.getInt(8));
+                SanPham sp = new SanPham();
+                sp.setId(rs.getInt(1));
+                sp.setMa(rs.getString(2));
+                sp.setTen(rs.getString(3));
+                sp.setDonGia(rs.getString(4));
+                sp.setTrangThai(rs.getInt(5));
+                sp.setId_Vi(v);
+                sp.setId_DanhMuc(dm);
+                sp.setId_size(s);
+                list_sp.add(sp);
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(SanPhamRepositoryImplement.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list_sp;
+
+
+    }
+
 
 }
