@@ -19,12 +19,13 @@ import javax.swing.table.DefaultTableModel;
  * @author ADMIN
  */
 public class QuanLy_HoaDon extends javax.swing.JFrame {
+
     DefaultTableModel tbm1;
     HoaDonCtServiceInterface hdctsv = new HoaDonCtServiceImplement();
-    
+
     DefaultTableModel tbm;
     HoaDonServiceInterface hdsv = new HoaDonServiceImplement();
-    
+
     public QuanLy_HoaDon() {
         initComponents();
         this.setResizable(false);
@@ -33,28 +34,22 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         tbm1 = (DefaultTableModel) tblHDCT.getModel();
         filltableHD();
         filltableHDCT();
+
     }
-    public void filltableHD(){
+
+    public void filltableHD() {
         tbm.setRowCount(0);
         for (HoaDonVModel x : hdsv.getList()) {
-            tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(), x.getTen_nv(), x.getNgayTao(), x.getTongTien(), x.getTenKh(), x.getMakm(), x.getTrangThai()});
         }
     }
-    public void filltableHDCT(){
+
+    public void filltableHDCT() {
         tbm1.setRowCount(0);
-        for (HoaDonCTVmodel x :  hdctsv.gethdct()) {
-            tbm1.addRow(new Object[]{x.getMa_hd(),x.getTenSP(),x.getSL_Mua(),x.getDonGia()});
+        for (HoaDonCTVmodel x : hdctsv.gethdct()) {
+            tbm1.addRow(new Object[]{x.getMa_hd(), x.getTenSP(), x.getSL_Mua(), x.getDonGia()});
         }
     }
-    public void comboboxTT(){
-        for (int i = 0; i < hdsv.getList().size(); i++) {
-            if (hdsv.getList().get(i).getTrangThai().equalsIgnoreCase(cbbLoc.getSelectedItem().toString())) {
-                
-            } else {
-            }
-        }
-    }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -254,6 +249,11 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         });
 
         cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hủy", "Đã Thanh Toán" }));
+        cbbLoc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbLocItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -307,6 +307,11 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         jScrollPane14.setViewportView(tblHDCT);
 
         cbbDonGia.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0<=50000 VND", "50000<=150000 VND", "150000<=500000 VND" }));
+        cbbDonGia.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbDonGiaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel24Layout = new javax.swing.GroupLayout(jPanel24);
         jPanel24.setLayout(jPanel24Layout);
@@ -409,7 +414,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
     private void btnHoaDonMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonMenuActionPerformed
         new QuanLy_HoaDon().setVisible(true);
         this.dispose();
-        
+
 
     }//GEN-LAST:event_btnHoaDonMenuActionPerformed
 
@@ -433,17 +438,17 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
 
     private void btnKhuyenMaiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiMenuActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnKhuyenMaiMenuActionPerformed
 
     private void btnThongkeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongkeMenuActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnThongkeMenuActionPerformed
 
     private void btnDangXuatMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatMenuActionPerformed
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_btnDangXuatMenuActionPerformed
 
     private void btnTimMKHbtnTimMaKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimMKHbtnTimMaKhachHangActionPerformed
@@ -455,7 +460,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         }
         tbm.setRowCount(0);
         for (HoaDonVModel x : lst_hdvmd) {
-            tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(), x.getTen_nv(), x.getNgayTao(), x.getTongTien(), x.getTenKh(), x.getMakm(), x.getTrangThai()});
         }
         filltableHD();
     }//GEN-LAST:event_btnTimMKHbtnTimMaKhachHangActionPerformed
@@ -469,10 +474,45 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         }
         tbm.setRowCount(0);
         for (HoaDonVModel x : lst_hdvmd) {
-            tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(), x.getTen_nv(), x.getNgayTao(), x.getTongTien(), x.getTenKh(), x.getMakm(), x.getTrangThai()});
         }
         filltableHD();
     }//GEN-LAST:event_btnTimMHDbtnTimMaHoaDonActionPerformed
+
+    private void cbbLocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbLocItemStateChanged
+        try {
+//            int index = tblHoaDon.getSelectedRow();
+//            String danhmuc = tblHoaDon.getValueAt(index, 6).toString();
+//            cbbLoc.setSelectedItem(danhmuc);
+            String trangThai = (String) cbbLoc.getSelectedItem();
+            tbm.setRowCount(0);
+            for (int i = 0; i < hdsv.getList().size(); i++) {
+                if (hdsv.getList().get(i).getTrangThai().equalsIgnoreCase(trangThai)) {
+                    tbm.addRow(new Object[]{hdsv.getList().get(i).getMa(),
+                        hdsv.getList().get(i).getTen_nv(),hdsv.getList().get(i).getNgayTao()
+                            ,hdsv.getList().get(i).getTongTien(),hdsv.getList().get(i).getTenKh()
+                            ,hdsv.getList().get(i).getMakm(),hdsv.getList().get(i).getTrangThai()});
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cbbLocItemStateChanged
+
+    private void cbbDonGiaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbDonGiaItemStateChanged
+        try {
+            double dongia =  (double) cbbDonGia.getSelectedItem();
+            tbm1.setRowCount(0);
+            for (int i = 0; i < hdctsv.gethdct().size(); i++) {
+                if (hdctsv.gethdct().get(i).getDonGia() == dongia) {
+                    tbm1.addRow(new Object[]{hdctsv.gethdct().get(i).getMa_hd(),
+                        hdctsv.gethdct().get(i).getTenSP(),
+                        hdctsv.gethdct().get(i).getSL_Mua(),
+                        hdctsv.gethdct().get(i).getDonGia()});
+                }
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_cbbDonGiaItemStateChanged
 
     /**
      * @param args the command line arguments

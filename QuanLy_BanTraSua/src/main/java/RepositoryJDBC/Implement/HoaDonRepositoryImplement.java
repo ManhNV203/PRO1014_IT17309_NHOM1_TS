@@ -115,5 +115,10 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
         }
         return false;
     }
+
+//    @Override
+//    public boolean findhd(HoaDon hd) {
+//       String sql = "select  from HoaDon hd join khachhang";
+//    }
     
 }

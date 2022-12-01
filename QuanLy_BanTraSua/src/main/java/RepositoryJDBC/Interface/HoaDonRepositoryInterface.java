@@ -12,8 +12,9 @@ import java.util.List;
  * @author FPTSHOP
  */
 public interface HoaDonRepositoryInterface {
-    public List<HoaDon> getList();
-    public List<HoaDon> getListhdbh();
-    public boolean addHoaDon(HoaDon hd);
-    public boolean Delete(HoaDon hd);
+     List<HoaDon> getList();
+     List<HoaDon> getListhdbh();
+     boolean addHoaDon(HoaDon hd);
+     boolean Delete(HoaDon hd);
+//     boolean findhd(HoaDon hd);
 }
