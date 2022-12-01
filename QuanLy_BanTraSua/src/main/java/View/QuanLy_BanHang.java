@@ -1,11 +1,14 @@
 
 package View;
 
+import DomainModel.ComBo;
 import DomainModel.HoaDon;
 import DomainModel.HoaDonChiTiet;
 import DomainModel.NhanVien;
+import Service.Implement.ComBoServiceImplement;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
+import Service.Interface.ComBoServiceInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
 import ViewModel.HoaDonCTVmodel;
@@ -13,16 +16,17 @@ import ViewModel.HoaDonVModel;
 import java.awt.event.MouseEvent;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 
 public class QuanLy_BanHang extends javax.swing.JFrame {
     DefaultTableModel tbm ;
     HoaDonServiceInterface hdsvbhitf = new HoaDonServiceImplement();
-    
+    DefaultTableModel tblModelComBo;
     DefaultTableModel tbmHDCT ;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
-  
+    ComBoServiceInterface comBoServiceInterface = new ComBoServiceImplement();
     /**
      * Creates new form QuanLy_BanHang
      */
@@ -31,8 +35,23 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         
         tbm = (DefaultTableModel) tblDSHoaDonBH.getModel();
         tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
+        tblModelComBo = (DefaultTableModel) tblComBoSanPham.getModel();
         filltableHDBH();
         filltotablehdct();
+        loadTableComBo();
+    }
+    void loadTableComBo(){
+         tblModelComBo.setRowCount(0);
+         List<ComBo> listCB = comBoServiceInterface.getallCombo();
+         for (ComBo comBo : listCB) {
+            tblModelComBo.addRow(new Object[]{
+                comBo.getMa(),
+                comBo.getTen(),
+                comBo.getDonGia(),
+                comBo.getTrangThai()
+            });
+        }
+         
     }
     public void filltableHDBH(){
         tbm.setRowCount(0);
@@ -104,7 +123,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblCanThanhToanBH = new javax.swing.JLabel();
         btnThanhToanBH = new javax.swing.JButton();
         lblTienTraLaiBH = new javax.swing.JLabel();
-        btnLamMoiSanPhamorderBH = new javax.swing.JButton();
+        btnHuyThanhToan = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
         btnaddsdt = new javax.swing.JButton();
@@ -439,14 +458,29 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         btnThanhToanBH.setBackground(new java.awt.Color(153, 255, 153));
         btnThanhToanBH.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnThanhToanBH.setText("Thanh Toán");
+        btnThanhToanBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThanhToanBHActionPerformed(evt);
+            }
+        });
 
-        btnLamMoiSanPhamorderBH.setBackground(new java.awt.Color(153, 153, 255));
-        btnLamMoiSanPhamorderBH.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnLamMoiSanPhamorderBH.setText("Hủy Thanh Toán");
+        btnHuyThanhToan.setBackground(new java.awt.Color(153, 153, 255));
+        btnHuyThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnHuyThanhToan.setText("Hủy Thanh Toán");
+        btnHuyThanhToan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHuyThanhToanActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Số ĐT");
 
         btnaddsdt.setText("+");
+        btnaddsdt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnaddsdtActionPerformed(evt);
+            }
+        });
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -480,7 +514,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                     .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
                         .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
-                                .addComponent(btnLamMoiSanPhamorderBH)
+                                .addComponent(btnHuyThanhToan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnThanhToanBH, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
@@ -566,7 +600,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(btnThanhToanBH, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnLamMoiSanPhamorderBH))
+                    .addComponent(btnHuyThanhToan))
                 .addGap(20, 20, 20))
         );
 
@@ -841,6 +875,44 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnNhanVienMenuActionPerformed
 
+    private void btnHuyThanhToanActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            if(hdctitf.HuyThanhToan(lblMaHoaDonBH.getText()) == false){
+                if (hdsvbhitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
+                    hdsvbhitf.getListhdbh();
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }else{
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can huy");
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }
+            }
+            if (hdctitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
+                if (hdsvbhitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
+                    hdsvbhitf.getListhdbh();
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }else{
+                    JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan That Bai");
+                    filltableHDBH();
+                    filltotablehdct();
+                    return;
+                }
+            } else {
+                JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan That Bai");
+                return;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
     private void btnKhachHangmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangmenuActionPerformed
         // TODO add your handling code here:
         new Quanly_Khachhang().setVisible(true);
@@ -931,6 +1003,28 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_tblSanPhamOrderMouseReleased
+private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
+    
+    
+    
+    try {
+            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText()) == true) {
+                JOptionPane.showMessageDialog(pnlAnhComBo, "Thanh Cong");
+                
+                filltableHDBH();
+                filltotablehdct();
+            } else {
+                JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can thanh toan");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    
+    
+}
+    private void btnaddsdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddsdtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnaddsdtActionPerformed
 
     /**
      * @param args the command line arguments
@@ -975,9 +1069,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private javax.swing.JButton btnDangXuatMenu;
     private javax.swing.JButton btnDoanUongMenu;
     private javax.swing.JButton btnHoaDonMenu;
+    private javax.swing.JButton btnHuyThanhToan;
     private javax.swing.JButton btnKhachHangmenu;
     private javax.swing.JButton btnKhuyenMaiMenu;
-    private javax.swing.JButton btnLamMoiSanPhamorderBH;
     private javax.swing.JButton btnNhanVienMenu;
     private javax.swing.JButton btnTaoHoaDonBH;
     private javax.swing.JButton btnThanhToanBH;
