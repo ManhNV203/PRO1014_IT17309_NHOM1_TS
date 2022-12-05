@@ -77,9 +77,9 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface {
     }
 
     @Override
-    public boolean ThanhToan(String ma) {
+    public boolean ThanhToan(String ma,double TongTien) {
         boolean check;
-        check = hdrp.ThanhToan(ma);
+        check = hdrp.ThanhToan(ma,TongTien);
         return check;
     }
 
