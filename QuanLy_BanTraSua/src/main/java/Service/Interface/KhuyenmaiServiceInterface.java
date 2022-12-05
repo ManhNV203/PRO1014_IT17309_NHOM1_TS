@@ -26,4 +26,5 @@ public interface KhuyenmaiServiceInterface {
     public List<KhuyenmaiViewModel> GetSotiengiamnhohon100(Double Sotien);
 
     public List<KhuyenmaiViewModel> GetSotiengiamnhohon200(Double Sotien);
+    public List<KhuyenmaiViewModel> getMaKM();
 }

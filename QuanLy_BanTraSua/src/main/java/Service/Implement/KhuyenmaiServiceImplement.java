@@ -70,6 +70,20 @@ public class KhuyenmaiServiceImplement implements KhuyenmaiServiceInterface {
         return kmrps.GetSotiengiamnhohon200(Sotien);
     }
 
+    @Override
+    public List<KhuyenmaiViewModel> getMaKM() {
+        List<KhuyenmaiViewModel> listVMD = new ArrayList<>();
+        List<KhuyenMai> listMD = new ArrayList<>();
+        listMD = kmrps.getMaKhuyenMai();
+        for (KhuyenMai khuyenMai : listMD) {
+            KhuyenmaiViewModel KMVMD = new KhuyenmaiViewModel();
+            KMVMD.setMa(khuyenMai.getMa());
+            KMVMD.setSoTienGiam(khuyenMai.getSoTienGiam());
+            listVMD.add(KMVMD);
+        }
+        return listVMD;
+    }
+
     
     }
 
