@@ -15,8 +15,10 @@ public interface HoaDonRepositoryInterface {
     public List<HoaDon> getList();
     public List<HoaDon> getListhdbh();
     public boolean addHoaDon(HoaDon hd);
-    public boolean Delete(HoaDon hd);
+    public boolean Delete(int id);
      public boolean ThanhToan(String ma);
     public int getIDByMa(String ma);
     public boolean HuyThanhToan(String ma);
+    
+    
 }

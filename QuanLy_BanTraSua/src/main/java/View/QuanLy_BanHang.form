@@ -131,7 +131,7 @@
                       <Component id="btnThongkeMenu" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnDangXuatMenu" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="218" max="32767" attributes="0"/>
+                      <EmptySpace pref="223" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -911,7 +911,7 @@
                                           <Component id="jLabel4" min="-2" pref="37" max="-2" attributes="0"/>
                                           <Group type="102" attributes="0">
                                               <Component id="cbbVi" min="-2" pref="133" max="-2" attributes="0"/>
-                                              <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
+                                              <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                               <Component id="btnThemSPBH" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
@@ -1096,6 +1096,9 @@
                         </Property>
                         <Property name="text" type="java.lang.String" value="Th&#xea;m S&#x1ea3;n Ph&#x1ea9;m Order"/>
                       </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemSPBHActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

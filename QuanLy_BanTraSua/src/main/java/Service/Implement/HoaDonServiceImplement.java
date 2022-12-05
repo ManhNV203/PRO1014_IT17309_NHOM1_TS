@@ -72,8 +72,8 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface {
     }
 
     @Override
-    public boolean Delete(HoaDon hd) {
-        return hdrp.Delete(hd);
+    public boolean Delete(int id) {
+        return hdrp.Delete(id);
     }
 
     @Override

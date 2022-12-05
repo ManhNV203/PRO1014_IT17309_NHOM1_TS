@@ -6,6 +6,7 @@ import DomainModel.DanhMuc;
 import DomainModel.HoaDon;
 import DomainModel.HoaDonChiTiet;
 import DomainModel.NhanVien;
+import DomainModel.SanPham;
 import DomainModel.Vi;
 import Service.Implement.ComBoServiceImplement;
 import Service.Implement.DanhMucServiceImplement;
@@ -51,7 +52,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
         tblModelComBo = (DefaultTableModel) tblComBoSanPham.getModel();
         filltableHDBH();
-        filltotablehdct();
+        
         loadTableComBo();
         fillSanphamBanhang();
         loadCBBFrame();
@@ -76,9 +77,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         }
         
     }
-    public void filltotablehdct(){
+    public void filltotablehdct(String mahd){
         tbmHDCT.setRowCount(0);
-        for (HoaDonCTVmodel x : hdctitf.gethdct()) {
+        for (HoaDonCTVmodel x : hdctitf.gethdct(mahd)) {
             tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM()});
         }
     }
@@ -104,11 +105,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             tblModel.addRow(new Object[]{
                 sanPhamViewModel.getMa(),
                 sanPhamViewModel.getTen(),
-                sanPhamViewModel.getDonGia(),
                 sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getDonGia(),
+                
                 sanPhamViewModel.getTenDM(),
                 sanPhamViewModel.getTenSize(),
-                sanPhamViewModel.getTrangThai()
+                
             });
         }
 
@@ -333,7 +335,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addComponent(btnThongkeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnDangXuatMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(218, Short.MAX_VALUE))
+                .addContainerGap(223, Short.MAX_VALUE))
         );
 
         pnlDSHoaDonBH.setBorder(javax.swing.BorderFactory.createTitledBorder("Hóa đơn chờ"));
@@ -714,6 +716,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         btnThemSPBH.setBackground(new java.awt.Color(153, 255, 153));
         btnThemSPBH.setText("Thêm Sản Phẩm Order");
+        btnThemSPBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSPBHActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -739,7 +746,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cbbVi, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(76, 76, 76)
+                                .addGap(70, 70, 70)
                                 .addComponent(btnThemSPBH))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -944,12 +951,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
                     hdsvbhitf.getListhdbh();
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
                 }else{
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can huy");
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
                 }
             }
@@ -958,12 +965,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
                     hdsvbhitf.getListhdbh();
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
                 }else{
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan That Bai");
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
                 }
             } else {
@@ -1009,7 +1016,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblMaHoaDonBH.setText(tblDSHoaDonBH.getValueAt(index, 0).toString());
         lblMaNhanVienBH.setText(tblDSHoaDonBH.getValueAt(index, 1).toString());
         lblNgayTaoHDBH.setText(tblDSHoaDonBH.getValueAt(index, 2).toString());
-        
+        filltotablehdct(tblDSHoaDonBH.getValueAt(index, 0).toString());
     }//GEN-LAST:event_tblDSHoaDonBHMouseClicked
 
     private void btnXoaSPOrderBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBHActionPerformed
@@ -1017,13 +1024,13 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         try {
             
             HoaDonChiTiet hdct = new HoaDonChiTiet();
-            for (int i = 0; i < hdctitf.gethdct().size(); i++) {
-                if(hdctitf.gethdct().get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))){
-                    hdct.setId(hdctitf.gethdct().get(i).getId());
+            for (int i = 0; i < hdctitf.gethdct(lblMaHoaDonBH.getText()).size(); i++) {
+                if(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))){
+                    hdct.setId(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getId());
                 }
             }
             if(hdctitf.deleteHDCT(hdct)){
-              filltotablehdct();  
+                filltotablehdct(lblMaHoaDonBH.getText());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -1040,7 +1047,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             hd.setId_NV(nv);
             hd.setNgayTao(new Date());
             hd.setTrangThai(0);
-            System.out.println(hd);
+           
             hdsvbhitf.addHoaDon(hd);
             filltableHDBH();
         } catch (Exception e) {
@@ -1048,12 +1055,22 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaoHoaDonBHActionPerformed
 
     private void btnXoaSPOrderBH1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBH1ActionPerformed
-        try {
-            HoaDon hd = new HoaDon();
-            hdsvbhitf.Delete(hd);
-            filltableHDBH();
+        
+        try  {
+            System.out.println(hdsvbhitf.getListhdbh().size());
+            for (int i = 0; i < hdsvbhitf.getListhdbh().size(); i++) {
+                
+                System.out.println(hdsvbhitf.getListhdbh().get(i).getMa());
+                for (int j = 0; j < hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).size(); j++) {
+                     hdctitf.deleteALL(hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).get(i).getId());
+                     
+                }
+                hdsvbhitf.Delete(hdsvbhitf.getListhdbh().get(i).getId());
+                filltableHDBH();
+            }
             
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnXoaSPOrderBH1ActionPerformed
 
@@ -1074,7 +1091,7 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
                 JOptionPane.showMessageDialog(pnlAnhComBo, "Thanh Cong");
                 
                 filltableHDBH();
-                filltotablehdct();
+//                filltotablehdct();
             } else {
                 JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can thanh toan");
             }
@@ -1183,6 +1200,37 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
 
     
     }//GEN-LAST:event_cbbViActionPerformed
+
+    private void btnThemSPBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPBHActionPerformed
+        try {
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            HoaDon hd = new HoaDon();
+            SanPham sp = new SanPham();
+            for (int i = 0; i < hdsvbhitf.getListhdbh().size(); i++) {
+                if(hdsvbhitf.getListhdbh().get(i).getMa().equals(tblDSHoaDonBH.getValueAt(tblDSHoaDonBH.getSelectedRow(), 0))){
+                    hd.setId(hdsvbhitf.getListhdbh().get(i).getId());
+                }
+            }
+            Object Slnhap = JOptionPane.showInputDialog(this,"Mời nhập số lượng");
+            if(Slnhap instanceof String){
+                hdct.setSL_Mua(Integer.parseInt(Slnhap.toString()));
+            }else{
+                return;
+            }
+            for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
+                if(sp_itf.getAllSP().get(i).getMa().equals(tblDSSanPham.getValueAt(tblDSSanPham.getSelectedRow(), 0))){
+                    sp.setId(sp_itf.getAllSP().get(i).getId());
+                    hdct.setDonGia(Double.parseDouble(sp_itf.getAllSP().get(i).getDonGia()));
+                }
+            }
+            hdct.setId_HD(hd);
+            hdct.setId_SP(sp);
+            hdctitf.AddHdct(hdct);
+            filltotablehdct(lblMaHoaDonBH.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnThemSPBHActionPerformed
 
     /**
      * @param args the command line arguments

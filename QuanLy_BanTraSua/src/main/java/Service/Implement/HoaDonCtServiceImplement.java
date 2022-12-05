@@ -34,8 +34,8 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
 
 
     @Override
-    public List<HoaDonCTVmodel> gethdct() {
-        List<HoaDonChiTiet> lst_hdct = hdctRepository.gethdct();
+    public List<HoaDonCTVmodel> gethdct(String mahd) {
+        List<HoaDonChiTiet> lst_hdct = hdctRepository.gethdct(mahd);
         List<HoaDonCTVmodel> lst_hdctvmd = new ArrayList<>();
         for (HoaDonChiTiet hdctdm : lst_hdct) {
             HoaDonCTVmodel hdctvmd = new HoaDonCTVmodel();
@@ -55,7 +55,7 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
     
     public static void main(String[] args) {
         HoaDonCTRepositoryInterface hoaDonCTRepositoryInterface = new HoaDonCtRepositoryImplement();
-        System.out.println(hoaDonCTRepositoryInterface.gethdct());
+//        System.out.println(hoaDonCTRepositoryInterface.gethdct());
     }
 
     @Override
@@ -82,5 +82,15 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
         }
         
         return check;
+    }
+
+    @Override
+    public boolean deleteALL(int id) {
+        return hdctRepository.deleteALL(id);
+    }
+
+    @Override
+    public boolean AddHdct(HoaDonChiTiet hdct) {
+        return hdctRepository.AddHdct(hdct);
     }
 }

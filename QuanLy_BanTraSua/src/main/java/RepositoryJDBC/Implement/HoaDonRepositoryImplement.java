@@ -43,7 +43,7 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
                 KhachHang kh = new KhachHang();
                 kh.setHoTen(rs.getString("Ten_Kh"));
                 HoaDon hd = new HoaDon(
-                        rs.getString("id"),
+                        rs.getInt("id"),
                         rs.getString("Ma"),
                         nv,
                         rs.getDate("ngayTao"), 
@@ -53,6 +53,9 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
                         rs.getInt("TrangThai"));
                 lst_hd.add(hd);
             }
+            // câu truy vấn thg Resulset nó đang trả về 0 có nghĩa là nó đang không có thg nào để duyệt trong rs.next
+            //ông xem lại câu truy vấn đi
+            // vãi
             System.out.println(lst_hd);
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +78,7 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
                 HoaDon hd = new HoaDon();
                 hd.setMa(rs.getString("Ma"));
                 hd.setId_NV(nv);
-                hd.setId(rs.getString("id"));
+                hd.setId(rs.getInt("id"));
                 hd.setNgayTao(rs.getDate("ngayTao"));
                 hd.setTrangThai(rs.getInt("TrangThai"));
                 lst_hdbh.add(hd);
@@ -105,10 +108,11 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
     }
 
     @Override
-    public boolean Delete(HoaDon hd) {
-        String sql ="delete  from HoaDon ";
+    public boolean Delete(int id) {
+        String sql ="delete  from HoaDon where id=? ";
         try {
             PreparedStatement pr = cn.prepareStatement(sql);
+            pr.setInt(1, id);
             pr.executeUpdate();
             return true;
         } catch (Exception e) {

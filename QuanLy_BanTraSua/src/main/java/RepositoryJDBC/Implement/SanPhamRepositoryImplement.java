@@ -25,32 +25,24 @@ public class SanPhamRepositoryImplement implements SanPhamRepositoryInterface {
 
     @Override
     public List<SanPham> getAllSanPham() {
-        String sql = "SELECT [Id]\n"
-                + "      ,[Ma]\n"
-                + "      ,[Ten]\n"
-                + "      ,[DonGia]\n"
-                + "      ,[TrangThai]\n"
-                + "      ,[Id_Vi]\n"
-                + "      ,[Id_DM]\n"
-                + "      ,[Id_Size]\n"
-                + "  FROM [dbo].[SanPham]";
+        String sql = "Select sp.Id, sp.Ma,sp.Ten, v.Ten, s.TheTich, dm.Ten , sp.DonGia \n" +
+"From SanPham sp join Vi v on sp.Id_Vi = v.Id join Size s on sp.Id_Size = s.Id join DanhMuc dm on sp.Id_DM = dm.Id";
         List<SanPham> listSP = new ArrayList<>();
         try {
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Vi v = new Vi();
-                v.setId(rs.getInt(6));
+                v.setTen(rs.getString(4));
                 DanhMuc dm = new DanhMuc();
-                dm.setId(rs.getInt(7));
+                dm.setTenDM(rs.getString(6));
                 Size s = new Size();
-                s.setId(rs.getInt(8));
+                s.setTheTich(rs.getString(5));
                 SanPham sp = new SanPham();
                 sp.setId(rs.getInt(1));
                 sp.setMa(rs.getString(2));
                 sp.setTen(rs.getString(3));
-                sp.setDonGia(rs.getString(4));
-                sp.setTrangThai(rs.getInt(5));
+                sp.setDonGia(rs.getString(7));
                 sp.setId_Vi(v);
                 sp.setId_DanhMuc(dm);
                 sp.setId_size(s);

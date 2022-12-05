@@ -17,7 +17,7 @@ public interface HoaDonServiceInterface {
     public List<HoaDonVModel> getList();
     public List<HoaDonVModel > getListhdbh();
     public boolean addHoaDon(HoaDon hd);
-    public boolean Delete(HoaDon hd);
+    public boolean Delete(int  id);
     public boolean ThanhToan(String ma);
     public boolean HuyThanhToan(String ma);
     public int getIDByMa(String ma);

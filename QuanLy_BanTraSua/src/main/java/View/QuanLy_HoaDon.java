@@ -32,7 +32,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         tbm = (DefaultTableModel) tblHoaDon.getModel();
         tbm1 = (DefaultTableModel) tblHDCT.getModel();
         filltableHD();
-        filltableHDCT();
+        
     }
     public void filltableHD(){
         tbm.setRowCount(0);
@@ -40,9 +40,9 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
         }
     }
-    public void filltableHDCT(){
+    public void filltableHDCT(String Mahd){
         tbm1.setRowCount(0);
-        for (HoaDonCTVmodel x :  hdctsv.gethdct()) {
+        for (HoaDonCTVmodel x :  hdctsv.gethdct(Mahd)) {
             tbm1.addRow(new Object[]{x.getMa_hd(),x.getTenSP(),x.getSL_Mua(),x.getDonGia()});
         }
     }
