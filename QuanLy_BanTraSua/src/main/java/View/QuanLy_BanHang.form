@@ -573,7 +573,7 @@
                                           <Component id="btnTaoHoaDonBH" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="jTextField3" max="32767" attributes="0"/>
+                                          <Component id="txtSDTKH" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btnaddsdt" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
@@ -605,7 +605,7 @@
                                               <Component id="lblCanThanhToanBH" alignment="0" min="-2" pref="135" max="-2" attributes="0"/>
                                               <Component id="txtTienKhacDuaBH" alignment="0" pref="179" max="32767" attributes="0"/>
                                               <Component id="txtTenKhachHangBH" alignment="0" pref="179" max="32767" attributes="0"/>
-                                              <Component id="jComboBox1" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="cboMaKM" alignment="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="jLabel28" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -644,7 +644,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jTextField3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSDTKH" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnaddsdt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
@@ -657,7 +657,7 @@
                                       <Group type="102" alignment="1" attributes="0">
                                           <Group type="103" groupAlignment="3" attributes="0">
                                               <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                              <Component id="cboMaKM" alignment="3" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
@@ -792,6 +792,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JTextField" name="txtTienKhacDuaBH">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtTienKhacDuaBHCaretUpdate"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTienKhacDuaBHActionPerformed"/>
+                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTienKhacDuaBHKeyTyped"/>
+                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel28">
                   <Properties>
@@ -807,8 +815,14 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTongTienBH">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblCanThanhToanBH">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnThanhToanBH">
                   <Properties>
@@ -825,6 +839,9 @@
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lblTienTraLaiBH">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="0"/>
+                  </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btnHuyThanhToan">
                   <Properties>
@@ -845,7 +862,7 @@
                     <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x110;T"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextField3">
+                <Component class="javax.swing.JTextField" name="txtSDTKH">
                 </Component>
                 <Component class="javax.swing.JButton" name="btnaddsdt">
                   <Properties>
@@ -855,17 +872,17 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnaddsdtActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JComboBox" name="jComboBox1">
+                <Component class="javax.swing.JComboBox" name="cboMaKM">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
+                      <StringArray count="1">
+                        <StringItem index="0" value="Ma Khuyen Mai"/>
                       </StringArray>
                     </Property>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cboMaKMActionPerformed"/>
+                  </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
                   </AuxValues>

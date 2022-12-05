@@ -39,7 +39,7 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
             while (rs.next()) {
                 KhachHang kh = new KhachHang();
                 listkh.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
-         
+
 //            Khachhang kh  = new Khachhang(sql, sql, sql, sql, sql, sql, sql)
             }
         } catch (SQLException ex) {
@@ -84,7 +84,6 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
     public void updateKhachhang(KhachHang kh) {
         String query = "UPDATE [dbo].[Khachhang]\n"
                 + "   SET\n"
-                   
                 + "      [HoTen] = ?\n"
                 + "      ,[GioiTinh] =?\n"
                 + "      ,[DiaChi] = ?\n"
@@ -92,8 +91,8 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
                 + "      ,[MoTa] = ?\n"
                 + " WHERE Ma = ?";
         try {
-            PreparedStatement ptm =  con.prepareStatement(query);
-            
+            PreparedStatement ptm = con.prepareStatement(query);
+
             ptm.setString(1, kh.getHoTen());
             ptm.setString(2, kh.getGioiTinh());
             ptm.setString(3, kh.getDiaChi());
@@ -101,7 +100,7 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
             ptm.setString(5, kh.getMoTa());
             ptm.setString(6, kh.getMa());
             ptm.executeUpdate();
-        }  catch (SQLException e) {
+        } catch (SQLException e) {
             Logger.getLogger(KhachhangRepositoryImplement.class.getName()).log(Level.SEVERE, null, e);
         }
     }
@@ -123,7 +122,7 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
     }
 
     @Override
-    public List<KhachHang> getBySDT(String sdt) {
+    public KhachHang getBySDT(String sdt) {
         KhachHang kh = new KhachHang();
         List<KhachHang> list = new ArrayList<>();
         String sql = "select * from KhachHang where SDT = ?";
@@ -131,18 +130,36 @@ public class KhachhangRepositoryImplement implements KhachhangRepositoryInterfac
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, sdt);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
-            list.add(new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7)));
-
+            if (rs.next()) {
+                kh = new KhachHang(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
+                return kh;
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return list;
+        return null;
     }
 //    public static void main(String[] args) {
 //        KhachhangRepositoryImplement kh = new KhachhangRepositoryImplement();
 //        System.out.println(kh.getBySDT("0343204318").toString());
 //    }
+
+    @Override
+    public boolean addSDTKhachHang(String SDT, String hoTen) {
+        int check = 0;
+        String sql = "insert into KhachHang( KhachHang.HoTen,KhachHang.SDT,KhachHang.Ma) values (?,?,?)";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, hoTen);
+            ps.setString(2, SDT);
+            ps.setString(3, "KH0" + Math.round(Math.random() * 1000));
+            
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check > 1;
+    }
 
 }
