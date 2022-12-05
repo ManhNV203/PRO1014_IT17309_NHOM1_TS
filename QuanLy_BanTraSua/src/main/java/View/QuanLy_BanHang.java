@@ -145,9 +145,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         popupmenu = new javax.swing.JPopupMenu();
         MNTThemSoLuong = new javax.swing.JMenuItem();
         MNTGiamSoLuong = new javax.swing.JMenuItem();
+        lblAnh = new javax.swing.JLabel();
         pnltong = new javax.swing.JPanel();
         pnlMenu = new javax.swing.JPanel();
-        lblAnh = new javax.swing.JLabel();
         btnBanHang_Menu = new javax.swing.JButton();
         btnHoaDonMenu = new javax.swing.JButton();
         btnDoanUongMenu = new javax.swing.JButton();
@@ -314,10 +314,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         pnlMenuLayout.setHorizontalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnlMenuLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnBanHang_Menu, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
@@ -333,9 +329,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         pnlMenuLayout.setVerticalGroup(
             pnlMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlMenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(124, 124, 124)
                 .addComponent(btnBanHang_Menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnHoaDonMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1114,7 +1108,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
 
         try {
-            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText()) == true) {
+            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText(),Double.parseDouble(lblTongTienBH.getText())) == true) {
                 JOptionPane.showMessageDialog(pnlAnhComBo, "Thanh Cong");
 
                 filltableHDBH();

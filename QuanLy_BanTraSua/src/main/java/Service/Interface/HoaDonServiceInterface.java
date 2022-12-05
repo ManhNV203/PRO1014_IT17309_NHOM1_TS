@@ -18,7 +18,7 @@ public interface HoaDonServiceInterface {
     public List<HoaDonVModel > getListhdbh();
     public boolean addHoaDon(HoaDon hd);
     public boolean Delete(HoaDon hd);
-    public boolean ThanhToan(String ma);
+    public boolean ThanhToan(String ma,double TongTien);
     public boolean HuyThanhToan(String ma);
     public int getIDByMa(String ma);
 }
