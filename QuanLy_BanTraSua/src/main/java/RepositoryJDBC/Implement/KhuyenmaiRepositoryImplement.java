@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,6 +49,11 @@ public class KhuyenmaiRepositoryImplement implements KhuyenmaiRepositoryinterfac
             Logger.getLogger(KhuyenmaiViewModel.class.getName()).log(Level.SEVERE, null, e);
         }
         return list;
+    }
+    public static void main(String[] args) {
+        KhuyenmaiRepositoryImplement km = new KhuyenmaiRepositoryImplement();
+        List<KhuyenMai> list = km.getMaKhuyenMai();
+        System.out.println(list);
     }
 
     @Override
@@ -170,6 +176,25 @@ public class KhuyenmaiRepositoryImplement implements KhuyenmaiRepositoryinterfac
 
         return list;
 
+    }
+
+    @Override
+    public List<KhuyenMai> getMaKhuyenMai() {
+        List<KhuyenMai> listKM = new ArrayList<>();
+        String sql = "select KhuyenMai.Ma,KhuyenMai.SoTienGiam from KhuyenMai";
+        try {
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()){
+                KhuyenMai km = new KhuyenMai();
+                km.setMa(rs.getString("Ma"));
+                km.setSoTienGiam(rs.getDouble("SoTienGiam"));
+                listKM.add(km);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listKM;
     }
 
   

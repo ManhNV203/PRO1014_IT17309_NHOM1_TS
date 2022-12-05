@@ -11,6 +11,7 @@ import Service.Interface.KhachhangServiceInterface;
 import ViewModel.KhachhangViewmodel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -56,6 +57,27 @@ public class KhachhangServiceImplement implements KhachhangServiceInterface {
     @Override
     public void UPdatekhachhang(KhachHang kh) {
         khrpitf.updateKhachhang(kh);
+    }
+
+    @Override
+    public boolean addSDTKhachHang(String SDT, String hoTen) {
+        boolean check;
+        check = khrpitf.addSDTKhachHang(SDT, hoTen);
+        return check;
+    }
+
+    @Override
+    public KhachhangViewmodel getBySDT(String SDT) {
+        KhachhangViewmodel KHVMD = new KhachhangViewmodel();
+        KhachHang KHMD = khrpitf.getBySDT(SDT);
+        if (Objects.isNull(KHMD)) {
+            return null;
+        }
+
+        KHVMD.setHoTen(KHMD.getHoTen());
+        KHVMD.setSDT(KHMD.getSDT());
+
+        return KHVMD;
     }
 
 }

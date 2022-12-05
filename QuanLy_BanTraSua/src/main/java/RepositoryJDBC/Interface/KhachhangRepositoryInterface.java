@@ -17,6 +17,7 @@ public interface KhachhangRepositoryInterface {
      public void createKhachang(KhachHang kh);
     public void updateKhachhang(KhachHang kh) ;
     public void deleteKhachhang(KhachHang kh) ;
-    public List<KhachHang> getBySDT(String sdt);
+    public KhachHang getBySDT(String sdt);
+    public boolean addSDTKhachHang(String SDT,String hoTen);
     
 }

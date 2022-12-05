@@ -22,4 +22,7 @@ public interface KhachhangServiceInterface {
     
     public  void UPdatekhachhang(KhachHang kh);
     
+    public boolean addSDTKhachHang(String SDT,String hoTen);
+    
+    public KhachhangViewmodel getBySDT(String SDT);
 }
