@@ -19,5 +19,5 @@ public interface HoaDonCTRepositoryInterface {
     public boolean HuyHoaDon(int ID);
     boolean deleteALL(int id);
     boolean AddHdct(HoaDonChiTiet hdct);
-    
+    boolean UpdateSoLuong(HoaDonChiTiet hdct);
 }

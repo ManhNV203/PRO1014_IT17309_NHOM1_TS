@@ -156,5 +156,20 @@ public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
         }
         return false;
     }
+
+    @Override
+    public boolean UpdateSoLuong(HoaDonChiTiet hdct) {
+        String sql = "update hoadonchitiet set SL_Mua=? where id=?";
+        try {
+            PreparedStatement pr = cn.prepareStatement(sql);
+            pr.setDouble(1, hdct.getSL_Mua());
+            pr.setInt(2, hdct.getId());
+            pr.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     
 }

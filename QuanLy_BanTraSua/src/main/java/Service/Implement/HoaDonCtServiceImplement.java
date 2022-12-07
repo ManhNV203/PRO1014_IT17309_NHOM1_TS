@@ -93,4 +93,9 @@ public class HoaDonCtServiceImplement implements HoaDonCtServiceInterface {
     public boolean AddHdct(HoaDonChiTiet hdct) {
         return hdctRepository.AddHdct(hdct);
     }
+
+    @Override
+    public boolean UpdateSoLuong(HoaDonChiTiet hdct) {
+        return hdctRepository.UpdateSoLuong(hdct);
+    }
 }

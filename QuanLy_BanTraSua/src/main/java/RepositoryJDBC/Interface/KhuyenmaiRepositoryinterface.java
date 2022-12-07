@@ -29,5 +29,7 @@ public interface KhuyenmaiRepositoryinterface {
     public List<KhuyenmaiViewModel> GetSotiengiamnhohon200(Double Sotien);
     
     public List<KhuyenMai> getMaKhuyenMai();
+    
+    public KhuyenMai getID(String ma);
 
 }

@@ -122,13 +122,16 @@ public class HoaDonRepositoryImplement implements HoaDonRepositoryInterface{
     }
 
     @Override
-    public boolean ThanhToan(String ma) {
+    public boolean ThanhToan(String ma,double TongTien,String ID_KH,String ID_KM) {
         int check =0;
-        String sql = "update HoaDon set TrangThai = ? where Ma = ?";
+        String sql = "update HoaDon set TrangThai = ?,TongTien=?,id_KH = ?,id_KM = ? where Ma = ?";
         try {
             PreparedStatement ps = cn.prepareStatement(sql);
             ps.setObject(1, 3);
-            ps.setObject(2, ma);
+            ps.setObject(2, TongTien);
+            ps.setObject(3, ID_KH);
+            ps.setObject(4, ID_KM);
+            ps.setObject(5, ma);
             check = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

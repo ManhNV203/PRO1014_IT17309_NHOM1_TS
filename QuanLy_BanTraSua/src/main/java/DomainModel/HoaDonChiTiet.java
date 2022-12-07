@@ -59,11 +59,14 @@ public class HoaDonChiTiet {
     public void setDonGia(double DonGia) {
         this.DonGia = DonGia;
     }
+    
 
     @Override
     public String toString() {
         return "HoaDonChiTiet{" + "id=" + id + ", Id_HD=" + Id_HD + ", Id_SP=" + Id_SP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + '}';
     }
+
+    
 
    
     

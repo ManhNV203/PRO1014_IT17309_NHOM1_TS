@@ -20,4 +20,5 @@ public interface HoaDonCtServiceInterface {
      public boolean HuyThanhToan(String ma);
      boolean deleteALL(int id);
      boolean AddHdct(HoaDonChiTiet hdct);
+     boolean UpdateSoLuong(HoaDonChiTiet hdct);
 }

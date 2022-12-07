@@ -12,21 +12,29 @@ import Service.Implement.ComBoServiceImplement;
 import Service.Implement.DanhMucServiceImplement;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
+import Service.Implement.KhachhangServiceImplement;
+import Service.Implement.KhuyenmaiServiceImplement;
 import Service.Implement.SanPhamServiceImplement;
 import Service.Implement.ViServiceImplement;
 import Service.Interface.ComBoServiceInterface;
 import Service.Interface.DanhMucServiceInterface;
 import Service.Interface.HoaDonCtServiceInterface;
 import Service.Interface.HoaDonServiceInterface;
+import Service.Interface.KhachhangServiceInterface;
+import Service.Interface.KhuyenmaiServiceInterface;
 import Service.Interface.SanPhamServiceInterface;
 import Service.Interface.ViServiceInterface;
+import Utility.Validate;
 import ViewModel.HoaDonCTVmodel;
 import ViewModel.HoaDonVModel;
+import ViewModel.KhachhangViewmodel;
+import ViewModel.KhuyenmaiViewModel;
 import ViewModel.SanPhamViewModel;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -42,6 +50,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     SanPhamServiceInterface sp_itf=  new SanPhamServiceImplement();
     DanhMucServiceInterface dm_itf= new DanhMucServiceImplement();
     ViServiceInterface vi_itf   = new ViServiceImplement();
+    KhachhangServiceInterface KHITF = new KhachhangServiceImplement();
+    KhuyenmaiServiceInterface KMSV = new KhuyenmaiServiceImplement();
     /**
      * Creates new form QuanLy_BanHang
      */
@@ -80,7 +90,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     public void filltotablehdct(String mahd){
         tbmHDCT.setRowCount(0);
         for (HoaDonCTVmodel x : hdctitf.gethdct(mahd)) {
-            tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM()});
+            tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM(),x.getTongtien()});
         }
     }
         public void loadCBBFrame() {
@@ -174,9 +184,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblTienTraLaiBH = new javax.swing.JLabel();
         btnHuyThanhToan = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtSDTKHH = new javax.swing.JTextField();
         btnaddsdt = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cboMaKM = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -428,6 +438,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             }
         });
         tblSanPhamOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSanPhamOrderMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblSanPhamOrderMouseReleased(evt);
             }
@@ -499,10 +512,26 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         jLabel27.setText("Trả lại");
 
+        txtTienKhacDuaBH.setText("0");
+        txtTienKhacDuaBH.addCaretListener(new javax.swing.event.CaretListener() {
+            public void caretUpdate(javax.swing.event.CaretEvent evt) {
+                txtTienKhacDuaBHCaretUpdate(evt);
+            }
+        });
+        txtTienKhacDuaBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTienKhacDuaBHActionPerformed(evt);
+            }
+        });
+
         jLabel28.setText("Tiền khách đưa");
 
         jLabel29.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel29.setText("VND");
+
+        lblTongTienBH.setText("0");
+
+        lblCanThanhToanBH.setText("0");
 
         btnThanhToanBH.setBackground(new java.awt.Color(153, 255, 153));
         btnThanhToanBH.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -512,6 +541,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 btnThanhToanBHActionPerformed(evt);
             }
         });
+
+        lblTienTraLaiBH.setText("0");
 
         btnHuyThanhToan.setBackground(new java.awt.Color(153, 153, 255));
         btnHuyThanhToan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -531,7 +562,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboMaKM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Ma Khuyen Mai" }));
+        cboMaKM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboMaKMActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlThongTinHoaDonLayout = new javax.swing.GroupLayout(pnlThongTinHoaDon);
         pnlThongTinHoaDon.setLayout(pnlThongTinHoaDonLayout);
@@ -556,7 +592,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnTaoHoaDonBH))
                             .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
-                                .addComponent(jTextField3)
+                                .addComponent(txtSDTKHH)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnaddsdt)
                                 .addGap(3, 3, 3))))
@@ -582,7 +618,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                                     .addComponent(lblCanThanhToanBH, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtTienKhacDuaBH, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
                                     .addComponent(txtTenKhachHangBH, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(cboMaKM, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addComponent(jLabel28))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -610,7 +646,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSDTKHH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnaddsdt))
                 .addGap(9, 9, 9)
                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -622,7 +658,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                             .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
                                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel20)
-                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(cboMaKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
                                         .addGap(18, 18, 18)
@@ -670,6 +706,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tblDSSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDSSanPhamMouseClicked(evt);
             }
         });
         jScrollPane4.setViewportView(tblDSSanPham);
@@ -994,7 +1035,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKhuyenMaiMenuActionPerformed
 
     private void btnThongkeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongkeMenuActionPerformed
-        // TODO add your handling code here:
+        new Quanly_ThongKe().setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_btnThongkeMenuActionPerformed
 
@@ -1017,6 +1059,18 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblMaNhanVienBH.setText(tblDSHoaDonBH.getValueAt(index, 1).toString());
         lblNgayTaoHDBH.setText(tblDSHoaDonBH.getValueAt(index, 2).toString());
         filltotablehdct(tblDSHoaDonBH.getValueAt(index, 0).toString());
+        
+        double tongtien = 0.0;
+        for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+         tongtien +=  hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+        }
+        
+        lblTongTienBH.setText(tongtien+"");
+        
+                
+                    lblCanThanhToanBH.setText(tongtien+"");
+            
+        
     }//GEN-LAST:event_tblDSHoaDonBHMouseClicked
 
     private void btnXoaSPOrderBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBHActionPerformed
@@ -1057,13 +1111,10 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private void btnXoaSPOrderBH1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBH1ActionPerformed
         
         try  {
-            System.out.println(hdsvbhitf.getListhdbh().size());
             for (int i = 0; i < hdsvbhitf.getListhdbh().size(); i++) {
-                
                 System.out.println(hdsvbhitf.getListhdbh().get(i).getMa());
                 for (int j = 0; j < hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).size(); j++) {
-                     hdctitf.deleteALL(hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).get(i).getId());
-                     
+                     hdctitf.deleteALL(hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).get(i).getId()); 
                 }
                 hdsvbhitf.Delete(hdsvbhitf.getListhdbh().get(i).getId());
                 filltableHDBH();
@@ -1079,15 +1130,23 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             if (evt.isPopupTrigger() && tblSanPhamOrder.getSelectedRowCount() != 0) {
                 popupmenu.show(evt.getComponent(), evt.getX(), evt.getY());
             }
+//             for (int i = 0; i < hdctitf.gethdct(Mahd); i++) {
+//                 
+//             }
         }
 
     }//GEN-LAST:event_tblSanPhamOrderMouseReleased
 private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
-    
+    String ID_KH;
+    String ID_KM;
+    KhachhangViewmodel khvmd = KHITF.getBySDT(txtSDTKHH.getText());
+    KhuyenmaiViewModel kmvmd = KMSV.getID(String.valueOf(cboMaKM.getSelectedItem()));
+    ID_KH = khvmd.getID();
+    ID_KM = kmvmd.getId();
     
     
     try {
-            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText()) == true) {
+            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText(),Double.parseDouble(lblCanThanhToanBH.getText()),ID_KH,ID_KM) == true) {
                 JOptionPane.showMessageDialog(pnlAnhComBo, "Thanh Cong");
                 
                 filltableHDBH();
@@ -1098,11 +1157,46 @@ private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    
+    DefaultTableModel model = (DefaultTableModel) tblSanPhamOrder.getModel();
+    model.setRowCount(0);
+    filltableHDBH();
     
 }
     private void btnaddsdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddsdtActionPerformed
         // TODO add your handling code here:
+        KhachhangViewmodel KHVMD = new KhachhangViewmodel();
+        KHVMD = KHITF.getBySDT(txtSDTKHH.getText());
+        Validate vl = new Validate();
+        if (!vl.checkSDT(txtSDTKHH.getText())) {
+            JOptionPane.showMessageDialog(rootPane, "So dien thoai khach hang khong hop le");
+            return;
+        }
+        try {
+            if (Objects.isNull(KHVMD)) {
+            
+            if ("".equals(txtTenKhachHangBH.getText().trim())) {
+                JOptionPane.showMessageDialog(rootPane, "Khach hang moi vui long nhap ten khach hang");
+                return;
+            } else {
+                
+                KHITF.addSDTKhachHang(txtSDTKHH.getText(), txtTenKhachHangBH.getText());
+                JOptionPane.showMessageDialog(rootPane, "Khach hang moi da duoc them");
+
+                return;
+            }
+
+        } else {
+            txtTenKhachHangBH.setText(KHVMD.getHoTen());
+            List<KhuyenmaiViewModel> ListKM = new ArrayList<>();
+            ListKM = KMSV.getMaKM();
+            for (KhuyenmaiViewModel km : ListKM) {
+                cboMaKM.addItem(km.getMa());
+            }
+        }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
     }//GEN-LAST:event_btnaddsdtActionPerformed
 
     private void btTimkiemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTimkiemSPActionPerformed
@@ -1124,7 +1218,6 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
 
                     });
                 }
-
                 break;
             }else{
                 JOptionPane.showMessageDialog(this, "Nhập sai tên sản phẩm");
@@ -1132,8 +1225,6 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
                  break;
             }
         } 
-
-        
     }//GEN-LAST:event_btTimkiemSPActionPerformed
 
     private void cbbLocSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocSanPhamActionPerformed
@@ -1202,6 +1293,12 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
     }//GEN-LAST:event_cbbViActionPerformed
 
     private void btnThemSPBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPBHActionPerformed
+        int index = tblDSHoaDonBH.getSelectedRow();
+        
+        if (index==-1) {
+            JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn cần thêm");
+            return;
+        }
         try {
             HoaDonChiTiet hdct = new HoaDonChiTiet();
             HoaDon hd = new HoaDon();
@@ -1227,10 +1324,50 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
             hdct.setId_SP(sp);
             hdctitf.AddHdct(hdct);
             filltotablehdct(lblMaHoaDonBH.getText());
+            double tongtien = 0.0;
+            for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+                tongtien += hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+            }
+
+            lblTongTienBH.setText(tongtien + "");
         } catch (Exception e) {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnThemSPBHActionPerformed
+
+    private void tblSanPhamOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamOrderMouseClicked
+        
+        
+    }//GEN-LAST:event_tblSanPhamOrderMouseClicked
+
+    private void txtTienKhacDuaBHCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHCaretUpdate
+        // TODO add your handling code here:
+        double TienTraLai = Double.parseDouble("0"+txtTienKhacDuaBH.getText()) - Double.parseDouble(lblCanThanhToanBH.getText());
+        lblTienTraLaiBH.setText(String.valueOf(TienTraLai));
+    }//GEN-LAST:event_txtTienKhacDuaBHCaretUpdate
+
+    private void cboMaKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMaKMActionPerformed
+        // TODO add your handling code here:
+        List<KhuyenmaiViewModel> ListKM = new ArrayList<>();
+            ListKM = KMSV.getMaKM();
+            
+            for (KhuyenmaiViewModel km : ListKM) {
+                if(km.getMa().equals(cboMaKM.getSelectedItem())){
+                    double CanThanhToan = Double.valueOf(lblTongTienBH.getText()) - km.getSoTienGiam();
+                    lblCanThanhToanBH.setText(String.valueOf(CanThanhToan));
+                }else{
+                    lblCanThanhToanBH.setText(lblTongTienBH.getText());
+                }
+            }
+    }//GEN-LAST:event_cboMaKMActionPerformed
+
+    private void tblDSSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSSanPhamMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblDSSanPhamMouseClicked
+
+    private void txtTienKhacDuaBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTienKhacDuaBHActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1289,8 +1426,8 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
     private javax.swing.JButton btnaddsdt;
     private javax.swing.JComboBox<String> cbbLocSanPham;
     private javax.swing.JComboBox<String> cbbVi;
+    private javax.swing.JComboBox<String> cboMaKM;
     private javax.swing.JButton jButton2;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -1320,7 +1457,6 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblAnh;
     private javax.swing.JLabel lblCanThanhToanBH;
     private javax.swing.JLabel lblMaHoaDonBH;
@@ -1340,6 +1476,7 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
     private javax.swing.JTable tblDSHoaDonBH;
     private javax.swing.JTable tblDSSanPham;
     private javax.swing.JTable tblSanPhamOrder;
+    private javax.swing.JTextField txtSDTKHH;
     private javax.swing.JTextField txtTenKhachHangBH;
     private javax.swing.JTextField txtTienKhacDuaBH;
     private javax.swing.JTextField txtTimkiemSP;

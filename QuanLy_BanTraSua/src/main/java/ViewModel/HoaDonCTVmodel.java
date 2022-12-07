@@ -24,11 +24,11 @@ public class HoaDonCTVmodel {
     private String ID_VI;
     private String ID_SIZE;
     private String ID_dM;
-
+    private double tongtien;
     public HoaDonCTVmodel() {
     }
 
-    public HoaDonCTVmodel(int id, String ma_hd, String Ma_SP, String TenSP, int SL_Mua, double DonGia, String ID_VI, String ID_SIZE, String ID_dM) {
+    public HoaDonCTVmodel(int id, String ma_hd, String Ma_SP, String TenSP, int SL_Mua, double DonGia, String ID_VI, String ID_SIZE, String ID_dM, double tongtien) {
         this.id = id;
         this.ma_hd = ma_hd;
         this.Ma_SP = Ma_SP;
@@ -38,6 +38,7 @@ public class HoaDonCTVmodel {
         this.ID_VI = ID_VI;
         this.ID_SIZE = ID_SIZE;
         this.ID_dM = ID_dM;
+        this.tongtien = tongtien;
     }
 
     public int getId() {
@@ -112,10 +113,20 @@ public class HoaDonCTVmodel {
         this.ID_dM = ID_dM;
     }
 
+    public double getTongtien() {
+        return tongtien=SL_Mua*DonGia;
+    }
+
+    public void setTongtien(double tongtien) {
+        this.tongtien = tongtien;
+    }
+
     @Override
     public String toString() {
-        return "HoaDonCTVmodel{" + "id=" + id + ", ma_hd=" + ma_hd + ", Ma_SP=" + Ma_SP + ", TenSP=" + TenSP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + ", ID_VI=" + ID_VI + ", ID_SIZE=" + ID_SIZE + ", ID_dM=" + ID_dM + '}';
+        return "HoaDonCTVmodel{" + "id=" + id + ", ma_hd=" + ma_hd + ", Ma_SP=" + Ma_SP + ", TenSP=" + TenSP + ", SL_Mua=" + SL_Mua + ", DonGia=" + DonGia + ", ID_VI=" + ID_VI + ", ID_SIZE=" + ID_SIZE + ", ID_dM=" + ID_dM + ", tongtien=" + tongtien + '}';
     }
+
+    
 
    
 

@@ -532,6 +532,7 @@
                         </Property>
                       </Properties>
                       <Events>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblSanPhamOrderMouseClicked"/>
                         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblSanPhamOrderMouseReleased"/>
                       </Events>
                     </Component>
@@ -573,7 +574,7 @@
                                           <Component id="btnTaoHoaDonBH" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
-                                          <Component id="txtSDTKH" max="32767" attributes="0"/>
+                                          <Component id="txtSDTKHH" max="32767" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="btnaddsdt" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
@@ -644,7 +645,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtSDTKH" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtSDTKHH" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="btnaddsdt" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
@@ -798,7 +799,6 @@
                   <Events>
                     <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="txtTienKhacDuaBHCaretUpdate"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTienKhacDuaBHActionPerformed"/>
-                    <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTienKhacDuaBHKeyTyped"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="jLabel28">
@@ -862,7 +862,7 @@
                     <Property name="text" type="java.lang.String" value="S&#x1ed1; &#x110;T"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="txtSDTKH">
+                <Component class="javax.swing.JTextField" name="txtSDTKHH">
                 </Component>
                 <Component class="javax.swing.JButton" name="btnaddsdt">
                   <Properties>
@@ -1027,6 +1027,9 @@
                               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblDSSanPhamMouseClicked"/>
+                          </Events>
                         </Component>
                       </SubComponents>
                     </Container>
