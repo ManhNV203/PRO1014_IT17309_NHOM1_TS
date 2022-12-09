@@ -4,6 +4,7 @@
  */
 package View;
 
+import DomainModel.HoaDon;
 import Service.Implement.HoaDonCtServiceImplement;
 import Service.Implement.HoaDonServiceImplement;
 import Service.Interface.HoaDonCtServiceInterface;
@@ -32,7 +33,7 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         tbm = (DefaultTableModel) tblHoaDon.getModel();
         tbm1 = (DefaultTableModel) tblHDCT.getModel();
         filltableHD();
-        filltableHDCT();
+        
     }
     public void filltableHD(){
         tbm.setRowCount(0);
@@ -40,9 +41,9 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
             tbm.addRow(new Object[]{x.getMa(),x.getTen_nv(),x.getNgayTao(),x.getTongTien(),x.getTenKh(),x.getMakm(),x.getTrangThai()});
         }
     }
-    public void filltableHDCT(){
+    public void filltableHDCT(String Mahd){
         tbm1.setRowCount(0);
-        for (HoaDonCTVmodel x :  hdctsv.gethdct()) {
+        for (HoaDonCTVmodel x :  hdctsv.gethdct(Mahd)) {
             tbm1.addRow(new Object[]{x.getMa_hd(),x.getTenSP(),x.getSL_Mua(),x.getDonGia()});
         }
     }
@@ -254,6 +255,11 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         });
 
         cbbLoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đã Hủy", "Đã Thanh Toán" }));
+        cbbLoc.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cbbLocItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel23Layout = new javax.swing.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -473,6 +479,15 @@ public class QuanLy_HoaDon extends javax.swing.JFrame {
         }
         filltableHD();
     }//GEN-LAST:event_btnTimMHDbtnTimMaHoaDonActionPerformed
+
+    private void cbbLocItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbbLocItemStateChanged
+        tbm.setRowCount(0);
+        for (int i = 0; i < hdsv.getList().size(); i++) {
+            if (hdsv.getList().get(i).getTrangThai().equalsIgnoreCase(cbbLoc.getSelectedItem().toString())) {
+                tbm.addRow(new Object[]{hdsv.getList().get(i).getMa(),hdsv.getList().get(i).getTen_nv(),hdsv.getList().get(i).getNgayTao(),hdsv.getList().get(i).getTongTien(),hdsv.getList().get(i).getTenKh(),hdsv.getList().get(i).getMakm(),hdsv.getList().get(i).getTrangThai()});
+            }
+        }
+    }//GEN-LAST:event_cbbLocItemStateChanged
 
     /**
      * @param args the command line arguments

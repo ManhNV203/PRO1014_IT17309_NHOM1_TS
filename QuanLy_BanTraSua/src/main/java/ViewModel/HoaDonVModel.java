@@ -15,7 +15,7 @@ import java.util.Date;
  * @author FPTSHOP
  */
 public class HoaDonVModel {
-    private String id;
+    private int id;
     private String Ma;
     private String Ma_nv;
     private String Ten_nv;
@@ -27,7 +27,7 @@ public class HoaDonVModel {
     public HoaDonVModel() {
     }
 
-    public HoaDonVModel(String id, String Ma, String Ma_nv, String Ten_nv, Date ngayTao, BigDecimal TongTien, String TenKh, String makm, int TrangThai) {
+    public HoaDonVModel(int id, String Ma, String Ma_nv, String Ten_nv, Date ngayTao, BigDecimal TongTien, String TenKh, String makm, int TrangThai) {
         this.id = id;
         this.Ma = Ma;
         this.Ma_nv = Ma_nv;
@@ -39,11 +39,11 @@ public class HoaDonVModel {
         this.TrangThai = TrangThai;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -103,7 +103,6 @@ public class HoaDonVModel {
         this.makm = makm;
     }
 
-    
     public String getTrangThai() {
         if (TrangThai==0) {
             return "Chưa Thanh Toán";
@@ -122,6 +121,8 @@ public class HoaDonVModel {
     public String toString() {
         return "HoaDonVModel{" + "id=" + id + ", Ma=" + Ma + ", Ma_nv=" + Ma_nv + ", Ten_nv=" + Ten_nv + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", TenKh=" + TenKh + ", makm=" + makm + ", TrangThai=" + TrangThai + '}';
     }
+
+    
 
     
 

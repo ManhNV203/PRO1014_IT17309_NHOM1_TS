@@ -76,8 +76,12 @@ public class KhachhangServiceImplement implements KhachhangServiceInterface {
 
         KHVMD.setHoTen(KHMD.getHoTen());
         KHVMD.setSDT(KHMD.getSDT());
+        KHVMD.setID(KHMD.getID());
 
         return KHVMD;
     }
-
+    public static void main(String[] args) {
+        KhachhangServiceImplement kh = new KhachhangServiceImplement();
+        System.out.println(kh.getBySDT("0985469203").toString());
+    }
 }

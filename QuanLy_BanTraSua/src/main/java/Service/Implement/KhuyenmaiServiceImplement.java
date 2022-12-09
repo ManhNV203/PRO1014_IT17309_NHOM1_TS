@@ -11,6 +11,7 @@ import Service.Interface.KhuyenmaiServiceInterface;
 import ViewModel.KhuyenmaiViewModel;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -84,6 +85,23 @@ public class KhuyenmaiServiceImplement implements KhuyenmaiServiceInterface {
         return listVMD;
     }
 
+    @Override
+    public KhuyenmaiViewModel getID(String ma) {
+        KhuyenmaiViewModel KMVMD = new KhuyenmaiViewModel();
+        KhuyenMai KMMD = kmrps.getID(ma);
+        if (Objects.isNull(KMMD)) {
+            return null;
+        }
+
+        KMVMD.setId(KMMD.getId());
+        
+
+        return KMVMD;
+    }
+    public static void main(String[] args) {
+        KhuyenmaiServiceImplement km = new KhuyenmaiServiceImplement();
+        System.out.println(km.getID("KM4").toString());
+    }
     
     }
 

@@ -13,8 +13,11 @@ import java.util.List;
  */
 public interface HoaDonCTRepositoryInterface {
     
-    public List<HoaDonChiTiet> gethdct();
-    public boolean delete(HoaDonChiTiet hdct);
+    public List<HoaDonChiTiet> gethdct(String Mahd);
+    public boolean delete(HoaDonChiTiet  hdct);
     public List getIDByMa(int ID);
     public boolean HuyHoaDon(int ID);
+    boolean deleteALL(int id);
+    boolean AddHdct(HoaDonChiTiet hdct);
+    boolean UpdateSoLuong(HoaDonChiTiet hdct);
 }

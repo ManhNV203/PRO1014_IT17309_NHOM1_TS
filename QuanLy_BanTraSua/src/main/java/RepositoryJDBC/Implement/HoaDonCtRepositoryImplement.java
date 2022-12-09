@@ -12,6 +12,7 @@ import DomainModel.Size;
 import DomainModel.Vi;
 import RepositoryJDBC.Interface.HoaDonCTRepositoryInterface;
 import ViewModel.HoaDonCTVmodel;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,11 +30,18 @@ public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
     
 
     @Override
-    public List<HoaDonChiTiet> gethdct() {
+    public List<HoaDonChiTiet> gethdct(String Mahd) {
         List<HoaDonChiTiet> lst_hdct = new ArrayList<>();
-        String sql ="select hdct.Id, hd.Id as IDHD,hd.Ma as mahd, sp.Ma as Masp,sp.Ten as TenSp,hdct.DonGia,hdct.SL_Mua,v.Ten as Vi,s.TheTich as TheTich,dm.Ten as DanhMuc from HoaDonChiTiet hdct join SanPham sp on hdct.Id_SP = sp.Id join HoaDon hd on hdct.Id_HD = hd.Id join Vi v on sp.Id_Vi = v.Id join Size s on sp.Id_Size=s.Id join DanhMuc dm on sp.Id_DM=dm.Id ";
+        String sql ="select hdct.Id, hd.Id as IDHD,hd.Ma as mahd, sp.Ma as Masp"
+                + ",sp.Ten as TenSp,hdct.DonGia,hdct.SL_Mua,v.Ten as Vi,s.TheTich as TheTich"
+                + ",dm.Ten as DanhMuc from HoaDonChiTiet hdct join SanPham sp"
+                + " on hdct.Id_SP = sp.Id "
+                + "join HoaDon hd on hdct.Id_HD = hd.Id "
+                + "join Vi v on sp.Id_Vi = v.Id join Size s on sp.Id_Size=s.Id "
+                + "join DanhMuc dm on sp.Id_DM=dm.Id where hd.Ma=?";
         try {
             PreparedStatement pr = cn.prepareStatement(sql);
+            pr.setString(1, Mahd);
             ResultSet rs = pr.executeQuery();
             while (rs.next()) {  
                 Vi v = new Vi();
@@ -49,7 +57,7 @@ public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
                 sp.setId_size(s);
                 sp.setId_DanhMuc(dm);
                 HoaDon hd = new HoaDon();
-                hd.setId(rs.getString("IDHD"));
+                hd.setId(rs.getInt("IDHD"));
                 hd.setMa(rs.getString("mahd"));
                 HoaDonChiTiet hdct = new HoaDonChiTiet(rs.getInt("id"),hd, sp, rs.getInt("SL_Mua"), rs.getDouble("DonGia"));
                 lst_hdct.add(hdct);
@@ -107,6 +115,61 @@ public class HoaDonCtRepositoryImplement implements HoaDonCTRepositoryInterface{
             e.printStackTrace();
         }
         return check >0;
+    }
+
+    @Override
+    public boolean deleteALL(int id) {
+        
+        int check = 0;
+        String sql = "delete from HoaDonChiTiet where ID = ?";
+        try {
+            PreparedStatement ps = cn.prepareStatement(sql);
+            ps.setInt(1, id);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check >0;
+    }
+
+    @Override
+    public boolean AddHdct(HoaDonChiTiet hdct) {
+        String sql = "insert into HoaDonChiTiet (Id_HD,Id_SP,SL_Mua,DonGia) values (?,?,?,?)";
+        try {
+            PreparedStatement pr = cn.prepareStatement(sql);
+            Integer idHD = null;
+            if(hdct.getId_HD() != null){
+                idHD = hdct.getId_HD().getId();
+            }
+            Integer idSP = null;
+            if(hdct.getId_SP()!= null){
+                idSP = hdct.getId_SP().getId();
+            }
+            pr.setInt(1, idHD);
+            pr.setInt(2, idSP);
+            pr.setInt(3, hdct.getSL_Mua());
+            pr.setDouble(4, hdct.getDonGia());
+            pr.execute();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean UpdateSoLuong(HoaDonChiTiet hdct) {
+        String sql = "update hoadonchitiet set SL_Mua=? where id=?";
+        try {
+            PreparedStatement pr = cn.prepareStatement(sql);
+            pr.setDouble(1, hdct.getSL_Mua());
+            pr.setInt(2, hdct.getId());
+            pr.executeUpdate();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
     }
     
 }

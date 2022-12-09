@@ -77,6 +77,11 @@ public class KhuyenmaiViewModel {
     public void setDieukien(String dieukien) {
         this.dieukien = dieukien;
     }
+
+    @Override
+    public String toString() {
+        return "KhuyenmaiViewModel{" + "Id=" + Id + ", Ma=" + Ma + ", SoTienGiam=" + SoTienGiam + ", ngayBatDau=" + ngayBatDau + ", ngayketThuc=" + ngayketThuc + ", dieukien=" + dieukien + '}';
+    }
     
     
 }

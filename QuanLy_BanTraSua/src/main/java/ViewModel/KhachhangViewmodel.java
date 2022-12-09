@@ -85,6 +85,11 @@ public class KhachhangViewmodel {
     public void setMoTa(String MoTa) {
         this.MoTa = MoTa;
     }
+
+    @Override
+    public String toString() {
+        return "KhachhangViewmodel{" + "ID=" + ID + ", Ma=" + Ma + ", HoTen=" + HoTen + ", GioiTinh=" + GioiTinh + ", DiaChi=" + DiaChi + ", SDT=" + SDT + ", MoTa=" + MoTa + '}';
+    }
     
     
     

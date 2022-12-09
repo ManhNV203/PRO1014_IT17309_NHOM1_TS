@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 public class HoaDon {
-    private String id;
+    private int id;
     private String Ma;
     private NhanVien Id_NV;
     private Date ngayTao;
@@ -18,7 +18,7 @@ public class HoaDon {
     public HoaDon() {
     }
 
-    public HoaDon(String id, String Ma, NhanVien Id_NV, Date ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
+    public HoaDon(int id, String Ma, NhanVien Id_NV, Date ngayTao, BigDecimal TongTien, KhachHang id_KH, KhuyenMai id_KM, int TrangThai) {
         this.id = id;
         this.Ma = Ma;
         this.Id_NV = Id_NV;
@@ -29,11 +29,11 @@ public class HoaDon {
         this.TrangThai = TrangThai;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -97,6 +97,8 @@ public class HoaDon {
     public String toString() {
         return "HoaDon{" + "id=" + id + ", Ma=" + Ma + ", Id_NV=" + Id_NV + ", ngayTao=" + ngayTao + ", TongTien=" + TongTien + ", id_KH=" + id_KH + ", id_KM=" + id_KM + ", TrangThai=" + TrangThai + '}';
     }
+
+    
     
     
 }

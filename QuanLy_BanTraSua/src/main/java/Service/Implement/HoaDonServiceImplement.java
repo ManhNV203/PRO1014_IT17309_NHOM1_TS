@@ -72,14 +72,14 @@ public class HoaDonServiceImplement implements HoaDonServiceInterface {
     }
 
     @Override
-    public boolean Delete(HoaDon hd) {
-        return hdrp.Delete(hd);
+    public boolean Delete(int id) {
+        return hdrp.Delete(id);
     }
 
     @Override
-    public boolean ThanhToan(String ma) {
+    public boolean ThanhToan(String ma,double TongTien,String ID_KH,String ID_KM) {
         boolean check;
-        check = hdrp.ThanhToan(ma);
+        check = hdrp.ThanhToan(ma,TongTien,ID_KH,ID_KM);
         return check;
     }
 

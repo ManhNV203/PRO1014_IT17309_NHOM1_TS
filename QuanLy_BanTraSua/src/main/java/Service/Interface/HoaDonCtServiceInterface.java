@@ -15,7 +15,10 @@ import java.util.List;
 public interface HoaDonCtServiceInterface {
 
     
-     List<HoaDonCTVmodel> gethdct();
-     public boolean deleteHDCT(HoaDonChiTiet hdct);
-     public boolean HuyThanhToan(String ma);
+     List<HoaDonCTVmodel> gethdct(String Mahd);
+     boolean deleteHDCT(HoaDonChiTiet hdct);
+      boolean HuyThanhToan(String ma);
+     boolean deleteALL(int id);
+     boolean AddHdct(HoaDonChiTiet hdct);
+     boolean UpdateSoLuong(HoaDonChiTiet hdct);
 }

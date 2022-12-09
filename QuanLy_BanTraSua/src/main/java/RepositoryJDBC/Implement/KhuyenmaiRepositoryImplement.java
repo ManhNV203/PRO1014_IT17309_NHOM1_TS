@@ -197,6 +197,26 @@ public class KhuyenmaiRepositoryImplement implements KhuyenmaiRepositoryinterfac
         return listKM;
     }
 
+    @Override
+    public KhuyenMai getID(String ma) {
+        String sql = "select * from KhuyenMai where Ma = ?";
+        KhuyenMai km = new KhuyenMai();
+        try {
+           
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, ma);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()){
+                
+                km.setId(rs.getString("id"));
+                return km;
+            }
+        } catch (Exception e) {
+            
+        }
+        return null;
+    }
+
   
 
 

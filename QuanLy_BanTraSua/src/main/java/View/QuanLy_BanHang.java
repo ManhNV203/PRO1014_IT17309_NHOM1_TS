@@ -1,11 +1,12 @@
+
 package View;
 
 import DomainModel.ComBo;
 import DomainModel.DanhMuc;
 import DomainModel.HoaDon;
 import DomainModel.HoaDonChiTiet;
-import DomainModel.KhuyenMai;
 import DomainModel.NhanVien;
+import DomainModel.SanPham;
 import DomainModel.Vi;
 import Service.Implement.ComBoServiceImplement;
 import Service.Implement.DanhMucServiceImplement;
@@ -34,26 +35,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class QuanLy_BanHang extends javax.swing.JFrame {
 
-    DefaultTableModel tbm;
+public class QuanLy_BanHang extends javax.swing.JFrame {
+    DefaultTableModel tbm ;
     HoaDonServiceInterface hdsvbhitf = new HoaDonServiceImplement();
     DefaultTableModel tblModelComBo;
-    DefaultTableModel tbmHDCT;
+    DefaultTableModel tbmHDCT ;
     HoaDonCtServiceInterface hdctitf = new HoaDonCtServiceImplement();
     ComBoServiceInterface comBoServiceInterface = new ComBoServiceImplement();
-    SanPhamServiceInterface sp_itf = new SanPhamServiceImplement();
-    DanhMucServiceInterface dm_itf = new DanhMucServiceImplement();
-    ViServiceInterface vi_itf = new ViServiceImplement();
+    SanPhamServiceInterface sp_itf=  new SanPhamServiceImplement();
+    DanhMucServiceInterface dm_itf= new DanhMucServiceImplement();
+    ViServiceInterface vi_itf   = new ViServiceImplement();
     KhachhangServiceInterface KHITF = new KhachhangServiceImplement();
     KhuyenmaiServiceInterface KMSV = new KhuyenmaiServiceImplement();
-    //QuanLy_BanHang Thread = new QuanLy_BanHang();
     /**
      * Creates new form QuanLy_BanHang
      */
@@ -63,18 +61,16 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         tbm = (DefaultTableModel) tblDSHoaDonBH.getModel();
         tbmHDCT = (DefaultTableModel) tblSanPhamOrder.getModel();
         tblModelComBo = (DefaultTableModel) tblComBoSanPham.getModel();
-        
         filltableHDBH();
-        filltotablehdct();
+        
         loadTableComBo();
         fillSanphamBanhang();
         loadCBBFrame();
     }
-
-    void loadTableComBo() {
-        tblModelComBo.setRowCount(0);
-        List<ComBo> listCB = comBoServiceInterface.getallCombo();
-        for (ComBo comBo : listCB) {
+    void loadTableComBo(){
+         tblModelComBo.setRowCount(0);
+         List<ComBo> listCB = comBoServiceInterface.getallCombo();
+         for (ComBo comBo : listCB) {
             tblModelComBo.addRow(new Object[]{
                 comBo.getMa(),
                 comBo.getTen(),
@@ -82,26 +78,23 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 comBo.getTrangThai()
             });
         }
-
+         
     }
-
-    public void filltableHDBH() {
+    public void filltableHDBH(){
         tbm.setRowCount(0);
         for (HoaDonVModel x : hdsvbhitf.getListhdbh()) {
-            tbm.addRow(new Object[]{x.getMa(), x.getMa_nv(), x.getNgayTao(), x.getTrangThai()});
+            tbm.addRow(new Object[]{x.getMa(),x.getMa_nv(),x.getNgayTao(),x.getTrangThai()});
         }
-
+        
     }
-
-    public void filltotablehdct() {
+    public void filltotablehdct(String mahd){
         tbmHDCT.setRowCount(0);
-        for (HoaDonCTVmodel x : hdctitf.gethdct()) {
-            tbmHDCT.addRow(new Object[]{x.getMa_SP(), x.getTenSP(), x.getDonGia(), x.getSL_Mua(), x.getID_VI(), x.getID_SIZE(), x.getID_dM()});
+        for (HoaDonCTVmodel x : hdctitf.gethdct(mahd)) {
+            tbmHDCT.addRow(new Object[]{x.getMa_SP(),x.getTenSP(),x.getDonGia(),x.getSL_Mua(),x.getID_VI(),x.getID_SIZE(),x.getID_dM(),x.getTongtien()});
         }
     }
-
-    public void loadCBBFrame() {
-        DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbLocSanPham.getModel();
+        public void loadCBBFrame() {
+            DefaultComboBoxModel tblComboBoxModelDMKho = (DefaultComboBoxModel) cbbLocSanPham.getModel();
         List<DanhMuc> listDmKho = dm_itf.getallDM();
         for (DanhMuc danhMuc : listDmKho) {
             tblComboBoxModelDMKho.addElement(danhMuc.getTenDM());
@@ -113,8 +106,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             tblComboBoxModelVI.addElement(vi.getTen());
         }
     }
-
-    public void fillSanphamBanhang() {
+             public void fillSanphamBanhang() {
 
         DefaultTableModel tblModel = (DefaultTableModel) tblDSSanPham.getModel();
         tblModel.setRowCount(0);
@@ -123,15 +115,17 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             tblModel.addRow(new Object[]{
                 sanPhamViewModel.getMa(),
                 sanPhamViewModel.getTen(),
-                sanPhamViewModel.getDonGia(),
                 sanPhamViewModel.getTenVi(),
+                sanPhamViewModel.getDonGia(),
+                
                 sanPhamViewModel.getTenDM(),
                 sanPhamViewModel.getTenSize(),
-                sanPhamViewModel.getTrangThai()
+                
             });
         }
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -190,7 +184,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblTienTraLaiBH = new javax.swing.JLabel();
         btnHuyThanhToan = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        txtSDTKH = new javax.swing.JTextField();
+        txtSDTKHH = new javax.swing.JTextField();
         btnaddsdt = new javax.swing.JButton();
         cboMaKM = new javax.swing.JComboBox<>();
         jTabbedPane1 = new javax.swing.JTabbedPane();
@@ -219,9 +213,19 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         btnChonComBo = new javax.swing.JButton();
 
         MNTThemSoLuong.setText("Thêm Số Lượng");
+        MNTThemSoLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MNTThemSoLuongActionPerformed(evt);
+            }
+        });
         popupmenu.add(MNTThemSoLuong);
 
         MNTGiamSoLuong.setText("Giam Số Lượng");
+        MNTGiamSoLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MNTGiamSoLuongActionPerformed(evt);
+            }
+        });
         popupmenu.add(MNTGiamSoLuong);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -444,6 +448,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             }
         });
         tblSanPhamOrder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSanPhamOrderMouseClicked(evt);
+            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tblSanPhamOrderMouseReleased(evt);
             }
@@ -526,11 +533,6 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 txtTienKhacDuaBHActionPerformed(evt);
             }
         });
-        txtTienKhacDuaBH.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtTienKhacDuaBHKeyTyped(evt);
-            }
-        });
 
         jLabel28.setText("Tiền khách đưa");
 
@@ -600,7 +602,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnTaoHoaDonBH))
                             .addGroup(pnlThongTinHoaDonLayout.createSequentialGroup()
-                                .addComponent(txtSDTKH)
+                                .addComponent(txtSDTKHH)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnaddsdt)
                                 .addGap(3, 3, 3))))
@@ -654,7 +656,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtSDTKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtSDTKHH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnaddsdt))
                 .addGap(9, 9, 9)
                 .addGroup(pnlThongTinHoaDonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -716,6 +718,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tblDSSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDSSanPhamMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(tblDSSanPham);
 
         jLabel2.setText("Tên Sản Phẩm");
@@ -760,6 +767,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
         btnThemSPBH.setBackground(new java.awt.Color(153, 255, 153));
         btnThemSPBH.setText("Thêm Sản Phẩm Order");
+        btnThemSPBH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemSPBHActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -785,7 +797,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(cbbVi, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(76, 76, 76)
+                                .addGap(70, 70, 70)
                                 .addComponent(btnThemSPBH))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addContainerGap()
@@ -985,17 +997,17 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
     private void btnHuyThanhToanActionPerformed(java.awt.event.ActionEvent evt) {
         try {
-            if (hdctitf.HuyThanhToan(lblMaHoaDonBH.getText()) == false) {
+            if(hdctitf.HuyThanhToan(lblMaHoaDonBH.getText()) == false){
                 if (hdsvbhitf.HuyThanhToan(lblMaHoaDonBH.getText()) == true) {
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
                     hdsvbhitf.getListhdbh();
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
-                } else {
+                }else{
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can huy");
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
                 }
             }
@@ -1004,12 +1016,12 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan Thanh Cong");
                     hdsvbhitf.getListhdbh();
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
-                } else {
+                }else{
                     JOptionPane.showMessageDialog(pnlAnhComBo, "Huy Thanh Toan That Bai");
                     filltableHDBH();
-                    filltotablehdct();
+//                    filltotablehdct();
                     return;
                 }
             } else {
@@ -1020,7 +1032,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-
+    
     private void btnKhachHangmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangmenuActionPerformed
         // TODO add your handling code here:
         new Quanly_Khachhang().setVisible(true);
@@ -1029,17 +1041,18 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
     private void btnKhuyenMaiMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiMenuActionPerformed
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_btnKhuyenMaiMenuActionPerformed
 
     private void btnThongkeMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThongkeMenuActionPerformed
-        // TODO add your handling code here:
-
+        new Quanly_ThongKe().setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_btnThongkeMenuActionPerformed
 
     private void btnDangXuatMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangXuatMenuActionPerformed
         // TODO add your handling code here:
-
+        
     }//GEN-LAST:event_btnDangXuatMenuActionPerformed
 
     private void txtTenKhachHangBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenKhachHangBHActionPerformed
@@ -1055,25 +1068,37 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         lblMaHoaDonBH.setText(tblDSHoaDonBH.getValueAt(index, 0).toString());
         lblMaNhanVienBH.setText(tblDSHoaDonBH.getValueAt(index, 1).toString());
         lblNgayTaoHDBH.setText(tblDSHoaDonBH.getValueAt(index, 2).toString());
-
+        filltotablehdct(tblDSHoaDonBH.getValueAt(index, 0).toString());
+        
+        double tongtien = 0.0;
+        for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+         tongtien +=  hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+        }
+        
+        lblTongTienBH.setText(tongtien+"");
+        
+                
+                    lblCanThanhToanBH.setText(tongtien+"");
+            
+        
     }//GEN-LAST:event_tblDSHoaDonBHMouseClicked
 
     private void btnXoaSPOrderBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBHActionPerformed
-
+        
         try {
-
+            
             HoaDonChiTiet hdct = new HoaDonChiTiet();
-            for (int i = 0; i < hdctitf.gethdct().size(); i++) {
-                if (hdctitf.gethdct().get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))) {
-                    hdct.setId(hdctitf.gethdct().get(i).getId());
+            for (int i = 0; i < hdctitf.gethdct(lblMaHoaDonBH.getText()).size(); i++) {
+                if(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(tblSanPhamOrder.getSelectedRow(), 0))){
+                    hdct.setId(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getId());
                 }
             }
-            if (hdctitf.deleteHDCT(hdct)) {
-                filltotablehdct();
+            if(hdctitf.deleteHDCT(hdct)){
+                filltotablehdct(lblMaHoaDonBH.getText());
             }
         } catch (Exception e) {
             e.printStackTrace();
-
+            
         }
     }//GEN-LAST:event_btnXoaSPOrderBHActionPerformed
 
@@ -1082,11 +1107,11 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             NhanVien nv = new NhanVien();
             nv.setID(1);
             HoaDon hd = new HoaDon();
-            hd.setMa("HD0" + Math.round(Math.random() * 1000));
+            hd.setMa("HD0" + Math.round(Math.random()*1000));
             hd.setId_NV(nv);
             hd.setNgayTao(new Date());
             hd.setTrangThai(0);
-            System.out.println(hd);
+           
             hdsvbhitf.addHoaDon(hd);
             filltableHDBH();
         } catch (Exception e) {
@@ -1094,45 +1119,64 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTaoHoaDonBHActionPerformed
 
     private void btnXoaSPOrderBH1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaSPOrderBH1ActionPerformed
-        try {
-            HoaDon hd = new HoaDon();
-            hdsvbhitf.Delete(hd);
-            filltableHDBH();
-
+        
+        try  {
+            for (int i = 0; i < hdsvbhitf.getListhdbh().size(); i++) {
+                System.out.println(hdsvbhitf.getListhdbh().get(i).getMa());
+                for (int j = 0; j < hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).size(); j++) {
+                     hdctitf.deleteALL(hdctitf.gethdct(hdsvbhitf.getListhdbh().get(i).getMa()).get(i).getId()); 
+                }
+                hdsvbhitf.Delete(hdsvbhitf.getListhdbh().get(i).getId());
+                filltableHDBH();
+            }
+            
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }//GEN-LAST:event_btnXoaSPOrderBH1ActionPerformed
 
     private void tblSanPhamOrderMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamOrderMouseReleased
-        if (evt.getButton() == MouseEvent.BUTTON3) {
+         if (evt.getButton() == MouseEvent.BUTTON3) {
             if (evt.isPopupTrigger() && tblSanPhamOrder.getSelectedRowCount() != 0) {
                 popupmenu.show(evt.getComponent(), evt.getX(), evt.getY());
             }
+            
+
         }
 
     }//GEN-LAST:event_tblSanPhamOrderMouseReleased
-    private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
-
-        try {
-            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText()) == true) {
+private void btnThanhToanBHActionPerformed(java.awt.event.ActionEvent evt) {
+    String ID_KH;
+    String ID_KM;
+    KhachhangViewmodel khvmd = KHITF.getBySDT(txtSDTKHH.getText());
+    KhuyenmaiViewModel kmvmd = KMSV.getID(String.valueOf(cboMaKM.getSelectedItem()));
+    ID_KH = khvmd.getID();
+    ID_KM = kmvmd.getId();
+    
+    
+    try {
+            if (hdsvbhitf.ThanhToan(lblMaHoaDonBH.getText(),Double.parseDouble(lblCanThanhToanBH.getText()),ID_KH,ID_KM) == true) {
                 JOptionPane.showMessageDialog(pnlAnhComBo, "Thanh Cong");
-
+                
                 filltableHDBH();
-                filltotablehdct();
+//                filltotablehdct();
             } else {
                 JOptionPane.showMessageDialog(pnlAnhComBo, "Ban chua chon hoa don can thanh toan");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-    }
+    DefaultTableModel model = (DefaultTableModel) tblSanPhamOrder.getModel();
+    model.setRowCount(0);
+    filltableHDBH();
+    
+}
     private void btnaddsdtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnaddsdtActionPerformed
         // TODO add your handling code here:
         KhachhangViewmodel KHVMD = new KhachhangViewmodel();
-        KHVMD = KHITF.getBySDT(txtSDTKH.getText());
+        KHVMD = KHITF.getBySDT(txtSDTKHH.getText());
         Validate vl = new Validate();
-        if (!vl.checkSDT(txtSDTKH.getText())) {
+        if (!vl.checkSDT(txtSDTKHH.getText())) {
             JOptionPane.showMessageDialog(rootPane, "So dien thoai khach hang khong hop le");
             return;
         }
@@ -1144,7 +1188,7 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
                 return;
             } else {
                 
-                KHITF.addSDTKhachHang(txtSDTKH.getText(), txtTenKhachHangBH.getText());
+                KHITF.addSDTKhachHang(txtSDTKHH.getText(), txtTenKhachHangBH.getText());
                 JOptionPane.showMessageDialog(rootPane, "Khach hang moi da duoc them");
 
                 return;
@@ -1165,8 +1209,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     }//GEN-LAST:event_btnaddsdtActionPerformed
 
     private void btTimkiemSPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTimkiemSPActionPerformed
-        List<SanPhamViewModel> lst_spvmd = new ArrayList<>();
-        for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
+   List<SanPhamViewModel> lst_spvmd = new ArrayList<>();
+for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
             if (sp_itf.getAllSP().get(i).getTen().equalsIgnoreCase(txtTimkiemSP.getText())) {
                 lst_spvmd.add(sp_itf.getAllSP().get(i));
                 JOptionPane.showMessageDialog(this, "Tìm thành công!");
@@ -1183,22 +1227,19 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
                     });
                 }
-
                 break;
-            } else {
+            }else{
                 JOptionPane.showMessageDialog(this, "Nhập sai tên sản phẩm");
                 txtTimkiemSP.setText(null);
-                break;
+                 break;
             }
-        }
-
-
+        } 
     }//GEN-LAST:event_btTimkiemSPActionPerformed
 
     private void cbbLocSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbLocSanPhamActionPerformed
         // TODO add your handling code here:
-        // DAnh mục  
-        String nameDM = (String) cbbLocSanPham.getSelectedItem();
+         // DAnh mục  
+ String nameDM = (String) cbbLocSanPham.getSelectedItem();
         List<DanhMuc> listdm = dm_itf.getallDM();
         List<SanPhamViewModel> lstsp_vmd = new ArrayList<>();
 
@@ -1224,13 +1265,13 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
 
             });
         }
-
+       
     }//GEN-LAST:event_cbbLocSanPhamActionPerformed
 
     private void cbbViActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbViActionPerformed
         // TODO add your handling code here:
-
-        String nameVi = (String) cbbVi.getSelectedItem();
+           
+     String nameVi = (String) cbbVi.getSelectedItem();
         List<Vi> lisVi = vi_itf.getAllVi();
         List<SanPhamViewModel> lstsp_vmd = new ArrayList<>();
 
@@ -1257,13 +1298,68 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             });
         }
 
-
+    
     }//GEN-LAST:event_cbbViActionPerformed
+
+    private void btnThemSPBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPBHActionPerformed
+        int index = tblDSHoaDonBH.getSelectedRow();
+        
+        if (index==-1) {
+            JOptionPane.showMessageDialog(this,"Vui lòng chọn hóa đơn cần thêm");
+            return;
+        }
+        try {
+            HoaDonChiTiet hdct = new HoaDonChiTiet();
+            HoaDon hd = new HoaDon();
+            SanPham sp = new SanPham();
+            for (int i = 0; i < hdsvbhitf.getListhdbh().size(); i++) {
+                if(hdsvbhitf.getListhdbh().get(i).getMa().equals(tblDSHoaDonBH.getValueAt(tblDSHoaDonBH.getSelectedRow(), 0))){
+                    hd.setId(hdsvbhitf.getListhdbh().get(i).getId());
+                }
+            }
+            Object Slnhap = JOptionPane.showInputDialog(this,"Mời nhập số lượng");
+            if(Slnhap instanceof String){
+                hdct.setSL_Mua(Integer.parseInt(Slnhap.toString()));
+            }else{
+                return;
+            }
+            for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
+                if(sp_itf.getAllSP().get(i).getMa().equals(tblDSSanPham.getValueAt(tblDSSanPham.getSelectedRow(), 0))){
+                    sp.setId(sp_itf.getAllSP().get(i).getId());
+                    hdct.setDonGia(Double.parseDouble(sp_itf.getAllSP().get(i).getDonGia()));
+                }
+            }
+            hdct.setId_HD(hd);
+            hdct.setId_SP(sp);
+            hdctitf.AddHdct(hdct);
+            filltotablehdct(lblMaHoaDonBH.getText());
+            double tongtien = 0.0;
+            for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+                tongtien += hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+            }
+
+            lblTongTienBH.setText(tongtien + "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnThemSPBHActionPerformed
+
+    private void tblSanPhamOrderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamOrderMouseClicked
+        
+        
+    }//GEN-LAST:event_tblSanPhamOrderMouseClicked
+
+    private void txtTienKhacDuaBHCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHCaretUpdate
+        // TODO add your handling code here:
+        double TienTraLai = Double.parseDouble("0"+txtTienKhacDuaBH.getText()) - Double.parseDouble(lblCanThanhToanBH.getText());
+        lblTienTraLaiBH.setText(String.valueOf(TienTraLai));
+    }//GEN-LAST:event_txtTienKhacDuaBHCaretUpdate
 
     private void cboMaKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboMaKMActionPerformed
         // TODO add your handling code here:
         List<KhuyenmaiViewModel> ListKM = new ArrayList<>();
             ListKM = KMSV.getMaKM();
+            
             for (KhuyenmaiViewModel km : ListKM) {
                 if(km.getMa().equals(cboMaKM.getSelectedItem())){
                     double CanThanhToan = Double.valueOf(lblTongTienBH.getText()) - km.getSoTienGiam();
@@ -1274,25 +1370,75 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             }
     }//GEN-LAST:event_cboMaKMActionPerformed
 
+    private void tblDSSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDSSanPhamMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblDSSanPhamMouseClicked
+
     private void txtTienKhacDuaBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTienKhacDuaBHActionPerformed
 
-    private void txtTienKhacDuaBHKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTienKhacDuaBHKeyTyped
-
-    private void txtTienKhacDuaBHCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHCaretUpdate
-        // TODO add your handling code here:
+    private void MNTThemSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNTThemSoLuongActionPerformed
+       int index = tblSanPhamOrder.getSelectedRow();
+       HoaDonChiTiet hdct = new HoaDonChiTiet();
+        Integer tongsoluong = (Integer) tblSanPhamOrder.getValueAt(index, 3);
+       
+       Integer Soluong = Integer.parseInt(JOptionPane.showInputDialog(this,"Mời nhập số lượng muốn thêm"));
+        if (Soluong instanceof Integer) {
+            hdct.setSL_Mua(Soluong + tongsoluong );
+        }else{
+        return;
+        }
+        for (int i = 0; i < hdctitf.gethdct(lblMaHoaDonBH.getText()).size(); i++) {
+             if (hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(index, 0))) {
+                hdct.setId(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getId());
+            }
+        }
         
-        double TienTraLai = Double.parseDouble(txtTienKhacDuaBH.getText()) - Double.parseDouble(lblCanThanhToanBH.getText());
-        lblTienTraLaiBH.setText(String.valueOf(TienTraLai));
-    }//GEN-LAST:event_txtTienKhacDuaBHCaretUpdate
+        hdctitf.UpdateSoLuong(hdct);
+        filltotablehdct(lblMaHoaDonBH.getText());
+        
+        double tongtien = 0.0;
+            for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+                tongtien += hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+            }
+
+        lblTongTienBH.setText(tongtien + "");
+        
+    }//GEN-LAST:event_MNTThemSoLuongActionPerformed
+
+    private void MNTGiamSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNTGiamSoLuongActionPerformed
+        int index = tblSanPhamOrder.getSelectedRow();
+       HoaDonChiTiet hdct = new HoaDonChiTiet();
+        Integer tongsoluong = (Integer) tblSanPhamOrder.getValueAt(index, 3);
+       
+       Integer Soluong = Integer.parseInt(JOptionPane.showInputDialog(this,"Mời nhập số lượng muốn thêm"));
+        if (Soluong instanceof Integer) {
+            hdct.setSL_Mua(tongsoluong - Soluong );
+        }else{
+        return;
+        }
+        for (int i = 0; i < hdctitf.gethdct(lblMaHoaDonBH.getText()).size(); i++) {
+             if (hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(index, 0))) {
+                hdct.setId(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getId());
+            }
+        }
+        
+        hdctitf.UpdateSoLuong(hdct);
+        filltotablehdct(lblMaHoaDonBH.getText());
+        double tongtien = 0.0;
+            for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+                tongtien += hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+            }
+
+            lblTongTienBH.setText(tongtien + "");
+        
+    }//GEN-LAST:event_MNTGiamSoLuongActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[])  {
+    public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1396,21 +1542,9 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
     private javax.swing.JTable tblDSHoaDonBH;
     private javax.swing.JTable tblDSSanPham;
     private javax.swing.JTable tblSanPhamOrder;
-    private javax.swing.JTextField txtSDTKH;
+    private javax.swing.JTextField txtSDTKHH;
     private javax.swing.JTextField txtTenKhachHangBH;
     private javax.swing.JTextField txtTienKhacDuaBH;
     private javax.swing.JTextField txtTimkiemSP;
     // End of variables declaration//GEN-END:variables
-
-//    public void run() {
-//        while (true) {   
-//            double TraLai = Double.valueOf(txtTienKhacDuaBH.getText()) - Double.valueOf(lblCanThanhToanBH.getText());
-//            lblTienTraLaiBH.setText(String.valueOf(TraLai));
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(QuanLy_BanHang.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//    }
 }
