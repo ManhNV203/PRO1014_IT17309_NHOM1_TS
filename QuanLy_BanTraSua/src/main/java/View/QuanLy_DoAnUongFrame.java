@@ -188,11 +188,12 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 comBo.getMa(),
                 comBo.getTen(),
                 comBo.getDonGia(),
-                comBo.getTrangThai()==1 ? "Đang áp dụng" : "Không còn áp dụng"
+                comBo.getTrangThai() == 1 ? "Đang áp dụng" : "Không còn áp dụng"
             });
         }
     }
-    public void loadTableComBoChiTiet(){
+
+    public void loadTableComBoChiTiet() {
         DefaultTableModel TblmoModel = (DefaultTableModel) tblComBoChiTiet.getModel();
         TblmoModel.setRowCount(0);
         List<ComBoChiTietViewModel> listCBCT = comBoChiTietServiceInterface.getAllComBo();
@@ -204,6 +205,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             });
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -254,9 +256,9 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         btnTimKiemKho = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         btnThemdoUong = new javax.swing.JButton();
-        btnSuaDoUong = new javax.swing.JButton();
         btnXoaDoUong = new javax.swing.JButton();
         btnclearFromThongtinSP = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         cbbDanhMucKhoComBO = new javax.swing.JComboBox<>();
@@ -631,14 +633,6 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSuaDoUong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        btnSuaDoUong.setText("Sửa");
-        btnSuaDoUong.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSuaDoUongActionPerformed(evt);
-            }
-        });
-
         btnXoaDoUong.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         btnXoaDoUong.setText("Xóa");
         btnXoaDoUong.addActionListener(new java.awt.event.ActionListener() {
@@ -654,6 +648,14 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             }
         });
 
+        btnSua.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -663,8 +665,8 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnclearFromThongtinSP, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
                     .addComponent(btnXoaDoUong, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(btnSuaDoUong, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(btnThemdoUong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnThemdoUong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
@@ -672,11 +674,11 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(btnThemdoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSuaDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnSua, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnXoaDoUong, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnclearFromThongtinSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnclearFromThongtinSP, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -1073,33 +1075,20 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTimKiemKhoActionPerformed
 
     private void btnThemdoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemdoUongActionPerformed
-        // TODO add your handling code here:
         if (validatFromSP() == true) {
             SanPham sanPham = new SanPham();
+
             sanPham.setMa(txtmaDoUong.getText());
             sanPham.setTen(txtTenDoUong.getText());
             sanPham.setDonGia(txtGia.getText());
-            String nameVi = (String) cbbVi.getSelectedItem();
-            List<Vi> listVi = viServiceInterface.getAllVi();
-            for (Vi vi : listVi) {
-                if (vi.getTen().equals(nameVi)) {
-//                    sanPham.setId_Vi(vi.getId());
-                }
-            }
-            String nameDM = (String) cbbDanhmucSp.getSelectedItem();
-            List<DanhMuc> listdm = danhMucServiceInterface.getallDM();
-            for (DanhMuc danhMuc : listdm) {
-                if (danhMuc.getTenDM().equals(nameDM)) {
-//                    sanPham.setId_DanhMuc(danhMuc.getId());
-                }
-            }
-            String maSize = (String) cbbSize.getSelectedItem();
-            List<Size> listSize = sizeServiceInterface.getAllSize();
-            for (Size size : listSize) {
-                if (size.getMa().equals(maSize)) {
-//                    sanPham.setId_size(size.getId());
-                }
-            }
+            Vi vi = (Vi) cbbVi.getSelectedItem();
+
+            sanPham.setId_Vi(vi);
+            DanhMuc nameDM = (DanhMuc) cbbDanhmucSp.getSelectedItem();
+            sanPham.setId_DanhMuc(nameDM);
+            Size maSize = (Size) cbbSize.getSelectedItem();
+            sanPham.setId_size(maSize);
+
             String trangThai = txtTrangThai.getText();
             if (trangThai.equalsIgnoreCase("Còn Hàng")) {
                 sanPham.setTrangThai(1);
@@ -1114,40 +1103,31 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 clearfromSanPham();
                 JOptionPane.showMessageDialog(this, "Thêm Thành Công");
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Thêm không Thành Công");
+
                 e.printStackTrace();
             }
         }
-    }//GEN-LAST:event_btnThemdoUongActionPerformed
+    }
 
-    private void btnSuaDoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaDoUongActionPerformed
+    private void btnSuaDoUongActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         int row = tblSanPhamDouong.getSelectedRow();
         if (row >= 0) {
+
             SanPham sanPham = new SanPham();
+
             sanPham.setMa(txtmaDoUong.getText());
             sanPham.setTen(txtTenDoUong.getText());
             sanPham.setDonGia(txtGia.getText());
-            String nameVi = (String) cbbVi.getSelectedItem();
-            List<Vi> listVi = viServiceInterface.getAllVi();
-            for (Vi vi : listVi) {
-                if (vi.getTen().equals(nameVi)) {
-//                    sanPham.setId_Vi(vi.getId());
-                }
-            }
-            String nameDM = (String) cbbDanhmucSp.getSelectedItem();
-            List<DanhMuc> listdm = danhMucServiceInterface.getallDM();
-            for (DanhMuc danhMuc : listdm) {
-                if (danhMuc.getTenDM().equals(nameDM)) {
-//                    sanPham.setId_DanhMuc(danhMuc.getId());
-                }
-            }
-            String maSize = (String) cbbSize.getSelectedItem();
-            List<Size> listSize = sizeServiceInterface.getAllSize();
-            for (Size size : listSize) {
-                if (size.getMa().equals(maSize)) {
-//                    sanPham.setId_size(size.getId());
-                }
-            }
+            Vi vi = (Vi) cbbVi.getSelectedItem();
+
+            sanPham.setId_Vi(vi);
+            DanhMuc nameDM = (DanhMuc) cbbDanhmucSp.getSelectedItem();
+            sanPham.setId_DanhMuc(nameDM);
+            Size maSize = (Size) cbbSize.getSelectedItem();
+            sanPham.setId_size(maSize);
+
             String trangThai = txtTrangThai.getText();
             if (trangThai.equalsIgnoreCase("Còn Hàng")) {
                 sanPham.setTrangThai(1);
@@ -1155,6 +1135,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
             if (trangThai.equalsIgnoreCase("Hết Hàng")) {
                 sanPham.setTrangThai(0);
             }
+            
             System.out.println(sanPham);
             try {
                 sanPhamServiceInterface.updateSanPham(sanPham);
@@ -1162,13 +1143,19 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
                 clearfromSanPham();
                 JOptionPane.showMessageDialog(this, "Sửa Thành Công");
             } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Sửa không Thành Công");
+
                 e.printStackTrace();
             }
-        } else {
+
+        }
+        else {
             JOptionPane.showMessageDialog(this, "Chọn Mục Cần Sửa");
             return;
         }
-    }//GEN-LAST:event_btnSuaDoUongActionPerformed
+        
+
+    }//GEN-LAST:event_btnThemdoUongActionPerformed
 
     private void btnXoaDoUongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaDoUongActionPerformed
         int row = tblSanPhamDouong.getSelectedRow();
@@ -1202,16 +1189,16 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private void tblSanPhamDouongComBOMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamDouongComBOMouseClicked
         // TODO add your handling code here:
         int row = tblSanPhamDouongComBO.getSelectedRow();
-        if(row>=0){
+        if (row >= 0) {
             SanPham sp = new SanPham();
             String maSP = (String) tblSanPhamDouongComBO.getValueAt(row, 0);
             List<SanPhamViewModel> list = sanPhamServiceInterface.getAllSP();
             for (SanPhamViewModel sanPhamViewModel : list) {
-                if(sanPhamViewModel.getMa().equals(maSP)){
+                if (sanPhamViewModel.getMa().equals(maSP)) {
                     sp.setId(sanPhamViewModel.getId());
                 }
             }
-            
+
         }
     }//GEN-LAST:event_tblSanPhamDouongComBOMouseClicked
 
@@ -1240,7 +1227,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         List<ComBo> listCb = comBoServiceInterface.getallCombo();
         int listsize = listCb.size();
         String ma;
-        ma = "CB" + listsize++ ;
+        ma = "CB" + listsize++;
         comBo.setMa(ma);
         comBo.setTrangThai(1);
         try {
@@ -1256,13 +1243,13 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
         int row = TblComBo.getSelectedRow();
         DefaultTableModel tblModel = (DefaultTableModel) tblComBoChiTiet.getModel();
         tblModel.setRowCount(0);
-        if(row>=0){
+        if (row >= 0) {
             txtmaComBo.setText((String) TblComBo.getValueAt(row, 0));
             txtTenComBo.setText((String) TblComBo.getValueAt(row, 1));
             String maCB = (String) TblComBo.getValueAt(row, 0);
             List<ComBoChiTietViewModel> list = comBoChiTietServiceInterface.getAllComBo();
             for (ComBoChiTietViewModel comBoChiTietViewModel : list) {
-                if(comBoChiTietViewModel.getMa_CB().equals(maCB)){
+                if (comBoChiTietViewModel.getMa_CB().equals(maCB)) {
                     tblModel.addRow(new Object[]{
                         comBoChiTietViewModel.getMa_SP(),
                         comBoChiTietViewModel.getTen_SP(),
@@ -1277,31 +1264,73 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private void btnThemSpVaoComBoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSpVaoComBoActionPerformed
         // TODO add your handling code here:
         int row = tblSanPhamDouongComBO.getSelectedRow();
-        if(row>=0){
+        if (row >= 0) {
             ComBoChiTiet comBoChiTiet = new ComBoChiTiet();
             String maComBO = txtmaComBo.getText();
             List<ComBo> listCB = comBoServiceInterface.getallCombo();
             for (ComBo comBo : listCB) {
-                if(comBo.getMa().equals(maComBO)){
+                if (comBo.getMa().equals(maComBO)) {
                     comBoChiTiet.setId_CB(comBo.getId());
                 }
             }
             String maSP = (String) tblSanPhamDouongComBO.getValueAt(row, 0);
             List<SanPhamViewModel> list = sanPhamServiceInterface.getAllSP();
             for (SanPhamViewModel sanPhamViewModel : list) {
-                if(sanPhamViewModel.getMa().equals(maSP)){
+                if (sanPhamViewModel.getMa().equals(maSP)) {
                     comBoChiTiet.setId_SP(sanPhamViewModel.getId());
                 }
             }
             System.out.println(comBoChiTiet);
             try {
                 comBoChiTietServiceInterface.addComBo(comBoChiTiet);
-                
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
     }//GEN-LAST:event_btnThemSpVaoComBoActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int row = tblSanPhamDouong.getSelectedRow();
+        if (row >= 0) {
+            
+                SanPham sanPham = new SanPham();
+
+                sanPham.setMa(txtmaDoUong.getText());
+                sanPham.setTen(txtTenDoUong.getText());
+                sanPham.setDonGia(txtGia.getText());
+                Vi vi = (Vi) cbbVi.getSelectedItem();
+
+                sanPham.setId_Vi(vi);
+                DanhMuc nameDM = (DanhMuc) cbbDanhmucSp.getSelectedItem();
+                sanPham.setId_DanhMuc(nameDM);
+                Size maSize = (Size) cbbSize.getSelectedItem();
+                sanPham.setId_size(maSize);
+
+                String trangThai = txtTrangThai.getText();
+                if (trangThai.equalsIgnoreCase("Còn Hàng")) {
+                    sanPham.setTrangThai(1);
+                }
+                if (trangThai.equalsIgnoreCase("Hết Hàng")) {
+                    sanPham.setTrangThai(0);
+                }
+                System.out.println(sanPham);
+                try {
+                    sanPhamServiceInterface.updateSanPham(sanPham);
+                    loadTableDSSP();
+                    clearfromSanPham();
+                    JOptionPane.showMessageDialog(this, "Sửa Thành Công");
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, "Sửa không Thành Công");
+
+                    e.printStackTrace();
+                }
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "Chọn Mục Cần Sửa");
+            return;
+        }
+    }//GEN-LAST:event_btnSuaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1348,7 +1377,7 @@ public class QuanLy_DoAnUongFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnKhachHangmenu;
     private javax.swing.JButton btnKhuyenMaiMenu;
     private javax.swing.JButton btnNhanVienMenu;
-    private javax.swing.JButton btnSuaDoUong;
+    private javax.swing.JButton btnSua;
     private javax.swing.JButton btnTaoComBo;
     private javax.swing.JButton btnThemNhanhDM;
     private javax.swing.JButton btnThemNhanhVi;

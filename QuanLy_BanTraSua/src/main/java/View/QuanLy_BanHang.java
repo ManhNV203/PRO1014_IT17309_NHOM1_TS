@@ -213,9 +213,19 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
         btnChonComBo = new javax.swing.JButton();
 
         MNTThemSoLuong.setText("Thêm Số Lượng");
+        MNTThemSoLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MNTThemSoLuongActionPerformed(evt);
+            }
+        });
         popupmenu.add(MNTThemSoLuong);
 
         MNTGiamSoLuong.setText("Giam Số Lượng");
+        MNTGiamSoLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MNTGiamSoLuongActionPerformed(evt);
+            }
+        });
         popupmenu.add(MNTGiamSoLuong);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -1130,9 +1140,8 @@ public class QuanLy_BanHang extends javax.swing.JFrame {
             if (evt.isPopupTrigger() && tblSanPhamOrder.getSelectedRowCount() != 0) {
                 popupmenu.show(evt.getComponent(), evt.getX(), evt.getY());
             }
-//             for (int i = 0; i < hdctitf.gethdct(Mahd); i++) {
-//                 
-//             }
+            
+
         }
 
     }//GEN-LAST:event_tblSanPhamOrderMouseReleased
@@ -1368,6 +1377,63 @@ for (int i = 0; i < sp_itf.getAllSP().size(); i++) {
     private void txtTienKhacDuaBHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTienKhacDuaBHActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTienKhacDuaBHActionPerformed
+
+    private void MNTThemSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNTThemSoLuongActionPerformed
+       int index = tblSanPhamOrder.getSelectedRow();
+       HoaDonChiTiet hdct = new HoaDonChiTiet();
+        Integer tongsoluong = (Integer) tblSanPhamOrder.getValueAt(index, 3);
+       
+       Integer Soluong = Integer.parseInt(JOptionPane.showInputDialog(this,"Mời nhập số lượng muốn thêm"));
+        if (Soluong instanceof Integer) {
+            hdct.setSL_Mua(Soluong + tongsoluong );
+        }else{
+        return;
+        }
+        for (int i = 0; i < hdctitf.gethdct(lblMaHoaDonBH.getText()).size(); i++) {
+             if (hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(index, 0))) {
+                hdct.setId(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getId());
+            }
+        }
+        
+        hdctitf.UpdateSoLuong(hdct);
+        filltotablehdct(lblMaHoaDonBH.getText());
+        
+        double tongtien = 0.0;
+            for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+                tongtien += hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+            }
+
+        lblTongTienBH.setText(tongtien + "");
+        
+    }//GEN-LAST:event_MNTThemSoLuongActionPerformed
+
+    private void MNTGiamSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MNTGiamSoLuongActionPerformed
+        int index = tblSanPhamOrder.getSelectedRow();
+       HoaDonChiTiet hdct = new HoaDonChiTiet();
+        Integer tongsoluong = (Integer) tblSanPhamOrder.getValueAt(index, 3);
+       
+       Integer Soluong = Integer.parseInt(JOptionPane.showInputDialog(this,"Mời nhập số lượng muốn thêm"));
+        if (Soluong instanceof Integer) {
+            hdct.setSL_Mua(tongsoluong - Soluong );
+        }else{
+        return;
+        }
+        for (int i = 0; i < hdctitf.gethdct(lblMaHoaDonBH.getText()).size(); i++) {
+             if (hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getMa_SP().equals(tblSanPhamOrder.getValueAt(index, 0))) {
+                hdct.setId(hdctitf.gethdct(lblMaHoaDonBH.getText()).get(i).getId());
+            }
+        }
+        
+        hdctitf.UpdateSoLuong(hdct);
+        filltotablehdct(lblMaHoaDonBH.getText());
+        double tongtien = 0.0;
+            for (int i = 0; i < hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).size(); i++) {
+                tongtien += hdctitf.gethdct(tblDSHoaDonBH.getValueAt(index, 0).toString()).get(i).getTongtien();
+            }
+
+            lblTongTienBH.setText(tongtien + "");
+        
+    }//GEN-LAST:event_MNTGiamSoLuongActionPerformed
 
     /**
      * @param args the command line arguments

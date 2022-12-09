@@ -12,11 +12,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Th&#xea;m S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MNTThemSoLuongActionPerformed"/>
+          </Events>
         </MenuItem>
         <MenuItem class="javax.swing.JMenuItem" name="MNTGiamSoLuong">
           <Properties>
             <Property name="text" type="java.lang.String" value="Giam S&#x1ed1; L&#x1b0;&#x1ee3;ng"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MNTGiamSoLuongActionPerformed"/>
+          </Events>
         </MenuItem>
       </SubComponents>
     </Container>
